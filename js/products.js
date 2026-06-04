@@ -249,10 +249,10 @@ const products = [
     features: ['抗震动设计', '体积小、重量轻', '温度适应范围宽', '可靠性高']
   },
   {
-    id: 'jqvt-20kv-01', line: 'locomotive', type: 'voltage', voltage: '20KV',
+    id: 'jqvt-25-07', line: 'locomotive', type: 'voltage', voltage: '20KV',
     name: 'JDZXW2-25A1 型机车电压互感器',
     summary: '机车专用干式电压互感器，适用于20kV机车配电',
-    image: 'images/products/jqvt-20kv-01.jpg',
+    image: 'images/products/jqvt-25-07.jpg',
     specs: [
       { label: '额定电压比', value: '25/0.15/0.15 KV' },
       { label: '额定频率', value: '50 Hz' },
@@ -263,7 +263,7 @@ const products = [
       { label: '使用环境', value: '-40°C ~ +70°C' },
       { label: '执行标准', value: 'TB/T 3202-2015' }
     ],
-    description: 'JQG-20Y 系列机车电压互感器专为电力机车设计，满足 20kV 机车配电系统的电压测量和计量需求。',
+    description: 'JDZX 系列机车电压互感器，适用于 25kV 机车配电系统的电压测量和计量。',
     features: ['抗震动设计', '体积小、重量轻', '温度适应范围宽', '可靠性高']
   },
   {
@@ -284,6 +284,115 @@ const products = [
     description: 'JQG-35Y 系列机车电压互感器专为电力机车设计，适用于 35kV 机车配电系统的电压测量和继电保护。',
     features: ['抗震动设计', '高精度多绕组设计', '温度适应范围宽', '可靠性高']
   },
+  {
+    id: 'jqvt-25-01', line: 'locomotive', type: 'voltage', voltage: '20KV',
+    name: 'JDZXW3-25 型机车电压互感器',
+    summary: '机车专用干式电压互感器，适用于20kV机车配电',
+    image: 'images/products/jqvt-25-01.jpg',
+    specs: [
+      { label: '额定电压比', value: '25/0.1 KV' },
+      { label: '额定频率', value: '50 Hz' },
+      { label: '准确级', value: '0.5' },
+      { label: '额定容量', value: '20 VA' },
+      { label: '绝缘水平', value: '31/80/170 kV' },
+      { label: '抗震等级', value: 'Ⅰ级' },
+      { label: '使用环境', value: '-40°C ~ +70°C' },
+      { label: '执行标准', value: 'TB/T 3202-2015' }
+    ],
+    description: 'JDZXW3-25 系列机车电压互感器，适用于 25kV 机车配电系统的电压测量和计量。',
+    features: ['抗震动设计', '体积小、重量轻', '温度适应范围宽', '可靠性高']
+  },
+  {
+    id: 'jqvt-25-02', line: 'locomotive', type: 'voltage', voltage: '20KV',
+    name: 'JDZX18-25B 型机车电压互感器',
+    summary: '机车专用干式电压互感器，适用于20kV机车配电',
+    image: 'images/products/jqvt-25-02.jpg',
+    specs: [
+      { label: '额定电压比', value: '25/0.2/0.2/0.2 KV' },
+      { label: '额定频率', value: '50 Hz' },
+      { label: '准确级', value: '0.5/0.5/0.5' },
+      { label: '额定容量', value: '15/15/15 VA' },
+      { label: '绝缘水平', value: '31/80/170 kV' },
+      { label: '抗震等级', value: 'Ⅰ级' },
+      { label: '使用环境', value: '-40°C ~ +70°C' },
+      { label: '执行标准', value: 'TB/T 3202-2015' }
+    ],
+    description: 'JDZX 系列机车电压互感器，适用于 25kV 机车配电系统的电压测量和计量。',
+    features: ['抗震动设计', '体积小、重量轻', '温度适应范围宽', '可靠性高']
+  },
+  {
+    id: 'jqvt-25-03', line: 'locomotive', type: 'voltage', voltage: '20KV',
+    name: 'JDZX18-25B 型机车电压互感器',
+    summary: '机车专用干式电压互感器，适用于20kV机车配电',
+    image: 'images/products/jqvt-25-03.jpg',
+    specs: [
+      { label: '额定电压比', value: '25/0.15/0.15 KV' },
+      { label: '额定频率', value: '50 Hz' },
+      { label: '准确级', value: '1/1' },
+      { label: '额定容量', value: '30/30 VA' },
+      { label: '绝缘水平', value: '31/85/200 kV' },
+      { label: '抗震等级', value: 'Ⅰ级' },
+      { label: '使用环境', value: '-40°C ~ +70°C' },
+      { label: '执行标准', value: 'TB/T 3202-2015' }
+    ],
+    description: 'JDZX 系列机车电压互感器，适用于 25kV 机车配电系统的电压测量和计量。',
+    features: ['抗震动设计', '体积小、重量轻', '温度适应范围宽', '可靠性高']
+  },
+  {
+    id: 'jqvt-25-04', line: 'locomotive', type: 'voltage', voltage: '20KV',
+    name: 'JDZX18-25（C) 型机车电压互感器',
+    summary: '机车专用干式电压互感器，适用于20kV机车配电',
+    image: 'images/products/jqvt-25-04.jpg',
+    specs: [
+      { label: '额定电压比', value: '25/0.1 KV' },
+      { label: '额定频率', value: '50 Hz' },
+      { label: '准确级', value: '1' },
+      { label: '额定容量', value: '30 VA' },
+      { label: '绝缘水平', value: '31/80/170 kV' },
+      { label: '抗震等级', value: 'Ⅰ级' },
+      { label: '使用环境', value: '-40°C ~ +70°C' },
+      { label: '执行标准', value: 'TB/T 3202-2015' }
+    ],
+    description: 'JDZX 系列机车电压互感器，适用于 25kV 机车配电系统的电压测量和计量。',
+    features: ['抗震动设计', '体积小、重量轻', '温度适应范围宽', '可靠性高']
+  },
+  {
+    id: 'jqvt-25-05', line: 'locomotive', type: 'voltage', voltage: '20KV',
+    name: 'JDZX18-25D 型机车电压互感器',
+    summary: '机车专用干式电压互感器，适用于20kV机车配电',
+    image: 'images/products/jqvt-25-05.jpg',
+    specs: [
+      { label: '额定电压比', value: '25/0.1 KV' },
+      { label: '额定频率', value: '50 Hz' },
+      { label: '准确级', value: '1' },
+      { label: '额定容量', value: '120 VA' },
+      { label: '绝缘水平', value: '31/85/200 kV' },
+      { label: '抗震等级', value: 'Ⅰ级' },
+      { label: '使用环境', value: '-40°C ~ +70°C' },
+      { label: '执行标准', value: 'TB/T 3202-2015' }
+    ],
+    description: 'JDZX 系列机车电压互感器，适用于 25kV 机车配电系统的电压测量和计量。',
+    features: ['抗震动设计', '体积小、重量轻', '温度适应范围宽', '可靠性高']
+  },
+  {
+    id: 'jqvt-25-06', line: 'locomotive', type: 'voltage', voltage: '20KV',
+    name: 'JDZXW3-25B1 型机车电压互感器',
+    summary: '机车专用干式电压互感器，适用于20kV机车配电',
+    image: 'images/products/jqvt-25-06.jpg',
+    specs: [
+      { label: '额定电压比', value: '25/0.1/0.1 KV' },
+      { label: '额定频率', value: '50 Hz' },
+      { label: '准确级', value: '0.5/0.5' },
+      { label: '额定容量', value: '20/20 VA' },
+      { label: '绝缘水平', value: '40.5/100/200 kV' },
+      { label: '抗震等级', value: 'Ⅰ级' },
+      { label: '使用环境', value: '-40°C ~ +70°C' },
+      { label: '执行标准', value: 'TB/T 3202-2015' }
+    ],
+    description: 'JDZX 系列机车电压互感器，适用于 25kV 机车配电系统的电压测量和计量。',
+    features: ['抗震动设计', '体积小、重量轻', '温度适应范围宽', '可靠性高']
+  },
+
 
   // ───── 动车产品 - 电流互感器 ─────
   {
