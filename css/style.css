@@ -468,6 +468,30 @@ button { cursor: pointer; font: inherit; border: none; background: none; }
 .modal-features li { padding: 6px 0 6px 22px; position: relative; font-size: 13px; }
 .modal-features li::before { content: '✓'; position: absolute; left: 0; color: var(--primary); font-weight: 700; }
 
+/* ---- 详情弹窗产品外形图 ---- */
+.modal-img {
+  width: 100%;
+  margin-bottom: 18px;
+  border-radius: var(--radius);
+  overflow: hidden;
+  background: var(--primary-light);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 12px;
+  min-height: 140px;
+}
+.modal-img img {
+  width: 100%;
+  height: auto;
+  max-height: 280px;
+  object-fit: contain;
+  display: block;
+}
+.modal-img.img-error {
+  display: none;
+}
+
 /* ---- Offline Banner ---- */
 .offline-banner {
   position: fixed;

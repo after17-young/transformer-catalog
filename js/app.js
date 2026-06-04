@@ -268,6 +268,9 @@
       <h3 class="product-card-name">${p.name}</h3>
       ${p.voltage ? `<p class="product-card-voltage">电压等级：${p.voltage.replace('KV', 'kV')}</p>` : ''}
       <p class="product-card-summary">${p.summary}</p>
+      <div class="modal-img">
+        <img src="${p.image}" alt="${p.name}外形图" loading="lazy" onerror="this.parentElement.classList.add('img-error')">
+      </div>
       <div class="modal-desc"><h4>产品描述</h4><p>${p.description}</p></div>
       <div class="modal-specs"><h4>技术参数</h4><table class="specs-table">${p.specs.map(s => `<tr><td>${s.label}</td><td>${s.value}</td></tr>`).join('')}</table></div>
       <div class="modal-features"><h4>产品特点</h4><ul>${p.features.map(f => `<li>${f}</li>`).join('')}</ul></div>`
