@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <meta name="theme-color" content="#0047ab">
+  <meta name="description" content="专业电力互感器生产厂家 - 电流互感器、电压互感器、机车动车产品样本">
+  <link rel="manifest" href="manifest.json">
+  <link rel="apple-touch-icon" href="icons/icon-192.png">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <title>华通互感器 - 产品样本</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <!-- ============ 顶栏 ============ -->
+  <header class="app-header" id="appHeader">
+    <button class="icon-btn header-btn" id="menuBtn" aria-label="菜单">
+      <svg viewBox="0 0 24 24" width="24" height="24"><path d="M3 6h18M3 12h18M3 18h18" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round"/></svg>
+    </button>
+    <div class="header-brand">
+      <span class="header-logo">华通</span>
+      <h1 class="header-title" id="headerTitle">首页</h1>
+    </div>
+    <button class="icon-btn header-btn" id="searchBtn" aria-label="搜索">
+      <svg viewBox="0 0 24 24" width="22" height="22"><circle cx="11" cy="11" r="7" stroke="currentColor" stroke-width="2" fill="none"/><path d="M16.5 16.5L21 21" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+    </button>
+  </header>
+
+  <!-- ============ 搜索栏 ============ -->
+  <div class="search-overlay" id="searchOverlay">
+    <div class="search-bar">
+      <button class="icon-btn search-back" id="searchBack" aria-label="返回">
+        <svg viewBox="0 0 24 24" width="24" height="24"><path d="M15 18l-6-6 6-6" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </button>
+      <div class="search-input-wrap">
+        <svg class="search-icon" viewBox="0 0 24 24" width="18" height="18"><circle cx="11" cy="11" r="7" stroke="#999" stroke-width="2" fill="none"/><path d="M16.5 16.5L21 21" stroke="#999" stroke-width="2" stroke-linecap="round"/></svg>
+        <input type="search" id="searchInput" placeholder="搜索产品名称、型号..." autocomplete="off">
+      </div>
+    </div>
+    <div class="search-results" id="searchResults"></div>
+  </div>
+
+  <!-- ============ 侧边栏 ============ -->
+  <nav class="sidebar" id="sidebar">
+    <div class="sidebar-top">
+      <div class="sidebar-brand">
+        <div class="sidebar-logo">华通</div>
+        <span>华通互感器</span>
+      </div>
+      <button class="icon-btn sidebar-close" id="closeSidebar" aria-label="关闭菜单">
+        <svg viewBox="0 0 24 24" width="24" height="24"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+      </button>
+    </div>
+    <ul class="sidebar-nav">
+      <li><a href="#" data-page="home" class="active"><span class="nav-icon">🏠</span>首页</a></li>
+      <li><a href="#" data-page="products"><span class="nav-icon">📦</span>产品中心</a></li>
+      <li><a href="#" data-page="about"><span class="nav-icon">🏢</span>企业简介</a></li>
+    </ul>
+    <div class="sidebar-divider"></div>
+    <div class="sidebar-contact">
+      <h3 class="sidebar-contact-title">📞 联系我们</h3>
+      <div class="contact-item">
+        <span class="contact-icon">📍</span>
+        <div>
+          <p class="contact-label">地址</p>
+          <p class="contact-value" id="contactAddress">浙江省温州市乐清市柳市镇</p>
+        </div>
+      </div>
+      <div class="contact-item">
+        <span class="contact-icon">📞</span>
+        <div>
+          <p class="contact-label">电话</p>
+          <p class="contact-value" id="contactPhone">0577-88888888</p>
+        </div>
+      </div>
+      <div class="contact-item">
+        <span class="contact-icon">📧</span>
+        <div>
+          <p class="contact-label">邮箱</p>
+          <p class="contact-value" id="contactEmail">sales@huatong.cn</p>
+        </div>
+      </div>
+      <div class="contact-item">
+        <span class="contact-icon">🌐</span>
+        <div>
+          <p class="contact-label">网站</p>
+          <p class="contact-value" id="contactWebsite">www.huatong.cn</p>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- ============ 遮罩 ============ -->
+  <div class="overlay" id="overlay"></div>
+
+  <!-- ============ 页面容器 ============ -->
+  <main class="main-content" id="mainContent">
+
+    <!-- ===== 首页 ===== -->
+    <section class="page active" id="page-home">
+      <!-- 轮播图 -->
+      <div class="carousel" id="carousel">
+        <div class="carousel-track" id="carouselTrack"></div>
+        <div class="carousel-dots" id="carouselDots"></div>
+        <button class="carousel-arrow carousel-prev" id="carouselPrev" aria-label="上一张">
+          <svg viewBox="0 0 24 24" width="22" height="22"><path d="M15 18l-6-6 6-6" stroke="#fff" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+        <button class="carousel-arrow carousel-next" id="carouselNext" aria-label="下一张">
+          <svg viewBox="0 0 24 24" width="22" height="22"><path d="M9 18l6-6-6-6" stroke="#fff" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+      </div>
+
+      <!-- 快捷导航（产品线） -->
+      <div class="quick-nav">
+        <div class="quick-nav-item" data-page-link="products" data-line="standard">
+          <div class="quick-nav-icon">📦</div>
+          <span>标准产品</span>
+        </div>
+        <div class="quick-nav-item" data-page-link="products" data-line="locomotive">
+          <div class="quick-nav-icon">🚂</div>
+          <span>机车产品</span>
+        </div>
+        <div class="quick-nav-item" data-page-link="products" data-line="train">
+          <div class="quick-nav-icon">🚄</div>
+          <span>动车产品</span>
+        </div>
+        </div>
+
+      <!-- 热门产品 -->
+      <div class="section-header">
+        <h3>🔥 热门产品</h3>
+        <a href="#" class="section-more" data-page-link="products">查看全部 →</a>
+      </div>
+      <div class="product-grid" id="homeProductGrid"></div>
+    </section>
+
+    <!-- ===== 产品中心 ===== -->
+    <section class="page" id="page-products">
+      <!-- 第一级：产品线 -->
+      <div class="filter-row" id="lineTabs"></div>
+      <!-- 第二级：类型 -->
+      <div class="filter-row" id="typeTabs"></div>
+      <!-- 第三级：电压等级 -->
+      <div class="filter-row" id="voltageTabs"></div>
+      <!-- 产品列表 -->
+      <div class="product-grid" id="productGrid"></div>
+      <div class="empty-state" id="emptyState" style="display:none;">
+        <span class="empty-icon">📭</span>
+        <p>未找到匹配产品</p>
+      </div>
+    </section>
+
+    <!-- ===== 企业简介 ===== -->
+    <section class="page" id="page-about">
+      <div class="about-hero">
+        <div class="about-hero-bg"></div>
+        <div class="about-hero-content">
+          <h2>关于华通</h2>
+          <p>专业 · 可靠 · 创新</p>
+        </div>
+      </div>
+      <div class="about-body">
+        <div class="about-section">
+          <h3>公司简介</h3>
+          <p>浙江华通互感器有限公司成立于 2005 年，是一家专业从事电力互感器研发、生产和销售的高新技术企业。公司坐落于"中国电器之都"——浙江省乐清市柳市镇，拥有现代化标准厂房 15000 平方米，年产各类互感器 50 万台套。</p>
+          <p>公司产品广泛应用于国家电网、南方电网、新能源电站、工矿企业及市政工程，远销东南亚、中东、非洲等 30 多个国家和地区，深受国内外客户信赖。</p>
+        </div>
+        <div class="about-section">
+          <h3>资质荣誉</h3>
+          <div class="cert-grid">
+            <div class="cert-item"><span class="cert-icon">🏅</span><span>ISO9001 质量认证</span></div>
+            <div class="cert-item"><span class="cert-icon">📜</span><span>国家计量器具许可</span></div>
+            <div class="cert-item"><span class="cert-icon">🔬</span><span>省级高新技术企业</span></div>
+            <div class="cert-item"><span class="cert-icon">🌍</span><span>CE 国际认证</span></div>
+          </div>
+        </div>
+        <div class="about-section">
+          <h3>生产实力</h3>
+          <div class="strength-grid">
+            <div class="strength-item"><span class="strength-num">15000+</span><span class="strength-label">㎡ 生产厂房</span></div>
+            <div class="strength-item"><span class="strength-num">200+</span><span class="strength-label">在职员工</span></div>
+            <div class="strength-item"><span class="strength-num">50万+</span><span class="strength-label">年产量(台)</span></div>
+            <div class="strength-item"><span class="strength-num">30+</span><span class="strength-label">出口国家</span></div>
+          </div>
+        </div>
+        <div class="about-section contact-card">
+          <h3>📞 联系方式</h3>
+          <div class="contact-info-grid">
+            <div class="contact-info-item">
+              <span class="ci-icon">📍</span>
+              <div><p class="ci-label">公司地址</p><p class="ci-value" id="aboutAddress">浙江省温州市乐清市柳市镇工业区88号</p></div>
+            </div>
+            <div class="contact-info-item">
+              <span class="ci-icon">📞</span>
+              <div><p class="ci-label">联系电话</p><p class="ci-value" id="aboutPhone">0577-88888888</p></div>
+            </div>
+            <div class="contact-info-item">
+              <span class="ci-icon">📧</span>
+              <div><p class="ci-label">电子邮箱</p><p class="ci-value" id="aboutEmail">sales@huatong.cn</p></div>
+            </div>
+            <div class="contact-info-item">
+              <span class="ci-icon">🌐</span>
+              <div><p class="ci-label">官方网站</p><p class="ci-value" id="aboutWebsite">www.huatong.cn</p></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="about-footer">
+        <p>© 2024 华通互感器 版权所有</p>
+      </div>
+    </section>
+  </main>
+
+  <!-- ============ 产品详情弹窗 ============ -->
+  <div class="modal-overlay" id="modalOverlay">
+    <div class="modal" id="productModal">
+      <button class="modal-close" id="modalClose" aria-label="关闭">
+        <svg viewBox="0 0 24 24" width="20" height="20"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+      </button>
+      <div class="modal-body" id="modalBody"></div>
+    </div>
+  </div>
+
+  <!-- ============ 底部导航 ============ -->
+  <nav class="bottom-bar" id="bottomBar">
+    <button class="bottom-bar-item active" data-page="home">
+      <svg viewBox="0 0 24 24" width="24" height="24"><path d="M3 12l9-9 9 9" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/><path d="M5 10v10a1 1 0 001 1h3a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1h3a1 1 0 001-1V10" stroke="currentColor" stroke-width="2" fill="none"/></svg>
+      <span>首页</span>
+    </button>
+    <button class="bottom-bar-item" data-page="products">
+      <svg viewBox="0 0 24 24" width="24" height="24"><path d="M21 16V8a2 2 0 00-1-1.73l-7-4a2 2 0 00-2 0l-7 4A2 2 0 002 8v8a2 2 0 001 1.73l7 4a2 2 0 002 0l7-4A2 2 0 0021 16z" stroke="currentColor" stroke-width="2" fill="none" stroke-linejoin="round"/><path d="M12 22V12" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><path d="M3.3 7L12 12l8.7-5" stroke="currentColor" stroke-width="2" fill="none" stroke-linejoin="round"/></svg>
+      <span>产品</span>
+    </button>
+    <button class="bottom-bar-item" data-page="about">
+      <svg viewBox="0 0 24 24" width="24" height="24"><circle cx="12" cy="8" r="4" stroke="currentColor" stroke-width="2" fill="none"/><path d="M20 21a8 8 0 00-16 0" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round"/></svg>
+      <span>关于</span>
+    </button>
+  </nav>
+
+  <div class="offline-banner" id="offlineBanner"><span>📡</span> 当前处于离线状态</div>
+
+  <script src="js/products.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
