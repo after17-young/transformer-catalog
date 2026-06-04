@@ -1,5 +1,5 @@
 /**
- * 华通互感器 PWA - 主应用逻辑 v2
+ * 大北互 PWA - 主应用逻辑 v2
  * 三级分类：产品线 → 类型 → 电压等级 + 轮播图
  */
 (function () {
@@ -382,7 +382,7 @@
     renderTypeTabs()
     renderVoltageTabs()
     renderFilteredProducts()
-    console.log('[PWA] 华通互感器 v2 已启动')
+    console.log('[PWA] 大北互 v2 已启动')
   }
 
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init)

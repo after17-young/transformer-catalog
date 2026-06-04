@@ -1,4 +1,4 @@
-const CACHE_NAME = 'huatong-catalog-v2'
+const CACHE_NAME = 'dabeihu-catalog-v2'
 const ASSETS = [
   '/',
   '/index.html',
