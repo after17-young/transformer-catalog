@@ -190,7 +190,7 @@
     return `<div class="product-card" data-id="${p.id}" role="button" tabindex="0">
       <div class="product-card-img">
         <span class="line-badge">${lineNames[p.line] || ''}</span>
-        <img src="${p.image}" alt="${p.name}" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+        <img src="${p.cardImage || p.image}" alt="${p.name}" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
         <span style="font-size:32px;opacity:0.35;display:none">${typeIcons[p.type] || '📦'}</span>
       </div>
       <div class="product-card-body">
