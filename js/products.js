@@ -232,15 +232,15 @@ const products = [
   // ───── 机车产品 - 电压互感器 ─────
   {
     id: 'jqvt-10kv-01', line: 'locomotive', type: 'voltage', voltage: '10KV',
-    name: 'JQG-10Y 型机车电压互感器',
+    name: 'JDZXW2-25A2 型机车电压互感器',
     summary: '机车专用干式电压互感器，适用于10kV机车配电',
     image: 'images/products/jqvt-10kv-01.jpg',
     specs: [
-      { label: '额定电压比', value: '10000/100V' },
+      { label: '额定电压比', value: '25/0.15/0.15 KV' },
       { label: '额定频率', value: '50 Hz' },
-      { label: '准确级', value: '0.5 / 3P' },
-      { label: '额定容量', value: '30-150 VA' },
-      { label: '绝缘水平', value: '12/28/75 kV' },
+      { label: '准确级', value: '1 / 1' },
+      { label: '额定容量', value: '30/130 VA' },
+      { label: '绝缘水平', value: '40.5/85/200 kV' },
       { label: '抗震等级', value: 'Ⅰ级' },
       { label: '使用环境', value: '-40°C ~ +70°C' },
       { label: '执行标准', value: 'TB/T 3202-2015' }
@@ -250,15 +250,15 @@ const products = [
   },
   {
     id: 'jqvt-20kv-01', line: 'locomotive', type: 'voltage', voltage: '20KV',
-    name: 'JQG-20Y 型机车电压互感器',
+    name: 'JDZXW2-25A1 型机车电压互感器',
     summary: '机车专用干式电压互感器，适用于20kV机车配电',
     image: 'images/products/jqvt-20kv-01.jpg',
     specs: [
-      { label: '额定电压比', value: '20000/100V' },
+      { label: '额定电压比', value: '25/0.15/0.15 KV' },
       { label: '额定频率', value: '50 Hz' },
-      { label: '准确级', value: '0.5 / 3P' },
-      { label: '额定容量', value: '30-200 VA' },
-      { label: '绝缘水平', value: '24/50/95 kV' },
+      { label: '准确级', value: '1 / 1' },
+      { label: '额定容量', value: '30/30 VA' },
+      { label: '绝缘水平', value: '40.5/85/200 kV' },
       { label: '抗震等级', value: 'Ⅰ级' },
       { label: '使用环境', value: '-40°C ~ +70°C' },
       { label: '执行标准', value: 'TB/T 3202-2015' }
@@ -267,16 +267,16 @@ const products = [
     features: ['抗震动设计', '体积小、重量轻', '温度适应范围宽', '可靠性高']
   },
   {
-    id: 'jqvt-35kv-01', line: 'locomotive', type: 'voltage', voltage: '35KV',
-    name: 'JQG-35Y 型机车电压互感器',
+    id: 'JDZXW2-25A', line: 'locomotive', type: 'voltage', voltage: '35KV',
+    name: 'JDZXW2-25A 型机车电压互感器',
     summary: '机车专用干式电压互感器，适用于35kV机车配电',
     image: 'images/products/jqvt-35kv-01.jpg',
     specs: [
-      { label: '额定电压比', value: '35000/100V' },
+      { label: '额定电压比', value: '25/0.1 KV' },
       { label: '额定频率', value: '50 Hz' },
-      { label: '准确级', value: '0.2 / 0.5 / 3P' },
-      { label: '额定容量', value: '50-300 VA' },
-      { label: '绝缘水平', value: '40.5/95/185 kV' },
+      { label: '准确级', value: '1' },
+      { label: '额定容量', value: '30 VA' },
+      { label: '绝缘水平', value: '30.5/70/170 kV' },
       { label: '抗震等级', value: 'Ⅰ级' },
       { label: '使用环境', value: '-40°C ~ +70°C' },
       { label: '执行标准', value: 'TB/T 3202-2015' }
