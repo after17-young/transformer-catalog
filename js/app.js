@@ -196,19 +196,6 @@
     </div>`
   }
 
-  function buildSeriesGallery(seriesId) {
-    var imgs = []
-    for (var i = 40; i <= 58; i++) {
-      imgs.push('images/series/1.中压一篇单页目录版_' + i + '.png')
-    }
-    return imgs.map(function(src, idx) {
-      return '<div class="product-card" style="cursor:default">' +
-        '<div class="product-card-img" style="height:auto;min-height:200px;background:#fff;padding:8px">' +
-        '<img src="' + src + '" alt="技术参数' + (idx+1) + '" style="width:100%;height:auto;display:block" loading="lazy">' +
-        '</div></div>'
-    }).join('')
-  }
-
   // 统一事件代理
   document.addEventListener('click', function (e) {
     const typeBtn = e.target.closest('#typeTabs .filter-tab')
@@ -251,10 +238,19 @@
       productGrid.innerHTML = series.filter(s => s.id !== 'all').map(s => buildSeriesCard(s)).join('')
       return
     }
-    // Show image gallery for LZZBJ9 series
+    // LZZBJ9 series: show image gallery
     if (filter.type === 'current' && filter.subType === 'post' && filter.series === 'lzzbj9') {
       emptyState.style.display = 'none'
-      productGrid.innerHTML = buildSeriesGallery('lzzbj9')
+      var imgs = []
+      for (var i = 40; i <= 58; i++) {
+        imgs.push('images/series/1.中压一篇单页目录版_' + i + '.png')
+      }
+      productGrid.innerHTML = imgs.map(function(src) {
+        return '<div class="product-card" style="cursor:default">' +
+          '<div class="product-card-img" style="height:auto;min-height:auto;background:#fff;padding:8px">' +
+          '<img src="' + src + '" style="width:100%;height:auto;display:block" loading="lazy">' +
+          '</div></div>'
+      }).join('')
       return
     }
     const list = getFilteredProducts()
