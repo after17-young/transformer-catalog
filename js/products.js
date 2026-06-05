@@ -712,12 +712,12 @@ const voltages = []
 
 // 类型图标映射（给UI用）
 function getTypeIcon(typeId) {
-  const map = { current: '⚡', voltage: '🔌', combined: '🔗', zero: '🔄', post: '🏛️' }
+  const map = { current: '⚡', voltage: '🔌', combined: '🔗', zero: '🔄', post: '🏛️', wall: '🧱', outdoor: '🌲', vt36: '🔌', vtOutdoor: '🌲' }
   return map[typeId] || '📦'
 }
 
 function getTypeName(typeId) {
-  const map = { current: '电流互感器', voltage: '电压互感器', combined: '组合互感器', zero: '零序电流互感器', post: '3.6-12KV支柱式电流互感器' }
+  const map = { current: '电流互感器', voltage: '电压互感器', combined: '组合互感器', zero: '零序电流互感器', post: '3.6-12KV支柱式电流互感器', wall: '3.6-12KV穿墙式电流互感器', outdoor: '3.6-12KV户外电流、电压互感器', vt36: '3.6-12KV电压互感器', vtOutdoor: '3.6-12KV户外电压互感器' }
   return map[typeId] || '未知'
 }
 

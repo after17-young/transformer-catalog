@@ -112,7 +112,7 @@
 
   function renderTypeTabs() {
     const show = filter.line === 'locomotive' || filter.line === 'train'
-      ? types.filter(t => t.id === 'all' || t.id === 'current' || t.id === 'post' || t.id === 'voltage')
+      ? types.filter(t => t.id === 'all' || t.id === 'current' || t.id === 'voltage')
       : types
     typeTabs.innerHTML = show.map(t =>
       `<button class="filter-tab${t.id === filter.type ? ' active' : ''}" data-type="${t.id}">${t.icon || ''} ${t.name}</button>`
@@ -120,12 +120,24 @@
   }
 
   function renderSubTypeTabs() {
+    let subTypes = []
     if (filter.type === 'current') {
-      const subTypes = [
+      subTypes = [
         { id: 'all', name: '全部型号' },
         { id: 'current', name: '电流互感器' },
-        { id: 'post', name: '3.6-12KV支柱式电流互感器' }
+        { id: 'post', name: '支柱式电流互感器' },
+        { id: 'wall', name: '穿墙式电流互感器' },
+        { id: 'outdoor', name: '户外电流、电压互感器' }
       ]
+    } else if (filter.type === 'voltage') {
+      subTypes = [
+        { id: 'all', name: '全部型号' },
+        { id: 'voltage', name: '电压互感器' },
+        { id: 'vt36', name: '3.6-12KV电压互感器' },
+        { id: 'vtOutdoor', name: '3.6-12KV户外电压互感器' }
+      ]
+    }
+    if (subTypes.length) {
       voltageTabs.innerHTML = subTypes.map(s =>
         `<button class="filter-tab voltage-tab${s.id === filter.subType ? ' active' : ''}" data-subtype="${s.id}">${s.name}</button>`
       ).join('')
@@ -170,9 +182,13 @@
       if (filter.line !== 'all' && p.line !== filter.line) return false
       if (filter.type !== 'all') {
         if (filter.type === 'current') {
-          if (filter.subType === 'current' && p.type !== 'current') return false
-          if (filter.subType === 'post' && p.type !== 'post') return false
-          if (filter.subType === 'all' && p.type !== 'current' && p.type !== 'post') return false
+          if (filter.subType === 'all') return p.type === 'current' || p.type === 'post' || p.type === 'wall' || p.type === 'outdoor'
+          if (filter.subType === 'current') return p.type === 'current'
+          return p.type === filter.subType
+        } else if (filter.type === 'voltage') {
+          if (filter.subType === 'all') return p.type === 'voltage' || p.type === 'vt36' || p.type === 'vtOutdoor'
+          if (filter.subType === 'voltage') return p.type === 'voltage'
+          return p.type === filter.subType
         } else if (p.type !== filter.type) return false
       }
       return true
@@ -195,8 +211,8 @@
 
   function buildCard(p) {
     const lineNames = { standard: '标准', locomotive: '机车', train: '动车' }
-    const typeNames = { current: '电流互感器', voltage: '电压互感器', combined: '组合互感器', zero: '零序电流互感器', post: '3.6-12KV支柱式电流互感器' }
-    const typeIcons = { current: '⚡', voltage: '🔌', combined: '🔗', zero: '🔄', post: '🏛️' }
+    const typeNames = { current: '电流互感器', voltage: '电压互感器', combined: '组合互感器', zero: '零序电流互感器', post: '3.6-12KV支柱式电流互感器', wall: '3.6-12KV穿墙式电流互感器', outdoor: '3.6-12KV户外电流、电压互感器', vt36: '3.6-12KV电压互感器', vtOutdoor: '3.6-12KV户外电压互感器' }
+    const typeIcons = { current: '⚡', voltage: '🔌', combined: '🔗', zero: '🔄', post: '🏛️', wall: '🧱', outdoor: '🌲', vt36: '🔌', vtOutdoor: '🌲' }
     return `<div class="product-card" data-id="${p.id}" role="button" tabindex="0">
       <div class="product-card-img">
         <span class="line-badge">${lineNames[p.line] || ''}</span>
@@ -311,7 +327,7 @@
       return p.specs.some(x => x.label.toLowerCase().includes(s) || x.value.toLowerCase().includes(s))
     })
     if (!r.length) { searchResults.innerHTML = `<div class="empty-state"><span class="empty-icon">🔍</span><p>未找到相关产品</p></div>`; return }
-    const ti = { current: '⚡', voltage: '🔌', combined: '🔗', zero: '🔄', post: '🏛️' }
+    const ti = { current: '⚡', voltage: '🔌', combined: '🔗', zero: '🔄', post: '🏛️', wall: '🧱', outdoor: '🌲', vt36: '🔌', vtOutdoor: '🌲' }
     searchResults.innerHTML = r.map(p => `<div class="search-result-item" data-id="${p.id}">
       <span class="search-result-icon">${ti[p.type] || '📦'}</span>
       <div class="search-result-info">
@@ -338,7 +354,7 @@
 
   function showDetail(p) {
     const ln = { standard: '标准产品', locomotive: '机车产品', train: '动车产品' }
-    const tn = { current: '电流互感器', voltage: '电压互感器', combined: '组合互感器', zero: '零序电流互感器', post: '3.6-12KV支柱式电流互感器' }
+    const tn = { current: '电流互感器', voltage: '电压互感器', combined: '组合互感器', zero: '零序电流互感器', post: '3.6-12KV支柱式电流互感器', wall: '3.6-12KV穿墙式电流互感器', outdoor: '3.6-12KV户外电流、电压互感器', vt36: '3.6-12KV电压互感器', vtOutdoor: '3.6-12KV户外电压互感器' }
     modalBody.innerHTML = `
       <span class="line-label">${ln[p.line] || ''}</span>
       <span class="product-card-type${p.type === 'voltage' ? ' voltage-t' : ''}">${tn[p.type] || ''}</span>
