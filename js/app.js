@@ -120,7 +120,7 @@
   }
 
   function renderVoltageTabs() {
-    if (filter.type === 'current' || filter.type === 'voltage') {
+    if (filter.type === 'current' || filter.type === 'voltage' || filter.type === 'post') {
       voltageTabs.innerHTML = voltages.map(v =>
         `<button class="filter-tab voltage-tab${v.id === filter.voltage ? ' active' : ''}" data-voltage="${v.id}">${v.name}</button>`
       ).join('')
@@ -164,7 +164,7 @@
     return products.filter(p => {
       if (filter.line !== 'all' && p.line !== filter.line) return false
       if (filter.type !== 'all' && p.type !== filter.type) return false
-      if (filter.voltage !== 'all' && (p.type === 'current' || p.type === 'voltage') && p.voltage !== filter.voltage) return false
+      if (filter.voltage !== 'all' && (p.type === 'current' || p.type === 'voltage' || p.type === 'post') && p.voltage !== filter.voltage) return false
       return true
     })
   }
@@ -185,8 +185,8 @@
 
   function buildCard(p) {
     const lineNames = { standard: '标准', locomotive: '机车', train: '动车' }
-    const typeNames = { current: '电流互感器', voltage: '电压互感器', combined: '组合互感器', zero: '零序电流互感器' }
-    const typeIcons = { current: '⚡', voltage: '🔌', combined: '🔗', zero: '🔄' }
+    const typeNames = { current: '电流互感器', voltage: '电压互感器', combined: '组合互感器', zero: '零序电流互感器', post: '3.6-12KV支柱式电流互感器' }
+    const typeIcons = { current: '⚡', voltage: '🔌', combined: '🔗', zero: '🔄', post: '🏛️' }
     return `<div class="product-card" data-id="${p.id}" role="button" tabindex="0">
       <div class="product-card-img">
         <span class="line-badge">${lineNames[p.line] || ''}</span>
@@ -301,7 +301,7 @@
       return p.specs.some(x => x.label.toLowerCase().includes(s) || x.value.toLowerCase().includes(s))
     })
     if (!r.length) { searchResults.innerHTML = `<div class="empty-state"><span class="empty-icon">🔍</span><p>未找到相关产品</p></div>`; return }
-    const ti = { current: '⚡', voltage: '🔌', combined: '🔗', zero: '🔄' }
+    const ti = { current: '⚡', voltage: '🔌', combined: '🔗', zero: '🔄', post: '🏛️' }
     searchResults.innerHTML = r.map(p => `<div class="search-result-item" data-id="${p.id}">
       <span class="search-result-icon">${ti[p.type] || '📦'}</span>
       <div class="search-result-info">
@@ -328,7 +328,7 @@
 
   function showDetail(p) {
     const ln = { standard: '标准产品', locomotive: '机车产品', train: '动车产品' }
-    const tn = { current: '电流互感器', voltage: '电压互感器', combined: '组合互感器', zero: '零序电流互感器' }
+    const tn = { current: '电流互感器', voltage: '电压互感器', combined: '组合互感器', zero: '零序电流互感器', post: '3.6-12KV支柱式电流互感器' }
     modalBody.innerHTML = `
       <span class="line-label">${ln[p.line] || ''}</span>
       <span class="product-card-type${p.type === 'voltage' ? ' voltage-t' : ''}">${tn[p.type] || ''}</span>

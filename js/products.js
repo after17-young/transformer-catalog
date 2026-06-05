@@ -705,24 +705,27 @@ const types = [
   { id: 'current', name: '电流互感器', icon: '⚡' },
   { id: 'voltage', name: '电压互感器', icon: '🔌' },
   { id: 'combined', name: '组合互感器', icon: '🔗' },
-  { id: 'zero', name: '零序电流互感器', icon: '🔄' }
+  { id: 'zero', name: '零序电流互感器', icon: '🔄' },
+  { id: 'post', name: '3.6-12KV支柱式电流互感器', icon: '🏛️' }
 ]
 
 const voltages = [
   { id: 'all', name: '全部' },
+  { id: '3.6KV', name: '3.6kV' },
   { id: '10KV', name: '10kV' },
+  { id: '12KV', name: '12kV' },
   { id: '20KV', name: '20kV' },
   { id: '35KV', name: '35kV' }
 ]
 
 // 类型图标映射（给UI用）
 function getTypeIcon(typeId) {
-  const map = { current: '⚡', voltage: '🔌', combined: '🔗', zero: '🔄' }
+  const map = { current: '⚡', voltage: '🔌', combined: '🔗', zero: '🔄', post: '🏛️' }
   return map[typeId] || '📦'
 }
 
 function getTypeName(typeId) {
-  const map = { current: '电流互感器', voltage: '电压互感器', combined: '组合互感器', zero: '零序电流互感器' }
+  const map = { current: '电流互感器', voltage: '电压互感器', combined: '组合互感器', zero: '零序电流互感器', post: '3.6-12KV支柱式电流互感器' }
   return map[typeId] || '未知'
 }
 
