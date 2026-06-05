@@ -474,10 +474,10 @@ button { cursor: pointer; font: inherit; border: none; background: none; }
 .specs-table td:last-child { font-weight: 500; }
 .modal-ratings { margin-bottom: 18px; }
 .ratings-table-wrap { overflow-x: auto; border-radius: var(--radius); border: 1px solid var(--border); }
-.ratings-table { width: 100%; border-collapse: collapse; font-size: 12px; }
+.ratings-table { width: 100%; border-collapse: collapse; font-size: 11px; }
 .ratings-table thead { background: var(--primary); color: #fff; }
-.ratings-table th { padding: 8px 6px; font-weight: 600; white-space: nowrap; }
-.ratings-table td { padding: 6px; text-align: center; border-bottom: 1px solid var(--border); }
+.ratings-table th { padding: 7px 4px; font-weight: 600; white-space: nowrap; text-align: center; }
+.ratings-table td { padding: 5px 4px; text-align: center; border-bottom: 1px solid var(--border); white-space: nowrap; }
 .ratings-table tr:last-child td { border-bottom: none; }
 .ratings-table tbody tr:nth-child(even) { background: var(--primary-light); }
 .ratings-table tbody tr:hover { background: #d0e2ff; }

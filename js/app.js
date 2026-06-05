@@ -419,8 +419,8 @@
       <div class="modal-ratings"><h4>额定电流/负荷对照表</h4>
         <div class="ratings-table-wrap">
           <table class="ratings-table">
-            <thead><tr><th>额定一次电流 (A)</th><th>额定二次电流 (A)</th><th>额定负荷 (VA)</th></tr></thead>
-            <tbody>${p.ratings.map(r => `<tr><td>${r.primary}</td><td>${r.secondary}</td><td>${r.burden}</td></tr>`).join('')}</tbody>
+            <thead><tr><th>额定一次电流 (A)</th><th>一秒热电流 (kA)</th><th>动稳定电流 (kA)</th><th>准确级组合</th><th>额定二次输出 (VA)</th><th>表面爬电距离 (mm)</th><th>重量 (kg)</th></tr></thead>
+            <tbody>${p.ratings.map(r => `<tr><td>${r.primary}</td><td>${r.thermal}</td><td>${r.dynamic}</td><td>${r.accuracy}</td><td>${r.output}</td><td>${r.creepage}</td><td>${r.weight}</td></tr>`).join('')}</tbody>
           </table>
         </div>
       </div>` : ''}
