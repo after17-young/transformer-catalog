@@ -42,6 +42,7 @@
   const filter = { type: 'all', subType: 'all', series: 'all' }
   let carouselIndex = 0
   let carouselTimer = null
+  let galleryIndex = 0
 
   // =============================================
   // 轮播图
@@ -181,6 +182,7 @@
 
   function selectSeries(id) {
     filter.series = id
+    galleryIndex = 0
     renderSeriesView(); renderFilteredProducts()
   }
 
@@ -196,6 +198,27 @@
     </div>`
   }
 
+  function buildImageViewer() {
+    var total = 19
+    var idx = galleryIndex
+    var src = 'images/series/1.中压一篇单页目录版_' + (40 + idx) + '.png'
+    var s = series.find(function(x) { return x.id === 'lzzbj9' })
+    return '<div style="padding:12px">' +
+      '<div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px">' +
+      '<span style="font-size:14px;font-weight:600;color:var(--text)">' + (s ? s.name : '') + '</span>' +
+      '<span style="font-size:13px;color:var(--text-secondary)">' + (idx + 1) + ' / ' + total + '</span>' +
+      '</div>' +
+      '<div style="position:relative;background:#fff;border-radius:var(--radius);overflow:hidden;box-shadow:0 2px 8px rgba(0,0,0,0.1)">' +
+      '<img src="' + src + '" style="width:100%;height:auto;display:block" loading="lazy">' +
+      '<div style="position:absolute;top:0;bottom:0;left:0;width:45%;cursor:pointer" data-gallery="prev"></div>' +
+      '<div style="position:absolute;top:0;bottom:0;right:0;width:45%;cursor:pointer" data-gallery="next"></div>' +
+      '</div>' +
+      '<div style="display:flex;justify-content:space-between;margin-top:10px">' +
+      '<button class="filter-tab" data-gallery="prev" style="padding:6px 20px">← 上一张</button>' +
+      '<button class="filter-tab" data-gallery="next" style="padding:6px 20px">下一张 →</button>' +
+      '</div></div>'
+  }
+
   // 统一事件代理
   document.addEventListener('click', function (e) {
     const typeBtn = e.target.closest('#typeTabs .filter-tab')
@@ -206,6 +229,14 @@
     if (backBtn) { e.preventDefault(); filter.series = 'all'; renderSeriesView(); renderFilteredProducts(); return }
     const serCard = e.target.closest('.series-card')
     if (serCard) { e.preventDefault(); selectSeries(serCard.dataset.series); return }
+    const galBtn = e.target.closest('[data-gallery]')
+    if (galBtn) {
+      var dir = galBtn.dataset.gallery
+      var total = 19
+      if (dir === 'next' && galleryIndex < total - 1) galleryIndex++
+      else if (dir === 'prev' && galleryIndex > 0) galleryIndex--
+      renderFilteredProducts()
+    }
   })
 
   // =============================================
@@ -238,19 +269,10 @@
       productGrid.innerHTML = series.filter(s => s.id !== 'all').map(s => buildSeriesCard(s)).join('')
       return
     }
-    // LZZBJ9 series: show image gallery
+    // LZZBJ9 series: single image viewer
     if (filter.type === 'current' && filter.subType === 'post' && filter.series === 'lzzbj9') {
       emptyState.style.display = 'none'
-      var imgs = []
-      for (var i = 40; i <= 58; i++) {
-        imgs.push('images/series/1.中压一篇单页目录版_' + i + '.png')
-      }
-      productGrid.innerHTML = imgs.map(function(src) {
-        return '<div class="product-card" style="cursor:default">' +
-          '<div class="product-card-img" style="height:auto;min-height:auto;background:#fff;padding:8px">' +
-          '<img src="' + src + '" style="width:100%;height:auto;display:block" loading="lazy">' +
-          '</div></div>'
-      }).join('')
+      productGrid.innerHTML = buildImageViewer('lzzbj9')
       return
     }
     const list = getFilteredProducts()
@@ -498,6 +520,12 @@
         if (modalOverlay.classList.contains('visible')) { closeModal(); return }
         if (sidebar.classList.contains('open')) { closeSidebarFn(); return }
         if (searchOverlay.classList.contains('open')) { closeSearch(); return }
+      }
+      // Gallery arrow keys
+      if (filter.series === 'lzzbj9' && currentPage === 'products') {
+        var total = 19
+        if (e.key === 'ArrowRight' && galleryIndex < total - 1) { galleryIndex++; renderFilteredProducts(); e.preventDefault() }
+        if (e.key === 'ArrowLeft' && galleryIndex > 0) { galleryIndex--; renderFilteredProducts(); e.preventDefault() }
       }
     })
   }
