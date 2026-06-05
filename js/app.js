@@ -442,33 +442,12 @@
     let html = ''
     html += '<span class="product-card-type' + (p.type === 'voltage' ? ' voltage-t' : '') + '">' + (tn[p.type] || '') + '</span>'
     html += '<h3 class="product-card-name" style="margin:0 0 4px 0">' + esc(p.name) + '</h3>'
-    // 显示 ratings 表（电流互感器），精确匹配 Excel 格式
+    // 显示技术参数图片
     if (p.ratings && p.ratings.length) {
-      html += '<div class="modal-ratings"><h4>技术参数</h4><div class="ratings-table-wrap" style="overflow-x:auto">'
-      html += '<table class="ratings-table" style="min-width:1000px"><thead><tr>'
-      html += '<th>额定一次电流<br>Ipr (A)</th>'
-      html += '<th>一秒热电流<br>(kA 有效值)</th>'
-      html += '<th>动稳定电流<br>(kA 峰值)</th>'
-      html += '<th>准确级组合<br>(1S/2S)</th>'
-      html += '<th>额定二次输出 (VA)<br>0.2(S)</th>'
-      html += '<th>额定二次输出 (VA)<br>0.5(S)</th>'
-      html += '<th>额定二次输出 (VA)<br>5P10</th>'
-      html += '<th>表面爬电距离<br>(mm)</th>'
-      html += '<th>重量<br>(kg)</th>'
-      html += '</tr></thead><tbody>'
-      // 第一行：5A（含准确级组合、输出、爬电距离、重量）
-      var r0 = p.ratings[0]
-      html += '<tr><td>' + esc(r0.primary) + '</td><td>' + esc(r0.thermal) + '</td><td>' + esc(r0.dynamic) + '</td>'
-      html += '<td style="font-size:11px;line-height:1.6">' + buildAccuracyCombosText(p) + '</td>'
-      html += '<td>10</td><td>10</td><td>15</td>'
-      html += '<td>245</td><td>' + esc(p.weight || '') + '</td></tr>'
-      // 其余行
-      for (var i = 1; i < p.ratings.length; i++) {
-        var r = p.ratings[i]
-        html += '<tr><td>' + esc(r.primary) + '</td><td>' + esc(r.thermal) + '</td><td>' + esc(r.dynamic) + '</td>'
-        html += '<td></td><td></td><td></td><td></td><td></td><td></td></tr>'
-      }
-      html += '</tbody></table></div></div>'
+      html += '<div style="margin-top:10px">'
+      html += '<div style="font-size:14px;font-weight:600;margin-bottom:8px;padding-bottom:6px;border-bottom:1px solid #eee">技术参数</div>'
+      html += '<img src="images/技术参数.jpg" alt="技术参数" style="width:100%;height:auto;display:block" onerror="this.style.display=\'none\'">'
+      html += '</div>'
     }
     // 显示 vtRatings 表（电压互感器）
     if (p.vtRatings && p.vtRatings.length) {
@@ -480,8 +459,8 @@
       }
       html += '</tbody></table></div></div>'
     }
-    // 既没有 ratings、accuracyCombos 也没有 vtRatings 时显示 specs
-    if (!p.ratings && !p.vtRatings && !p.accuracyCombos) {
+    // 既没有 ratings 也没有 vtRatings 时显示 specs
+    if (!p.ratings && !p.vtRatings) {
       html += '<div class="modal-specs"><h4>技术参数</h4><table class="specs-table">'
       for (var i = 0; i < p.specs.length; i++) {
         html += '<tr><td>' + esc(p.specs[i].label) + '</td><td>' + esc(p.specs[i].value) + '</td></tr>'
