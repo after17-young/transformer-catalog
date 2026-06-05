@@ -105,13 +105,13 @@
 
   function renderLineTabs() {
     lineTabs.innerHTML = lines.map(l => {
-      const icon = l.id === 'standard' ? '📦' : l.id === 'locomotive' ? '🚂' : l.id === 'train' ? '🚄' : ''
+      const icon = l.id === 'standard' ? '📦' : l.id === 'rail' ? '🚂' : ''
       return `<button class="filter-tab${l.id === filter.line ? ' active' : ''}" data-line="${l.id}">${icon ? icon + ' ' : ''}${l.name}</button>`
     }).join('')
   }
 
   function renderTypeTabs() {
-    const show = filter.line === 'locomotive' || filter.line === 'train'
+    const show = filter.line === 'rail'
       ? types.filter(t => t.id === 'all' || t.id === 'current' || t.id === 'voltage')
       : types
     typeTabs.innerHTML = show.map(t =>
@@ -210,7 +210,7 @@
   }
 
   function buildCard(p) {
-    const lineNames = { standard: '标准', locomotive: '机车', train: '动车' }
+    const lineNames = { standard: '标准', rail: '机车动车' }
     const typeNames = { current: '电流互感器', voltage: '电压互感器', combined: '组合互感器', zero: '零序电流互感器', post: '3.6-12KV支柱式电流互感器', wall: '3.6-12KV穿墙式电流互感器', outdoor: '3.6-12KV户外电流、电压互感器', vt36: '3.6-12KV电压互感器', vtOutdoor: '3.6-12KV户外电压互感器' }
     const typeIcons = { current: '⚡', voltage: '🔌', combined: '🔗', zero: '🔄', post: '🏛️', wall: '🧱', outdoor: '🌲', vt36: '🔌', vtOutdoor: '🌲' }
     return `<div class="product-card" data-id="${p.id}" role="button" tabindex="0">
@@ -346,14 +346,14 @@
 
   function h(t, q) { if (!q) return t; const i = t.toLowerCase().indexOf(q.toLowerCase()); return i === -1 ? t : t.slice(0, i) + '<mark>' + t.slice(i, i + q.length) + '</mark>' + t.slice(i + q.length) }
   function getTypeName(id) { const m = { current: '电流互感器', voltage: '电压互感器', combined: '组合互感器', zero: '零序电流互感器' }; return m[id] || '' }
-  function getLineName(id) { const m = { standard: '标准产品', locomotive: '机车产品', train: '动车产品' }; return m[id] || '' }
+  function getLineName(id) { const m = { standard: '标准产品', rail: '机车动车产品' }; return m[id] || '' }
 
   // =============================================
   // 产品详情
   // =============================================
 
   function showDetail(p) {
-    const ln = { standard: '标准产品', locomotive: '机车产品', train: '动车产品' }
+    const ln = { standard: '标准产品', rail: '机车动车产品' }
     const tn = { current: '电流互感器', voltage: '电压互感器', combined: '组合互感器', zero: '零序电流互感器', post: '3.6-12KV支柱式电流互感器', wall: '3.6-12KV穿墙式电流互感器', outdoor: '3.6-12KV户外电流、电压互感器', vt36: '3.6-12KV电压互感器', vtOutdoor: '3.6-12KV户外电压互感器' }
     modalBody.innerHTML = `
       <span class="line-label">${ln[p.line] || ''}</span>
