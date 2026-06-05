@@ -122,6 +122,30 @@ let voltages = []
 // =============================================
 // 加载文件
 // =============================================
+function extractArray(content, varName) {
+  const start = content.indexOf('const ' + varName + ' = [')
+  if (start === -1) return null
+  const begin = start + ('const ' + varName + ' = [').length - 1 // position of [
+  let depth = 0, inStr = false, strChar = ''
+  for (let i = begin; i < content.length; i++) {
+    const ch = content[i]
+    if (inStr) {
+      if (ch === '\\') { i++; continue }
+      if (ch === strChar) inStr = false
+      continue
+    }
+    if (ch === "'" || ch === '"' || ch === '`') { inStr = true; strChar = ch; continue }
+    if (ch === '[') depth++
+    if (ch === ']') depth--
+    if (depth === 0) {
+      try {
+        return new Function('return ' + content.substring(begin, i + 1))()
+      } catch(e) { return null }
+    }
+  }
+  return null
+}
+
 document.getElementById('fileInput').addEventListener('change', function(e) {
   const file = e.target.files[0]
   if (!file) return
@@ -129,31 +153,21 @@ document.getElementById('fileInput').addEventListener('change', function(e) {
   reader.onload = function(ev) {
     const content = ev.target.result
     try {
-      // Extract products array using eval-like parsing
-      const match = content.match(/const products\s*=\s*(\[[\s\S]*?\])\s*\n\s*\n\s*\/\/\s*={3,}/)
-      if (!match) {
-        alert('无法解析 products.js 文件，请确认文件格式正确')
-        return
-      }
-      // Use Function constructor to parse
-      const data = new Function('return ' + match[1])()
+      const data = extractArray(content, 'products')
+      if (!data) { alert('无法解析 products.js 中的 products 数组'); return }
       products = data
 
-      // Extract series
-      const sMatch = content.match(/const series\s*=\s*(\[[\s\S]*?\])\s*\n\s*\n/)
-      if (sMatch) series = new Function('return ' + sMatch[1])()
+      const sData = extractArray(content, 'series')
+      if (sData) series = sData
 
-      // Extract types
-      const tMatch = content.match(/const types\s*=\s*(\[[\s\S]*?\])\s*\n\s*\n/)
-      if (tMatch) types = new Function('return ' + tMatch[1])()
+      const tData = extractArray(content, 'types')
+      if (tData) types = tData
 
-      // Extract lines
-      const lMatch = content.match(/const lines\s*=\s*(\[[\s\S]*?\])\s*\n\s*\n/)
-      if (lMatch) lines = new Function('return ' + lMatch[1])()
+      const lData = extractArray(content, 'lines')
+      if (lData) lines = lData
 
-      // Extract voltages
-      const vMatch = content.match(/const voltages\s*=\s*(\[[\s\S]*?\])\s*\n\s*\n/)
-      if (vMatch) voltages = new Function('return ' + vMatch[1])()
+      const vData = extractArray(content, 'voltages')
+      if (vData) voltages = vData
 
       document.getElementById('loadScreen').classList.add('hidden')
       document.getElementById('app').classList.remove('hidden')
