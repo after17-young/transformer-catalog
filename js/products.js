@@ -106,6 +106,8 @@ const products = [
     ],
   },
 
+  {
+    id: 'jqvt-10kv-01', line: 'standard', type: 'rail_vt', voltage: '10KV',
     name: 'JDZXW2-25A2 型机车电压互感器',
     summary: '机车专用干式电压互感器，适用于10kV机车配电',
     image: 'images/products/jqvt-10kv-01.jpg',
@@ -356,11 +358,55 @@ const products = [
       { ratio: '', accuracy: '', output: '', limitOutput: '', insulation: '', creepage: '', weight: '' }
     ],
   },
+]
 
+const lines = [
+  { id: 'all', name: '全部' }
+]
 
-  // ───── LZZB9系列 - 支柱式电流互感器 ─────
-  {
-  {
+const types = [
+  { id: 'all', name: '全部' },
+  { id: 'current', name: '电流互感器', icon: '⚡' },
+  { id: 'voltage', name: '电压互感器', icon: '🔌' },
+  { id: 'combined', name: '组合互感器', icon: '🔗' }
+]
+
+const voltages = []
+
+const series = [
+  { id: 'all', name: '全部' },
+  { id: 'lzzb9', name: 'LZZB9系列' },
+  { id: 'lzzbj9', name: 'LZZBJ9系列' },
+  { id: 'lzzbj18', name: 'LZZBJ18系列' }
+]
+
+function getTypeIcon(typeId) {
+  const map = { current: '⚡', voltage: '🔌', combined: '🔗', zero: '🔄', post: '🏛️', wall: '🧱', outdoor: '🌲', vt36: '🔌', vtOutdoor: '🌲', rail_ct: '🚂', rail_vt: '🚄' }
+  return map[typeId] || '📦'
+}
+
+function getTypeName(typeId) {
+  const map = { current: '电流互感器', voltage: '电压互感器', combined: '组合互感器', zero: '零序电流互感器', post: '3.6-12KV支柱式电流互感器', wall: '3.6-12KV穿墙式电流互感器', outdoor: '3.6-12KV户外电流、电压互感器', vt36: '3.6-12KV电压互感器', vtOutdoor: '3.6-12KV户外电压互感器', rail_ct: '机车动车电流互感器', rail_vt: '机车动车电压互感器' }
+  return map[typeId] || '未知'
+}
+
+function getLineName(lineId) {
+  const map = {}
+  return map[lineId] || ''
+}
+
+const companyInfo = {
+  name: '大北互',
+  fullName: '大连北方互感器集团有限公司',
+  shortName: '大北互',
+  slogan: '人品决定产品，科技决定未来',
+  desc: '公司位于辽宁省大连市普兰店区丰荣工业园区，是专业从事电力互感器研发、生产和销售的高新技术企业。',
+  contact: {
+    address: '辽宁省大连市普兰店区丰荣工业园区',
+    email: '',
+    website: 'www.dlbf.com',
+    phone: '0411-83291638'
+  },
   certifications: [
     { icon: '🏅', name: 'ISO9001 质量认证' },
     { icon: '📜', name: '国家计量器具许可' },
