@@ -434,7 +434,7 @@
     sidebar.querySelectorAll('[data-page]').forEach(a => a.classList.toggle('active', a.dataset.page === page))
     if (searchOverlay.classList.contains('open')) closeSearch()
     closeSidebarFn()
-    if (page === 'home') renderHomeProducts()
+    if (page === 'home') {}
     if (page === 'products') { renderTypeTabs(); renderSubTypeTabs(); renderSeriesView(); renderFilteredProducts() }
     if (page === 'params') { renderParamsPage() }
   }
@@ -468,7 +468,7 @@
     document.querySelectorAll('[data-page-link]').forEach(el => {
       el.addEventListener('click', e => {
         e.preventDefault()
-        navigateTo(el.dataset.pageLink)
+const type = el.dataset.type; if (type) { filter.type = type; filter.subType = 'all'; filter.series = 'all' } navigateTo(el.dataset.pageLink)
       })
     })
     menuBtn.addEventListener('click', openSidebar)
@@ -512,7 +512,6 @@
   function init() {
     fillContact()
     initCarousel()
-    renderHomeProducts()
     registerSW()
     bindEvents()
     // 预渲染产品筛选
