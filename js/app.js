@@ -150,25 +150,33 @@
 
   function selectLine(id) {
     filter.line = id; filter.type = 'all'; filter.subType = 'all'; filter.series = 'all'
-    renderLineTabs(); renderTypeTabs(); renderSubTypeTabs(); renderSeriesTabs(); renderFilteredProducts()
+    renderLineTabs(); renderTypeTabs(); renderSubTypeTabs(); renderSeriesView(); renderFilteredProducts()
   }
 
   function selectType(id) {
     filter.type = id; filter.subType = 'all'; filter.series = 'all'
-    renderTypeTabs(); renderSubTypeTabs(); renderSeriesTabs(); renderFilteredProducts()
+    renderTypeTabs(); renderSubTypeTabs(); renderSeriesView(); renderFilteredProducts()
   }
 
   function selectSubType(id) {
     filter.subType = id; filter.series = 'all'
-    renderSubTypeTabs(); renderSeriesTabs(); renderFilteredProducts()
+    renderSubTypeTabs(); renderSeriesView(); renderFilteredProducts()
   }
 
-  function renderSeriesTabs() {
+  function renderSeriesView() {
     if (filter.type === 'current' && filter.subType === 'post') {
-      seriesTabsDom.innerHTML = series.map(s =>
-        `<button class="filter-tab voltage-tab${s.id === filter.series ? ' active' : ''}" data-series="${s.id}">${s.name}</button>`
-      ).join('')
-      seriesTabsDom.style.display = ''
+      if (filter.series === 'all') {
+        seriesTabsDom.innerHTML = ''
+        seriesTabsDom.style.display = 'none'
+      } else {
+        // Show back button + series name when in a series
+        const s = series.find(x => x.id === filter.series)
+        seriesTabsDom.innerHTML = `<div style="display:flex;align-items:center;gap:10px;padding:6px 16px">
+          <button class="filter-tab" id="backToSeriesBtn" style="padding:4px 12px;font-size:12px">← 返回系列</button>
+          <span style="font-size:14px;font-weight:600;color:var(--text)">${s ? s.name : ''}</span>
+        </div>`
+        seriesTabsDom.style.display = ''
+      }
     } else {
       seriesTabsDom.innerHTML = ''
       seriesTabsDom.style.display = 'none'
@@ -177,7 +185,19 @@
 
   function selectSeries(id) {
     filter.series = id
-    renderSeriesTabs(); renderFilteredProducts()
+    renderSeriesView(); renderFilteredProducts()
+  }
+
+  function buildSeriesCard(s) {
+    const imgSrc = `images/series/${s.id}.jpg`
+    return `<div class="product-card series-card" data-series="${s.id}" role="button" tabindex="0" style="cursor:pointer">
+      <div class="product-card-img" style="background:var(--primary-light);display:flex;align-items:center;justify-content:center;font-size:48px;opacity:0.6">
+        <img src="${imgSrc}" alt="${s.name}" loading="lazy" onerror="this.style.display='none';this.parentElement.innerHTML='🏛️'" style="width:100%;height:100%;object-fit:contain;padding:12px;display:block">
+      </div>
+      <div class="product-card-body" style="text-align:center">
+        <h4 class="product-card-name" style="font-size:15px;text-align:center">${s.name}</h4>
+      </div>
+    </div>`
   }
 
   // 统一事件代理
@@ -188,8 +208,10 @@
     if (typeBtn) { e.preventDefault(); selectType(typeBtn.dataset.type); return }
     const subBtn = e.target.closest('#voltageTabs .filter-tab')
     if (subBtn) { e.preventDefault(); selectSubType(subBtn.dataset.subtype); return }
-    const serBtn = e.target.closest('#seriesTabs .filter-tab')
-    if (serBtn) { e.preventDefault(); selectSeries(serBtn.dataset.series); return }
+    const backBtn = e.target.closest('#backToSeriesBtn')
+    if (backBtn) { e.preventDefault(); filter.series = 'all'; renderSeriesView(); renderFilteredProducts(); return }
+    const serCard = e.target.closest('.series-card')
+    if (serCard) { e.preventDefault(); selectSeries(serCard.dataset.series); return }
   })
 
   // =============================================
@@ -217,6 +239,12 @@
   }
 
   function renderFilteredProducts() {
+    // Show series cards when in 支柱式 series overview
+    if (filter.type === 'current' && filter.subType === 'post' && filter.series === 'all') {
+      emptyState.style.display = 'none'
+      productGrid.innerHTML = series.filter(s => s.id !== 'all').map(s => buildSeriesCard(s)).join('')
+      return
+    }
     const list = getFilteredProducts()
     if (!list.length) { productGrid.innerHTML = ''; emptyState.style.display = 'flex'; return }
     emptyState.style.display = 'none'
@@ -409,7 +437,7 @@
     if (searchOverlay.classList.contains('open')) closeSearch()
     closeSidebarFn()
     if (page === 'home') renderHomeProducts()
-    if (page === 'products') { renderLineTabs(); renderTypeTabs(); renderSubTypeTabs(); renderSeriesTabs(); renderFilteredProducts() }
+    if (page === 'products') { renderLineTabs(); renderTypeTabs(); renderSubTypeTabs(); renderSeriesView(); renderFilteredProducts() }
     if (page === 'params') { renderParamsPage() }
   }
 
@@ -498,7 +526,7 @@
     renderLineTabs()
     renderTypeTabs()
     renderSubTypeTabs()
-    renderSeriesTabs()
+    renderSeriesView()
     renderFilteredProducts()
     console.log('[PWA] 大北互 v2 已启动')
   }
