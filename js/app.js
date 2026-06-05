@@ -196,16 +196,22 @@
     </div>`
   }
 
-  function showSeriesGallery() {
+  function showSeriesGallery(seriesId) {
+    var galleryDef = {
+      lzzbj9: { start: 40, end: 58, name: 'LZZBJ9系列参数图' },
+      lzzbj18: { start: 65, end: 67, name: 'LZZBJ18-10Q/150b/2(3,4)系列参数图' }
+    }
+    var def = galleryDef[seriesId]
+    if (!def) return
     var imgs = []
-    for (var i = 40; i <= 58; i++) {
+    for (var i = def.start; i <= def.end; i++) {
       imgs.push('images/series/1.中压一篇单页目录版_' + i + '.png')
     }
     $('#productModal').classList.add('modal-gallery')
     modalBody.innerHTML =
       '<div style="display:flex;align-items:center;gap:10px;margin-bottom:8px">' +
       '<button class="filter-tab" onclick="closeModal()" style="padding:4px 12px;font-size:12px">← 返回系列</button>' +
-      '<span style="font-size:15px;font-weight:600">LZZBJ9系列参数图</span>' +
+      '<span style="font-size:15px;font-weight:600">' + def.name + '</span>' +
       '</div>' +
       '<div style="max-height:65vh;overflow-y:auto">' +
       imgs.map(function(src) {
@@ -259,10 +265,10 @@
       return
     }
     // LZZBJ9 series: show in modal
-    if (filter.type === 'current' && filter.subType === 'post' && filter.series === 'lzzbj9') {
+    if (filter.type === 'current' && filter.subType === 'post' && (filter.series === 'lzzbj9' || filter.series === 'lzzbj18')) {
       emptyState.style.display = 'none'
       productGrid.innerHTML = ''
-      showSeriesGallery()
+      showSeriesGallery(filter.series)
       return
     }
     const list = getFilteredProducts()
@@ -447,8 +453,8 @@
     $('#productModal').classList.remove('modal-gallery')
     modalOverlay.classList.remove('visible')
     document.body.style.overflow = ''
-    // LZZBJ9 gallery: return to series selection
-    if (filter.series === 'lzzbj9') {
+    // Gallery series: return to series selection
+    if (filter.series === 'lzzbj9' || filter.series === 'lzzbj18') {
       filter.series = 'all'
       renderSeriesView()
       renderFilteredProducts()
