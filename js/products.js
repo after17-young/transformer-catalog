@@ -708,6 +708,13 @@ const types = [
 
 const voltages = []
 
+const series = [
+  { id: 'all', name: '全部' },
+  { id: 'lzzb9', name: 'LZZB9系列' },
+  { id: 'lzzbj9', name: 'LZZBJ9系列' },
+  { id: 'lzzbj18', name: 'LZZBJ18系列' }
+]
+
 // 类型图标映射（给UI用）
 function getTypeIcon(typeId) {
   const map = { current: '⚡', voltage: '🔌', combined: '🔗', zero: '🔄', post: '🏛️', wall: '🧱', outdoor: '🌲', vt36: '🔌', vtOutdoor: '🌲' }
@@ -755,5 +762,5 @@ const companyInfo = {
 }
 
 if (typeof module !== 'undefined') {
-  module.exports = { products, carouselSlides, lines, types, voltages, getTypeIcon, getTypeName, getLineName, companyInfo }
+  module.exports = { products, carouselSlides, lines, types, voltages, series, getTypeIcon, getTypeName, getLineName, companyInfo }
 }

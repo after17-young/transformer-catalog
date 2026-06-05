@@ -29,6 +29,7 @@
   const lineTabs = $('#lineTabs')
   const typeTabs = $('#typeTabs')
   const voltageTabs = $('#voltageTabs')
+  const seriesTabsDom = $('#seriesTabs')
   const carouselTrack = $('#carouselTrack')
   const carouselDots = $('#carouselDots')
   const carouselPrev = $('#carouselPrev')
@@ -38,7 +39,7 @@
 
   // ---- 状态 ----
   let currentPage = 'home'
-  const filter = { line: 'all', type: 'all', subType: 'all' }
+  const filter = { line: 'all', type: 'all', subType: 'all', series: 'all' }
   let carouselIndex = 0
   let carouselTimer = null
 
@@ -148,18 +149,35 @@
   }
 
   function selectLine(id) {
-    filter.line = id; filter.type = 'all'; filter.subType = 'all'
-    renderLineTabs(); renderTypeTabs(); renderSubTypeTabs(); renderFilteredProducts()
+    filter.line = id; filter.type = 'all'; filter.subType = 'all'; filter.series = 'all'
+    renderLineTabs(); renderTypeTabs(); renderSubTypeTabs(); renderSeriesTabs(); renderFilteredProducts()
   }
 
   function selectType(id) {
-    filter.type = id; filter.subType = 'all'
-    renderTypeTabs(); renderSubTypeTabs(); renderFilteredProducts()
+    filter.type = id; filter.subType = 'all'; filter.series = 'all'
+    renderTypeTabs(); renderSubTypeTabs(); renderSeriesTabs(); renderFilteredProducts()
   }
 
   function selectSubType(id) {
-    filter.subType = id
-    renderSubTypeTabs(); renderFilteredProducts()
+    filter.subType = id; filter.series = 'all'
+    renderSubTypeTabs(); renderSeriesTabs(); renderFilteredProducts()
+  }
+
+  function renderSeriesTabs() {
+    if (filter.type === 'current' && filter.subType === 'post') {
+      seriesTabsDom.innerHTML = series.map(s =>
+        `<button class="filter-tab voltage-tab${s.id === filter.series ? ' active' : ''}" data-series="${s.id}">${s.name}</button>`
+      ).join('')
+      seriesTabsDom.style.display = ''
+    } else {
+      seriesTabsDom.innerHTML = ''
+      seriesTabsDom.style.display = 'none'
+    }
+  }
+
+  function selectSeries(id) {
+    filter.series = id
+    renderSeriesTabs(); renderFilteredProducts()
   }
 
   // 统一事件代理
@@ -170,6 +188,8 @@
     if (typeBtn) { e.preventDefault(); selectType(typeBtn.dataset.type); return }
     const subBtn = e.target.closest('#voltageTabs .filter-tab')
     if (subBtn) { e.preventDefault(); selectSubType(subBtn.dataset.subtype); return }
+    const serBtn = e.target.closest('#seriesTabs .filter-tab')
+    if (serBtn) { e.preventDefault(); selectSeries(serBtn.dataset.series); return }
   })
 
   // =============================================
@@ -182,6 +202,10 @@
       if (filter.type !== 'all') {
         if (filter.type === 'current') {
           if (filter.subType === 'all') return p.type === 'post' || p.type === 'wall' || p.type === 'outdoor' || p.type === 'zero'
+          if (filter.subType === 'post') {
+            if (filter.series !== 'all') return p.type === 'post' && p.series === filter.series
+            return p.type === 'post'
+          }
           return p.type === filter.subType
         } else if (filter.type === 'voltage') {
           if (filter.subType === 'all') return p.type === 'vt36' || p.type === 'vtOutdoor'
@@ -385,7 +409,7 @@
     if (searchOverlay.classList.contains('open')) closeSearch()
     closeSidebarFn()
     if (page === 'home') renderHomeProducts()
-    if (page === 'products') { renderLineTabs(); renderTypeTabs(); renderSubTypeTabs(); renderFilteredProducts() }
+    if (page === 'products') { renderLineTabs(); renderTypeTabs(); renderSubTypeTabs(); renderSeriesTabs(); renderFilteredProducts() }
     if (page === 'params') { renderParamsPage() }
   }
 
@@ -421,7 +445,7 @@
         const page = el.dataset.pageLink
         if (page === 'products') {
           const line = el.dataset.line
-          if (line) { filter.line = line; filter.type = 'all'; filter.subType = 'all' }
+          if (line) { filter.line = line; filter.type = 'all'; filter.subType = 'all'; filter.series = 'all' }
         }
         navigateTo(page)
       })
@@ -474,6 +498,7 @@
     renderLineTabs()
     renderTypeTabs()
     renderSubTypeTabs()
+    renderSeriesTabs()
     renderFilteredProducts()
     console.log('[PWA] 大北互 v2 已启动')
   }
