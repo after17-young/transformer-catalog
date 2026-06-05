@@ -39,7 +39,7 @@
 
   // ---- 状态 ----
   let currentPage = 'home'
-  const filter = { line: 'all', type: 'all', subType: 'all', series: 'all' }
+  const filter = { type: 'all', subType: 'all', series: 'all' }
   let carouselIndex = 0
   let carouselTimer = null
 
@@ -105,17 +105,12 @@
   // =============================================
 
   function renderLineTabs() {
-    lineTabs.innerHTML = lines.map(l => {
-      const icon = l.id === 'standard' ? '📦' : l.id === 'rail' ? '🚂' : ''
-      return `<button class="filter-tab${l.id === filter.line ? ' active' : ''}" data-line="${l.id}">${icon ? icon + ' ' : ''}${l.name}</button>`
-    }).join('')
+    lineTabs.innerHTML = ''
+    lineTabs.style.display = 'none'
   }
 
   function renderTypeTabs() {
-    const show = filter.line === 'rail'
-      ? types.filter(t => t.id === 'all' || t.id === 'current' || t.id === 'voltage')
-      : types
-    typeTabs.innerHTML = show.map(t =>
+    typeTabs.innerHTML = types.map(t =>
       `<button class="filter-tab${t.id === filter.type ? ' active' : ''}" data-type="${t.id}">${t.icon || ''} ${t.name}</button>`
     ).join('')
   }
@@ -128,13 +123,15 @@
         { id: 'post', name: '支柱式电流互感器' },
         { id: 'wall', name: '穿墙式电流互感器' },
         { id: 'outdoor', name: '户外电流、电压互感器' },
-        { id: 'zero', name: '零序电流互感器' }
+        { id: 'zero', name: '零序电流互感器' },
+        { id: 'rail_ct', name: '机车动车电流互感器' }
       ]
     } else if (filter.type === 'voltage') {
       subTypes = [
         { id: 'all', name: '全部型号' },
         { id: 'vt36', name: '3.6-12KV电压互感器' },
-        { id: 'vtOutdoor', name: '3.6-12KV户外电压互感器' }
+        { id: 'vtOutdoor', name: '3.6-12KV户外电压互感器' },
+        { id: 'rail_vt', name: '机车动车电压互感器' }
       ]
     }
     if (subTypes.length) {
@@ -149,8 +146,7 @@
   }
 
   function selectLine(id) {
-    filter.line = id; filter.type = 'all'; filter.subType = 'all'; filter.series = 'all'
-    renderLineTabs(); renderTypeTabs(); renderSubTypeTabs(); renderSeriesView(); renderFilteredProducts()
+    // no longer used
   }
 
   function selectType(id) {
@@ -202,8 +198,6 @@
 
   // 统一事件代理
   document.addEventListener('click', function (e) {
-    const lineBtn = e.target.closest('#lineTabs .filter-tab')
-    if (lineBtn) { e.preventDefault(); selectLine(lineBtn.dataset.line); return }
     const typeBtn = e.target.closest('#typeTabs .filter-tab')
     if (typeBtn) { e.preventDefault(); selectType(typeBtn.dataset.type); return }
     const subBtn = e.target.closest('#voltageTabs .filter-tab')
@@ -220,17 +214,16 @@
 
   function getFilteredProducts() {
     return products.filter(p => {
-      if (filter.line !== 'all' && p.line !== filter.line) return false
       if (filter.type !== 'all') {
         if (filter.type === 'current') {
-          if (filter.subType === 'all') return p.type === 'post' || p.type === 'wall' || p.type === 'outdoor' || p.type === 'zero'
+          if (filter.subType === 'all') return p.type === 'post' || p.type === 'wall' || p.type === 'outdoor' || p.type === 'zero' || p.type === 'rail_ct'
           if (filter.subType === 'post') {
             if (filter.series !== 'all') return p.type === 'post' && p.series === filter.series
             return p.type === 'post'
           }
           return p.type === filter.subType
         } else if (filter.type === 'voltage') {
-          if (filter.subType === 'all') return p.type === 'vt36' || p.type === 'vtOutdoor'
+          if (filter.subType === 'all') return p.type === 'vt36' || p.type === 'vtOutdoor' || p.type === 'rail_vt'
           return p.type === filter.subType
         } else if (p.type !== filter.type) return false
       }
@@ -259,12 +252,11 @@
   }
 
   function buildCard(p) {
-    const lineNames = { standard: '标准', rail: '机车动车' }
-    const typeNames = { current: '电流互感器', voltage: '电压互感器', combined: '组合互感器', zero: '零序电流互感器', post: '3.6-12KV支柱式电流互感器', wall: '3.6-12KV穿墙式电流互感器', outdoor: '3.6-12KV户外电流、电压互感器', vt36: '3.6-12KV电压互感器', vtOutdoor: '3.6-12KV户外电压互感器' }
-    const typeIcons = { current: '⚡', voltage: '🔌', combined: '🔗', zero: '🔄', post: '🏛️', wall: '🧱', outdoor: '🌲', vt36: '🔌', vtOutdoor: '🌲' }
+    const typeNames = { current: '电流互感器', voltage: '电压互感器', combined: '组合互感器', zero: '零序电流互感器', post: '3.6-12KV支柱式电流互感器', wall: '3.6-12KV穿墙式电流互感器', outdoor: '3.6-12KV户外电流、电压互感器', vt36: '3.6-12KV电压互感器', vtOutdoor: '3.6-12KV户外电压互感器', rail_ct: '机车动车电流互感器', rail_vt: '机车动车电压互感器' }
+    const typeIcons = { current: '⚡', voltage: '🔌', combined: '🔗', zero: '🔄', post: '🏛️', wall: '🧱', outdoor: '🌲', vt36: '🔌', vtOutdoor: '🌲', rail_ct: '🚂', rail_vt: '🚄' }
     return `<div class="product-card" data-id="${p.id}" role="button" tabindex="0">
       <div class="product-card-img">
-        <span class="line-badge">${lineNames[p.line] || ''}</span>
+        <span class="line-badge">${p.type === 'rail_ct' ? '机车动车' : p.type === 'rail_vt' ? '机车动车' : ''}</span>
         <img src="${p.cardImage || p.image}" alt="${p.name}" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
         <span style="font-size:32px;opacity:0.35;display:none">${typeIcons[p.type] || '📦'}</span>
       </div>
@@ -298,7 +290,6 @@
   function doParamFilter() {
     const v = $('#pv_voltage').value
     const t = $('#pv_type').value
-    const l = $('#pv_line').value
     const a = $('#pv_accuracy').value.trim().toLowerCase()
     const c = $('#pv_capacity').value.trim().toLowerCase()
     const d = $('#pv_dimension').value.trim().toLowerCase()
@@ -306,7 +297,6 @@
     const result = products.filter(p => {
       if (v !== 'all' && p.voltage !== v) return false
       if (t !== 'all' && p.type !== t) return false
-      if (l !== 'all' && p.line !== l) return false
       if (a) {
         const accVal = getSpecValue(p, '准确级').toLowerCase()
         if (!accVal.includes(a)) return false
@@ -345,7 +335,6 @@
     // Reset form and clear results on page enter
     $('#pv_voltage').value = 'all'
     $('#pv_type').value = 'all'
-    $('#pv_line').value = 'all'
     $('#pv_accuracy').value = ''
     $('#pv_capacity').value = ''
     $('#pv_dimension').value = ''
@@ -376,11 +365,11 @@
       return p.specs.some(x => x.label.toLowerCase().includes(s) || x.value.toLowerCase().includes(s))
     })
     if (!r.length) { searchResults.innerHTML = `<div class="empty-state"><span class="empty-icon">🔍</span><p>未找到相关产品</p></div>`; return }
-    const ti = { current: '⚡', voltage: '🔌', combined: '🔗', zero: '🔄', post: '🏛️', wall: '🧱', outdoor: '🌲', vt36: '🔌', vtOutdoor: '🌲' }
+    const ti = { current: '⚡', voltage: '🔌', combined: '🔗', zero: '🔄', post: '🏛️', wall: '🧱', outdoor: '🌲', vt36: '🔌', vtOutdoor: '🌲', rail_ct: '🚂', rail_vt: '🚄' }
     searchResults.innerHTML = r.map(p => `<div class="search-result-item" data-id="${p.id}">
       <span class="search-result-icon">${ti[p.type] || '📦'}</span>
       <div class="search-result-info">
-        <span class="search-result-badge">${getLineName(p.line)} · ${getTypeName(p.type)}</span>
+        <span class="search-result-badge">${getTypeName(p.type)}</span>
         <p class="search-result-name">${h(p.name, q)}</p>
         <p class="search-result-summary">${h(p.summary, q)}</p>
       </div>
@@ -395,15 +384,15 @@
 
   function h(t, q) { if (!q) return t; const i = t.toLowerCase().indexOf(q.toLowerCase()); return i === -1 ? t : t.slice(0, i) + '<mark>' + t.slice(i, i + q.length) + '</mark>' + t.slice(i + q.length) }
   function getTypeName(id) { const m = { current: '电流互感器', voltage: '电压互感器', combined: '组合互感器', zero: '零序电流互感器' }; return m[id] || '' }
-  function getLineName(id) { const m = { standard: '标准产品', rail: '机车动车产品' }; return m[id] || '' }
+  function getLineName(id) { return '' }
 
   // =============================================
   // 产品详情
   // =============================================
 
   function showDetail(p) {
-    const ln = { standard: '标准产品', rail: '机车动车产品' }
-    const tn = { current: '电流互感器', voltage: '电压互感器', combined: '组合互感器', zero: '零序电流互感器', post: '3.6-12KV支柱式电流互感器', wall: '3.6-12KV穿墙式电流互感器', outdoor: '3.6-12KV户外电流、电压互感器', vt36: '3.6-12KV电压互感器', vtOutdoor: '3.6-12KV户外电压互感器' }
+    const ln = {}
+    const tn = { current: '电流互感器', voltage: '电压互感器', combined: '组合互感器', zero: '零序电流互感器', post: '3.6-12KV支柱式电流互感器', wall: '3.6-12KV穿墙式电流互感器', outdoor: '3.6-12KV户外电流、电压互感器', vt36: '3.6-12KV电压互感器', vtOutdoor: '3.6-12KV户外电压互感器', rail_ct: '机车动车电流互感器', rail_vt: '机车动车电压互感器' }
     modalBody.innerHTML = `
       <span class="line-label">${ln[p.line] || ''}</span>
       <span class="product-card-type${p.type === 'voltage' ? ' voltage-t' : ''}">${tn[p.type] || ''}</span>
@@ -446,7 +435,7 @@
     if (searchOverlay.classList.contains('open')) closeSearch()
     closeSidebarFn()
     if (page === 'home') renderHomeProducts()
-    if (page === 'products') { renderLineTabs(); renderTypeTabs(); renderSubTypeTabs(); renderSeriesView(); renderFilteredProducts() }
+    if (page === 'products') { renderTypeTabs(); renderSubTypeTabs(); renderSeriesView(); renderFilteredProducts() }
     if (page === 'params') { renderParamsPage() }
   }
 
@@ -479,12 +468,7 @@
     document.querySelectorAll('[data-page-link]').forEach(el => {
       el.addEventListener('click', e => {
         e.preventDefault()
-        const page = el.dataset.pageLink
-        if (page === 'products') {
-          const line = el.dataset.line
-          if (line) { filter.line = line; filter.type = 'all'; filter.subType = 'all'; filter.series = 'all' }
-        }
-        navigateTo(page)
+        navigateTo(el.dataset.pageLink)
       })
     })
     menuBtn.addEventListener('click', openSidebar)
@@ -531,8 +515,7 @@
     renderHomeProducts()
     registerSW()
     bindEvents()
-    // 预渲染产品筛选（在切换到产品页面时完全渲染）
-    renderLineTabs()
+    // 预渲染产品筛选
     renderTypeTabs()
     renderSubTypeTabs()
     renderSeriesView()

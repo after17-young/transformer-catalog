@@ -113,15 +113,11 @@
         </button>
       </div>
 
-      <!-- 快捷导航（产品线） -->
+      <!-- 快捷导航 -->
       <div class="quick-nav">
-        <div class="quick-nav-item" data-page-link="products" data-line="standard">
+        <div class="quick-nav-item" data-page-link="products">
           <div class="quick-nav-icon">📦</div>
-          <span>标准产品</span>
-        </div>
-        <div class="quick-nav-item" data-page-link="products" data-line="rail">
-          <div class="quick-nav-icon">🚂</div>
-          <span>机车动车产品</span>
+          <span>全部产品</span>
         </div>
         </div>
 
@@ -135,13 +131,11 @@
 
     <!-- ===== 产品中心 ===== -->
     <section class="page" id="page-products">
-      <!-- 第一级：产品线 -->
-      <div class="filter-row" id="lineTabs"></div>
-      <!-- 第二级：类型 -->
+      <!-- 第一级：类型 -->
       <div class="filter-row" id="typeTabs"></div>
-      <!-- 第三级：电压等级 -->
+      <!-- 第二级：子类型 -->
       <div class="filter-row" id="voltageTabs"></div>
-      <!-- 第四级：系列 -->
+      <!-- 第三级：系列 -->
       <div class="filter-row" id="seriesTabs" style="display:none"></div>
       <!-- 产品列表 -->
       <div class="product-grid" id="productGrid"></div>
@@ -244,23 +238,15 @@
         </div>
         <div class="params-row">
           <div class="params-field">
-            <label>产品线</label>
-            <select id="pv_line">
-              <option value="all">全部</option>
-              <option value="standard">标准产品</option>
-              <option value="rail">机车动车产品</option>
-            </select>
-          </div>
-          <div class="params-field">
             <label>准确级</label>
             <input type="text" id="pv_accuracy" placeholder="如 0.5, 5P20" autocomplete="off">
           </div>
-        </div>
-        <div class="params-row">
           <div class="params-field">
             <label>额定容量 (VA)</label>
             <input type="text" id="pv_capacity" placeholder="如 30, 50-200" autocomplete="off">
           </div>
+        </div>
+        <div class="params-row">
           <div class="params-field">
             <label>外形尺寸 (mm)</label>
             <input type="text" id="pv_dimension" placeholder="长宽高或关键词" autocomplete="off">

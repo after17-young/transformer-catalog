@@ -254,7 +254,7 @@ const products = [
 
   // ───── 机车产品 - 电流互感器 ─────
   {
-    id: 'jqct-10kv-01', line: 'rail', type: 'current', voltage: '10KV',
+    id: 'jqct-10kv-01', line: 'standard', type: 'rail_ct', voltage: '10KV',
     name: 'JQG-10 型机车电流互感器',
     summary: '机车专用干式电流互感器，适用于10kV机车配电',
     image: 'images/products/jqct-10kv-01.jpg',
@@ -287,7 +287,7 @@ const products = [
     ],
   },
   {
-    id: 'jqct-20kv-01', line: 'rail', type: 'current', voltage: '20KV',
+    id: 'jqct-20kv-01', line: 'standard', type: 'rail_ct', voltage: '20KV',
     name: 'JQG-20 型机车电流互感器',
     summary: '机车专用干式电流互感器，适用于20kV机车配电',
     image: 'images/products/jqct-20kv-01.jpg',
@@ -320,7 +320,7 @@ const products = [
     ],
   },
   {
-    id: 'jqct-35kv-01', line: 'rail', type: 'current', voltage: '35KV',
+    id: 'jqct-35kv-01', line: 'standard', type: 'rail_ct', voltage: '35KV',
     name: 'JQG-35 型机车电流互感器',
     summary: '机车专用干式电流互感器，适用于35kV机车配电',
     image: 'images/products/jqct-35kv-01.jpg',
@@ -354,7 +354,7 @@ const products = [
   },
   // ───── 机车产品 - 电压互感器 ─────
   {
-    id: 'jqvt-10kv-01', line: 'rail', type: 'voltage', voltage: '10KV',
+    id: 'jqvt-10kv-01', line: 'standard', type: 'rail_vt', voltage: '10KV',
     name: 'JDZXW2-25A2 型机车电压互感器',
     summary: '机车专用干式电压互感器，适用于10kV机车配电',
     image: 'images/products/jqvt-10kv-01.jpg',
@@ -379,7 +379,7 @@ const products = [
     features: ['抗震动设计', '体积小、重量轻', '温度适应范围宽', '可靠性高']
   },
   {
-    id: 'jqvt-25-07', line: 'rail', type: 'voltage', voltage: '20KV',
+    id: 'jqvt-25-07', line: 'standard', type: 'rail_vt', voltage: '20KV',
     name: 'JDZXW2-25A1 型机车电压互感器',
     summary: '机车专用干式电压互感器，适用于20kV机车配电',
     image: 'images/products/jqvt-25-07.jpg',
@@ -404,7 +404,7 @@ const products = [
     features: ['抗震动设计', '体积小、重量轻', '温度适应范围宽', '可靠性高']
   },
   {
-    id: 'JDZXW2-25A', line: 'rail', type: 'voltage', voltage: '35KV',
+    id: 'JDZXW2-25A', line: 'standard', type: 'rail_vt', voltage: '35KV',
     name: 'JDZXW2-25A 型机车电压互感器',
     summary: '机车专用干式电压互感器，适用于35kV机车配电',
     image: 'images/products/jqvt-35kv-01.jpg',
@@ -429,7 +429,7 @@ const products = [
     features: ['抗震动设计', '高精度多绕组设计', '温度适应范围宽', '可靠性高']
   },
   {
-    id: 'jqvt-25-01', line: 'rail', type: 'voltage', voltage: '20KV',
+    id: 'jqvt-25-01', line: 'standard', type: 'rail_vt', voltage: '20KV',
     name: 'JDZXW3-25 型机车电压互感器',
     summary: '机车专用干式电压互感器，适用于20kV机车配电',
     image: 'images/products/jqvt-25-01.jpg',
@@ -454,7 +454,7 @@ const products = [
     features: ['抗震动设计', '体积小、重量轻', '温度适应范围宽', '可靠性高']
   },
   {
-    id: 'jqvt-25-02', line: 'rail', type: 'voltage', voltage: '20KV',
+    id: 'jqvt-25-02', line: 'standard', type: 'rail_vt', voltage: '20KV',
     name: 'JDZX18-25B 型机车电压互感器',
     summary: '机车专用干式电压互感器，适用于20kV机车配电',
     image: 'images/products/jqvt-25-02.jpg',
@@ -479,7 +479,7 @@ const products = [
     features: ['抗震动设计', '体积小、重量轻', '温度适应范围宽', '可靠性高']
   },
   {
-    id: 'jqvt-25-03', line: 'rail', type: 'voltage', voltage: '20KV',
+    id: 'jqvt-25-03', line: 'standard', type: 'rail_vt', voltage: '20KV',
     name: 'JDZX18-25B 型机车电压互感器',
     summary: '机车专用干式电压互感器，适用于20kV机车配电',
     image: 'images/products/jqvt-25-03.jpg',
@@ -504,7 +504,7 @@ const products = [
     features: ['抗震动设计', '体积小、重量轻', '温度适应范围宽', '可靠性高']
   },
   {
-    id: 'jqvt-25-04', line: 'rail', type: 'voltage', voltage: '20KV',
+    id: 'jqvt-25-04', line: 'standard', type: 'rail_vt', voltage: '20KV',
     name: 'JDZX18-25（C) 型机车电压互感器',
     summary: '机车专用干式电压互感器，适用于20kV机车配电',
     image: 'images/products/jqvt-25-04.jpg',
@@ -529,7 +529,7 @@ const products = [
     features: ['抗震动设计', '体积小、重量轻', '温度适应范围宽', '可靠性高']
   },
   {
-    id: 'jqvt-25-05', line: 'rail', type: 'voltage', voltage: '20KV',
+    id: 'jqvt-25-05', line: 'standard', type: 'rail_vt', voltage: '20KV',
     name: 'JDZX18-25D 型机车电压互感器',
     summary: '机车专用干式电压互感器，适用于20kV机车配电',
     image: 'images/products/jqvt-25-05.jpg',
@@ -554,7 +554,7 @@ const products = [
     features: ['抗震动设计', '体积小、重量轻', '温度适应范围宽', '可靠性高']
   },
   {
-    id: 'jqvt-25-06', line: 'rail', type: 'voltage', voltage: '20KV',
+    id: 'jqvt-25-06', line: 'standard', type: 'rail_vt', voltage: '20KV',
     name: 'JDZXW3-25B1 型机车电压互感器',
     summary: '机车专用干式电压互感器，适用于20kV机车配电',
     image: 'images/products/jqvt-25-06.jpg',
@@ -582,7 +582,7 @@ const products = [
 
   // ───── 动车产品 - 电流互感器 ─────
   {
-    id: 'dect-10kv-01', line: 'rail', type: 'current', voltage: '10KV',
+    id: 'dect-10kv-01', line: 'standard', type: 'rail_ct', voltage: '10KV',
     name: 'DCG-10 型动车电流互感器',
     summary: '动车组专用电流互感器，适用于10kV动车配电',
     image: 'images/products/dect-10kv-01.jpg',
@@ -615,7 +615,7 @@ const products = [
     ],
   },
   {
-    id: 'dect-20kv-01', line: 'rail', type: 'current', voltage: '20KV',
+    id: 'dect-20kv-01', line: 'standard', type: 'rail_ct', voltage: '20KV',
     name: 'DCG-20 型动车电流互感器',
     summary: '动车组专用电流互感器，适用于20kV动车配电',
     image: 'images/products/dect-20kv-01.jpg',
@@ -648,7 +648,7 @@ const products = [
     ],
   },
   {
-    id: 'dect-35kv-01', line: 'rail', type: 'current', voltage: '35KV',
+    id: 'dect-35kv-01', line: 'standard', type: 'rail_ct', voltage: '35KV',
     name: 'DCG-35 型动车电流互感器',
     summary: '动车组专用电流互感器，适用于35kV动车配电',
     image: 'images/products/dect-35kv-01.jpg',
@@ -682,7 +682,7 @@ const products = [
   },
   // ───── 动车产品 - 电压互感器 ─────
   {
-    id: 'devt-10kv-01', line: 'rail', type: 'voltage', voltage: '10KV',
+    id: 'devt-10kv-01', line: 'standard', type: 'rail_vt', voltage: '10KV',
     name: 'DCG-10Y 型动车电压互感器',
     summary: '动车组专用电压互感器，适用于10kV动车配电',
     image: 'images/products/devt-10kv-01.jpg',
@@ -707,7 +707,7 @@ const products = [
     features: ['轻量化设计', '抗高频率震动', '温度适应范围宽', '长寿命免维护']
   },
   {
-    id: 'devt-20kv-01', line: 'rail', type: 'voltage', voltage: '20KV',
+    id: 'devt-20kv-01', line: 'standard', type: 'rail_vt', voltage: '20KV',
     name: 'DCG-20Y 型动车电压互感器',
     summary: '动车组专用电压互感器，适用于20kV动车配电',
     image: 'images/products/devt-20kv-01.jpg',
@@ -732,7 +732,7 @@ const products = [
     features: ['轻量化设计', '抗高频率震动', '温度适应范围宽', '长寿命免维护']
   },
   {
-    id: 'devt-35kv-01', line: 'rail', type: 'voltage', voltage: '35KV',
+    id: 'devt-35kv-01', line: 'standard', type: 'rail_vt', voltage: '35KV',
     name: 'DCG-35Y 型动车电压互感器',
     summary: '动车组专用电压互感器，适用于35kV动车配电',
     image: 'images/products/devt-35kv-01.jpg',
@@ -763,9 +763,7 @@ const products = [
 // =========================================
 
 const lines = [
-  { id: 'all', name: '全部' },
-  { id: 'standard', name: '标准产品' },
-  { id: 'rail', name: '机车动车产品' }
+  { id: 'all', name: '全部' }
 ]
 
 const types = [
@@ -786,18 +784,18 @@ const series = [
 
 // 类型图标映射（给UI用）
 function getTypeIcon(typeId) {
-  const map = { current: '⚡', voltage: '🔌', combined: '🔗', zero: '🔄', post: '🏛️', wall: '🧱', outdoor: '🌲', vt36: '🔌', vtOutdoor: '🌲' }
+  const map = { current: '⚡', voltage: '🔌', combined: '🔗', zero: '🔄', post: '🏛️', wall: '🧱', outdoor: '🌲', vt36: '🔌', vtOutdoor: '🌲', rail_ct: '🚂', rail_vt: '🚄' }
   return map[typeId] || '📦'
 }
 
 function getTypeName(typeId) {
-  const map = { current: '电流互感器', voltage: '电压互感器', combined: '组合互感器', zero: '零序电流互感器', post: '3.6-12KV支柱式电流互感器', wall: '3.6-12KV穿墙式电流互感器', outdoor: '3.6-12KV户外电流、电压互感器', vt36: '3.6-12KV电压互感器', vtOutdoor: '3.6-12KV户外电压互感器' }
+  const map = { current: '电流互感器', voltage: '电压互感器', combined: '组合互感器', zero: '零序电流互感器', post: '3.6-12KV支柱式电流互感器', wall: '3.6-12KV穿墙式电流互感器', outdoor: '3.6-12KV户外电流、电压互感器', vt36: '3.6-12KV电压互感器', vtOutdoor: '3.6-12KV户外电压互感器', rail_ct: '机车动车电流互感器', rail_vt: '机车动车电压互感器' }
   return map[typeId] || '未知'
 }
 
 function getLineName(lineId) {
-  const map = { standard: '标准产品', rail: '机车动车产品' }
-  return map[lineId] || '全部'
+  const map = {}
+  return map[lineId] || ''
 }
 
 // =========================================
