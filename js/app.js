@@ -258,16 +258,14 @@
   }
 
   function renderFilteredProducts() {
-    // Show series cards when in 支柱式 series overview
-    // Show series cards when in 支柱式 series overview or current all
-    if (filter.type === 'current' && (filter.subType === 'all' || filter.subType === 'post') && filter.series === 'all') {
+    // Show series cards when in 全部 or 电流互感器 view
+    if ((filter.type === 'all' || filter.type === 'current') && filter.subType === 'all' && filter.series === 'all') {
       emptyState.style.display = 'none'
       productGrid.innerHTML = series.filter(s => s.id !== 'all').map(s => buildSeriesCard(s)).join('')
       return
     }
     // Gallery series: show in modal
-    // Gallery series: show in modal
-    if (filter.type === 'current' && (filter.series === 'lzzbj9' || filter.series === 'lzzbj18')) {
+    if ((filter.type === 'all' || filter.type === 'current') && (filter.series === 'lzzbj9' || filter.series === 'lzzbj18')) {
       emptyState.style.display = 'none'
       productGrid.innerHTML = ''
       showSeriesGallery(filter.series)
