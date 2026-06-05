@@ -203,7 +203,7 @@
     }
     modalBody.innerHTML =
       '<div style="display:flex;align-items:center;gap:10px;margin-bottom:8px">' +
-      '<button class="filter-tab" onclick="closeModal(); filter.series=\'all\'; renderSeriesView(); renderFilteredProducts()" style="padding:4px 12px;font-size:12px">← 返回系列</button>' +
+      '<button class="filter-tab" onclick="closeModal()" style="padding:4px 12px;font-size:12px">← 返回系列</button>' +
       '<span style="font-size:15px;font-weight:600">LZZBJ9系列参数图</span>' +
       '</div>' +
       '<div style="max-height:65vh;overflow-y:auto">' +
@@ -442,7 +442,16 @@
     return lines.join('<br>')
   }
 
-  function closeModal() { modalOverlay.classList.remove('visible'); document.body.style.overflow = '' }
+  function closeModal() {
+    modalOverlay.classList.remove('visible')
+    document.body.style.overflow = ''
+    // LZZBJ9 gallery: return to series selection
+    if (filter.series === 'lzzbj9') {
+      filter.series = 'all'
+      renderSeriesView()
+      renderFilteredProducts()
+    }
+  }
 
   // =============================================
   // 页面路由
