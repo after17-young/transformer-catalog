@@ -242,10 +242,10 @@
     return products.filter(p => {
       if (filter.type !== 'all') {
         if (filter.type === 'current') {
-          if (filter.subType === 'all') return false // 不显示任何产品，用系列卡片替代
+          if (filter.subType === 'all') return false // 用系列卡片替代
           if (filter.subType === 'post') {
             if (filter.series !== 'all') return p.type === 'post' && p.series === filter.series
-            return false // 显示系列卡片
+            return false
           }
           return p.type === filter.subType
         } else if (filter.type === 'voltage') {
@@ -258,14 +258,14 @@
   }
 
   function renderFilteredProducts() {
-    // Show series cards when in 全部 or 电流互感器 view
-    if ((filter.type === 'all' || filter.type === 'current') && filter.subType === 'all' && filter.series === 'all') {
+    // Show series cards when in 电流互感器 with all subType
+    if (filter.type === 'current' && filter.subType === 'all' && filter.series === 'all') {
       emptyState.style.display = 'none'
       productGrid.innerHTML = series.filter(s => s.id !== 'all').map(s => buildSeriesCard(s)).join('')
       return
     }
     // Gallery series: show in modal
-    if ((filter.type === 'all' || filter.type === 'current') && (filter.series === 'lzzbj9' || filter.series === 'lzzbj18')) {
+    if ((filter.type === 'current') && (filter.series === 'lzzbj9' || filter.series === 'lzzbj18')) {
       emptyState.style.display = 'none'
       productGrid.innerHTML = ''
       showSeriesGallery(filter.series)
