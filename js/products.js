@@ -49,6 +49,21 @@ const products = [
     ],
     description: 'LW-10 系列电流互感器为户外环氧树脂浇注式结构，具有优良的绝缘性能和耐候性能。产品体积小、重量轻、安装方便，适用于户外配电系统及变电站的电流测量和保护。',
     features: ['环氧树脂浇注，抗紫外线老化', '高精度测量，支持 0.2S 级', '较强的过电流能力', '免维护设计']
+    ratings: [
+      { primary: 100, secondary: 5, burden: 15 },
+      { primary: 200, secondary: 5, burden: 20 },
+      { primary: 300, secondary: 5, burden: 30 },
+      { primary: 400, secondary: 5, burden: 40 },
+      { primary: 500, secondary: 5, burden: 50 },
+      { primary: 600, secondary: 5, burden: 60 },
+      { primary: 100, secondary: 1, burden: 10 },
+      { primary: 200, secondary: 1, burden: 15 },
+      { primary: 300, secondary: 1, burden: 20 },
+      { primary: 400, secondary: 1, burden: 30 },
+      { primary: 500, secondary: 1, burden: 40 },
+      { primary: 600, secondary: 1, burden: 50 }
+    ],
+
   },
   {
     id: 'ct-20kv-01', line: 'standard', type: 'current', voltage: '20KV',
@@ -74,6 +89,21 @@ const products = [
     ],
     description: 'LZZB-20 系列电流互感器为户内干式结构，适用于 20kV 中压配电系统的电流测量、电能计量和继电保护。',
     features: ['真空环氧浇注绝缘', '高精度多绕组设计', '局部放电量低', '可靠性高']
+    ratings: [
+      { primary: 100, secondary: 5, burden: 15 },
+      { primary: 200, secondary: 5, burden: 20 },
+      { primary: 300, secondary: 5, burden: 30 },
+      { primary: 400, secondary: 5, burden: 40 },
+      { primary: 500, secondary: 5, burden: 50 },
+      { primary: 600, secondary: 5, burden: 60 },
+      { primary: 100, secondary: 1, burden: 10 },
+      { primary: 200, secondary: 1, burden: 15 },
+      { primary: 300, secondary: 1, burden: 20 },
+      { primary: 400, secondary: 1, burden: 30 },
+      { primary: 500, secondary: 1, burden: 40 },
+      { primary: 600, secondary: 1, burden: 50 }
+    ],
+
   },
   {
     id: 'ct-35kv-01', line: 'standard', type: 'current', voltage: '35KV',
@@ -99,6 +129,21 @@ const products = [
     ],
     description: 'LZZBJ9-35 系列电流互感器为户外干式结构，采用进口环氧树脂真空浇注，具有优异的绝缘性能和抗老化能力。适用于 35kV 电力系统的电流测量、保护和计量。',
     features: ['真空环氧浇注绝缘', '高精度多绕组设计', '抗紫外线、耐候性强', '适用于恶劣环境']
+    ratings: [
+      { primary: 100, secondary: 5, burden: 15 },
+      { primary: 200, secondary: 5, burden: 20 },
+      { primary: 300, secondary: 5, burden: 30 },
+      { primary: 400, secondary: 5, burden: 40 },
+      { primary: 500, secondary: 5, burden: 50 },
+      { primary: 600, secondary: 5, burden: 60 },
+      { primary: 100, secondary: 1, burden: 10 },
+      { primary: 200, secondary: 1, burden: 15 },
+      { primary: 300, secondary: 1, burden: 20 },
+      { primary: 400, secondary: 1, burden: 30 },
+      { primary: 500, secondary: 1, burden: 40 },
+      { primary: 600, secondary: 1, burden: 50 }
+    ],
+
   },
 
   // ───── 标准产品 - 电压互感器 ─────
@@ -254,6 +299,21 @@ const products = [
     ],
     description: 'JQG-10 系列机车电流互感器专为电力机车设计，具有优良的抗震动、抗冲击性能，适用于机车配电系统的电流测量和保护。',
     features: ['抗震动设计，适应机车环境', '体积小巧，安装灵活', '温度适应范围宽', '可靠性高，免维护']
+    ratings: [
+      { primary: 100, secondary: 5, burden: 15 },
+      { primary: 200, secondary: 5, burden: 20 },
+      { primary: 300, secondary: 5, burden: 30 },
+      { primary: 400, secondary: 5, burden: 40 },
+      { primary: 500, secondary: 5, burden: 50 },
+      { primary: 600, secondary: 5, burden: 60 },
+      { primary: 100, secondary: 1, burden: 10 },
+      { primary: 200, secondary: 1, burden: 15 },
+      { primary: 300, secondary: 1, burden: 20 },
+      { primary: 400, secondary: 1, burden: 30 },
+      { primary: 500, secondary: 1, burden: 40 },
+      { primary: 600, secondary: 1, burden: 50 }
+    ],
+
   },
   {
     id: 'jqct-20kv-01', line: 'rail', type: 'current', voltage: '20KV',
@@ -279,6 +339,21 @@ const products = [
     ],
     description: 'JQG-20 系列机车电流互感器专为电力机车设计，满足 20kV 机车配电系统的电流测量和保护需求。',
     features: ['抗震动设计，适应机车环境', '体积小巧，安装灵活', '温度适应范围宽', '可靠性高，免维护']
+    ratings: [
+      { primary: 100, secondary: 5, burden: 15 },
+      { primary: 200, secondary: 5, burden: 20 },
+      { primary: 300, secondary: 5, burden: 30 },
+      { primary: 400, secondary: 5, burden: 40 },
+      { primary: 500, secondary: 5, burden: 50 },
+      { primary: 600, secondary: 5, burden: 60 },
+      { primary: 100, secondary: 1, burden: 10 },
+      { primary: 200, secondary: 1, burden: 15 },
+      { primary: 300, secondary: 1, burden: 20 },
+      { primary: 400, secondary: 1, burden: 30 },
+      { primary: 500, secondary: 1, burden: 40 },
+      { primary: 600, secondary: 1, burden: 50 }
+    ],
+
   },
   {
     id: 'jqct-35kv-01', line: 'rail', type: 'current', voltage: '35KV',
@@ -304,6 +379,21 @@ const products = [
     ],
     description: 'JQG-35 系列机车电流互感器专为电力机车设计，适用于 35kV 机车配电系统的电流测量和继电保护。',
     features: ['抗震动设计，适应机车环境', '高精度多绕组设计', '温度适应范围宽', '可靠性高，免维护']
+    ratings: [
+      { primary: 100, secondary: 5, burden: 15 },
+      { primary: 200, secondary: 5, burden: 20 },
+      { primary: 300, secondary: 5, burden: 30 },
+      { primary: 400, secondary: 5, burden: 40 },
+      { primary: 500, secondary: 5, burden: 50 },
+      { primary: 600, secondary: 5, burden: 60 },
+      { primary: 100, secondary: 1, burden: 10 },
+      { primary: 200, secondary: 1, burden: 15 },
+      { primary: 300, secondary: 1, burden: 20 },
+      { primary: 400, secondary: 1, burden: 30 },
+      { primary: 500, secondary: 1, burden: 40 },
+      { primary: 600, secondary: 1, burden: 50 }
+    ],
+
   },
 
   // ───── 机车产品 - 电压互感器 ─────
@@ -559,6 +649,21 @@ const products = [
     ],
     description: 'DCG-10 系列动车电流互感器专为高速动车组设计，采用轻量化结构，具有优异的抗震动和高铁运行环境适应性。',
     features: ['轻量化设计', '抗高频率震动', '温度适应范围宽', '长寿命免维护']
+    ratings: [
+      { primary: 100, secondary: 5, burden: 15 },
+      { primary: 200, secondary: 5, burden: 20 },
+      { primary: 300, secondary: 5, burden: 30 },
+      { primary: 400, secondary: 5, burden: 40 },
+      { primary: 500, secondary: 5, burden: 50 },
+      { primary: 600, secondary: 5, burden: 60 },
+      { primary: 100, secondary: 1, burden: 10 },
+      { primary: 200, secondary: 1, burden: 15 },
+      { primary: 300, secondary: 1, burden: 20 },
+      { primary: 400, secondary: 1, burden: 30 },
+      { primary: 500, secondary: 1, burden: 40 },
+      { primary: 600, secondary: 1, burden: 50 }
+    ],
+
   },
   {
     id: 'dect-20kv-01', line: 'rail', type: 'current', voltage: '20KV',
@@ -584,6 +689,21 @@ const products = [
     ],
     description: 'DCG-20 系列动车电流互感器专为高速动车组设计，适用于 20kV 动车配电系统的电流测量和保护。',
     features: ['轻量化设计', '抗高频率震动', '温度适应范围宽', '长寿命免维护']
+    ratings: [
+      { primary: 100, secondary: 5, burden: 15 },
+      { primary: 200, secondary: 5, burden: 20 },
+      { primary: 300, secondary: 5, burden: 30 },
+      { primary: 400, secondary: 5, burden: 40 },
+      { primary: 500, secondary: 5, burden: 50 },
+      { primary: 600, secondary: 5, burden: 60 },
+      { primary: 100, secondary: 1, burden: 10 },
+      { primary: 200, secondary: 1, burden: 15 },
+      { primary: 300, secondary: 1, burden: 20 },
+      { primary: 400, secondary: 1, burden: 30 },
+      { primary: 500, secondary: 1, burden: 40 },
+      { primary: 600, secondary: 1, burden: 50 }
+    ],
+
   },
   {
     id: 'dect-35kv-01', line: 'rail', type: 'current', voltage: '35KV',
@@ -609,6 +729,21 @@ const products = [
     ],
     description: 'DCG-35 系列动车电流互感器专为高速动车组设计，适用于 35kV 动车配电系统的电流测量和继电保护。',
     features: ['轻量化设计', '抗高频率震动', '高精度多绕组设计', '长寿命免维护']
+    ratings: [
+      { primary: 100, secondary: 5, burden: 15 },
+      { primary: 200, secondary: 5, burden: 20 },
+      { primary: 300, secondary: 5, burden: 30 },
+      { primary: 400, secondary: 5, burden: 40 },
+      { primary: 500, secondary: 5, burden: 50 },
+      { primary: 600, secondary: 5, burden: 60 },
+      { primary: 100, secondary: 1, burden: 10 },
+      { primary: 200, secondary: 1, burden: 15 },
+      { primary: 300, secondary: 1, burden: 20 },
+      { primary: 400, secondary: 1, burden: 30 },
+      { primary: 500, secondary: 1, burden: 40 },
+      { primary: 600, secondary: 1, burden: 50 }
+    ],
+
   },
 
   // ───── 动车产品 - 电压互感器 ─────

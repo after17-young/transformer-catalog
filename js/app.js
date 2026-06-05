@@ -415,6 +415,15 @@
       </div>
       <div class="modal-desc"><h4>产品描述</h4><p>${p.description}</p></div>
       <div class="modal-specs"><h4>技术参数</h4><table class="specs-table">${p.specs.map(s => `<tr><td>${s.label}</td><td>${s.value}</td></tr>`).join('')}</table></div>
+      ${p.ratings ? `
+      <div class="modal-ratings"><h4>额定电流/负荷对照表</h4>
+        <div class="ratings-table-wrap">
+          <table class="ratings-table">
+            <thead><tr><th>额定一次电流 (A)</th><th>额定二次电流 (A)</th><th>额定负荷 (VA)</th></tr></thead>
+            <tbody>${p.ratings.map(r => `<tr><td>${r.primary}</td><td>${r.secondary}</td><td>${r.burden}</td></tr>`).join('')}</tbody>
+          </table>
+        </div>
+      </div>` : ''}
       <div class="modal-features"><h4>产品特点</h4><ul>${p.features.map(f => `<li>${f}</li>`).join('')}</ul></div>`
     modalOverlay.classList.add('visible')
     document.body.style.overflow = 'hidden'
