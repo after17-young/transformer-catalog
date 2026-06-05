@@ -473,14 +473,11 @@ button { cursor: pointer; font: inherit; border: none; background: none; }
 .specs-table td:first-child { color: var(--text-secondary); width: 38%; font-weight: 500; }
 .specs-table td:last-child { font-weight: 500; }
 .modal-ratings { margin-bottom: 18px; }
-.ratings-table-wrap { overflow-x: auto; border-radius: var(--radius); border: 1px solid var(--border); }
-.ratings-table { width: 100%; border-collapse: collapse; font-size: 11px; }
+.ratings-table-wrap { overflow-x: auto; }
+.ratings-table { width: 100%; border-collapse: collapse; font-size: 11px; border: 2px solid #000; }
 .ratings-table thead { background: var(--primary); color: #fff; }
-.ratings-table th { padding: 7px 4px; font-weight: 600; white-space: nowrap; text-align: center; }
-.ratings-table td { padding: 5px 4px; text-align: center; border-bottom: 1px solid var(--border); white-space: nowrap; }
-.ratings-table tr:last-child td { border-bottom: none; }
-.ratings-table tbody tr:nth-child(even) { background: var(--primary-light); }
-.ratings-table tbody tr:hover { background: #d0e2ff; }
+.ratings-table th { padding: 7px 4px; font-weight: 600; white-space: nowrap; text-align: center; border: 1px solid #000; }
+.ratings-table td { padding: 5px 4px; text-align: center; border: 1px solid #000; white-space: nowrap; }
 .modal-features ul { list-style: none; padding: 0; }
 .modal-features li { padding: 6px 0 6px 22px; position: relative; font-size: 13px; }
 .modal-features li::before { content: '✓'; position: absolute; left: 0; color: var(--primary); font-weight: 700; }
