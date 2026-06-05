@@ -57,6 +57,7 @@
       <li><a href="#" data-page="home" class="active"><span class="nav-icon">🏠</span>首页</a></li>
       <li><a href="#" data-page="products"><span class="nav-icon">📦</span>产品中心</a></li>
       <li><a href="#" data-page="about"><span class="nav-icon">🏢</span>企业简介</a></li>
+	      <li><a href="#" data-page="params"><span class="nav-icon">🔍</span>智能选型</a></li>
     </ul>
     <div class="sidebar-divider"></div>
     <div class="sidebar-contact">
@@ -214,6 +215,66 @@
         <p>© 2024 大北互 版权所有</p>
       </div>
     </section>
+
+    <!-- ===== 智能选型 ===== -->
+    <section class="page" id="page-params">
+      <div class="params-form">
+        <h3>🔍 参数选型</h3>
+        <p class="params-hint">填写所需技术参数，系统将自动匹配适合的产品</p>
+        <div class="params-row">
+          <div class="params-field">
+            <label>额定电压</label>
+            <select id="pv_voltage">
+              <option value="all">全部</option>
+              <option value="10KV">10kV</option>
+              <option value="20KV">20kV</option>
+              <option value="35KV">35kV</option>
+            </select>
+          </div>
+          <div class="params-field">
+            <label>产品类型</label>
+            <select id="pv_type">
+              <option value="all">全部</option>
+              <option value="current">电流互感器</option>
+              <option value="voltage">电压互感器</option>
+              <option value="combined">组合互感器</option>
+              <option value="zero">零序电流互感器</option>
+            </select>
+          </div>
+        </div>
+        <div class="params-row">
+          <div class="params-field">
+            <label>产品线</label>
+            <select id="pv_line">
+              <option value="all">全部</option>
+              <option value="standard">标准产品</option>
+              <option value="locomotive">机车产品</option>
+              <option value="train">动车产品</option>
+            </select>
+          </div>
+          <div class="params-field">
+            <label>准确级</label>
+            <input type="text" id="pv_accuracy" placeholder="如 0.5, 5P20" autocomplete="off">
+          </div>
+        </div>
+        <div class="params-row">
+          <div class="params-field">
+            <label>额定容量 (VA)</label>
+            <input type="text" id="pv_capacity" placeholder="如 30, 50-200" autocomplete="off">
+          </div>
+          <div class="params-field">
+            <label>外形尺寸 (mm)</label>
+            <input type="text" id="pv_dimension" placeholder="长宽高或关键词" autocomplete="off">
+          </div>
+        </div>
+        <button class="param-btn" id="paramSearchBtn">🔍 开始匹配</button>
+      </div>
+      <div class="params-results" id="paramsResults" style="display:none">
+        <div class="params-count" id="paramsCount"></div>
+        <div class="product-grid" id="paramsProductGrid"></div>
+      </div>
+    </section>
+
   </main>
 
   <!-- ============ 产品详情弹窗 ============ -->
@@ -239,6 +300,10 @@
     <button class="bottom-bar-item" data-page="about">
       <svg viewBox="0 0 24 24" width="24" height="24"><circle cx="12" cy="8" r="4" stroke="currentColor" stroke-width="2" fill="none"/><path d="M20 21a8 8 0 00-16 0" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round"/></svg>
       <span>关于</span>
+    </button>
+    <button class="bottom-bar-item" data-page="params">
+      <svg viewBox="0 0 24 24" width="24" height="24"><circle cx="10" cy="10" r="6" stroke="currentColor" stroke-width="2" fill="none"/><path d="M21 21l-5-5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><path d="M8 10h4M10 8v4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+      <span>选型</span>
     </button>
   </nav>
 

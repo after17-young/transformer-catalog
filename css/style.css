@@ -516,6 +516,32 @@ button { cursor: pointer; font: inherit; border: none; background: none; }
   to { opacity: 1; transform: translateX(-50%) translateY(0); }
 }
 
+/* ---- 智能选型表单 ---- */
+.params-form { padding: 16px; }
+.params-form h3 { font-size: 18px; font-weight: 700; margin-bottom: 4px; }
+.params-hint { font-size: 13px; color: var(--text-secondary); margin-bottom: 16px; }
+.params-field { margin-bottom: 14px; flex: 1; min-width: 0; }
+.params-field label { display: block; font-size: 13px; font-weight: 600; margin-bottom: 6px; color: var(--text); }
+.params-field select, .params-field input {
+  width: 100%; height: 42px; padding: 0 14px;
+  border: 1.5px solid var(--border); border-radius: 10px;
+  font-size: 14px; background: var(--card-bg); color: var(--text);
+  outline: none; box-sizing: border-box;
+  -webkit-appearance: none; appearance: none;
+}
+.params-field select:focus, .params-field input:focus {
+  border-color: var(--primary); box-shadow: 0 0 0 3px rgba(0,71,171,0.1);
+}
+.params-row { display: flex; gap: 12px; }
+.param-btn {
+  width: 100%; height: 44px; border-radius: 22px;
+  background: var(--primary); color: #fff;
+  font-size: 15px; font-weight: 600; border: none; cursor: pointer;
+  transition: opacity var(--transition);
+}
+.param-btn:active { opacity: 0.8; }
+.params-count { font-size: 13px; color: var(--text-secondary); padding: 8px 16px 4px; }
+
 /* =========================================
    响应式
    ========================================= */

@@ -34,7 +34,7 @@
   const carouselPrev = $('#carouselPrev')
   const carouselNext = $('#carouselNext')
 
-  const pageTitles = { home: '首页', products: '产品中心', about: '企业简介' }
+  const pageTitles = { home: '首页', products: '产品中心', params: '智能选型', about: '企业简介' }
 
   // ---- 状态 ----
   let currentPage = 'home'
@@ -212,6 +212,69 @@
   }
 
   // =============================================
+  // 智能选型（参数筛选）
+  // =============================================
+
+  function getSpecValue(p, key) {
+    const s = p.specs.find(s => s.label.includes(key))
+    return s ? s.value : ''
+  }
+
+  function doParamFilter() {
+    const v = $('#pv_voltage').value
+    const t = $('#pv_type').value
+    const l = $('#pv_line').value
+    const a = $('#pv_accuracy').value.trim().toLowerCase()
+    const c = $('#pv_capacity').value.trim().toLowerCase()
+    const d = $('#pv_dimension').value.trim().toLowerCase()
+
+    const result = products.filter(p => {
+      if (v !== 'all' && p.voltage !== v) return false
+      if (t !== 'all' && p.type !== t) return false
+      if (l !== 'all' && p.line !== l) return false
+      if (a) {
+        const accVal = getSpecValue(p, '准确级').toLowerCase()
+        if (!accVal.includes(a)) return false
+      }
+      if (c) {
+        const capVal = getSpecValue(p, '额定容量').toLowerCase()
+        if (!capVal.includes(c)) return false
+      }
+      if (d) {
+        const dims = p.dimensions || {}
+        const dimStr = [dims.length, dims.width, dims.height, dims.weight].join(' ').toLowerCase()
+        if (!dimStr.includes(d)) return false
+      }
+      return true
+    })
+
+    const count = $('#paramsCount')
+    const grid = $('#paramsProductGrid')
+    const results = $('#paramsResults')
+    results.style.display = ''
+
+    if (!result.length) {
+      count.textContent = '未找到匹配产品'
+      grid.innerHTML = ''
+      return
+    }
+    count.textContent = `共匹配 ${result.length} 个产品`
+    grid.innerHTML = result.map(p => buildCard(p)).join('')
+    bindCardClicks(grid)
+  }
+
+  function renderParamsPage() {
+    // Reset form and clear results on page enter
+    $('#pv_voltage').value = 'all'
+    $('#pv_type').value = 'all'
+    $('#pv_line').value = 'all'
+    $('#pv_accuracy').value = ''
+    $('#pv_capacity').value = ''
+    $('#pv_dimension').value = ''
+    $('#paramsResults').style.display = 'none'
+  }
+
+  // =============================================
   // 搜索
   // =============================================
 
@@ -297,6 +360,7 @@
     closeSidebarFn()
     if (page === 'home') renderHomeProducts()
     if (page === 'products') { renderLineTabs(); renderTypeTabs(); renderVoltageTabs(); renderFilteredProducts() }
+    if (page === 'params') { renderParamsPage() }
   }
 
   function openSidebar() { sidebar.classList.add('open'); overlay.classList.add('visible') }
@@ -345,6 +409,8 @@
     searchInput.addEventListener('keydown', e => { if (e.key === 'Escape') closeSearch() })
     modalClose.addEventListener('click', closeModal)
     modalOverlay.addEventListener('click', e => { if (e.target === modalOverlay) closeModal() })
+    const paramBtn = $('#paramSearchBtn')
+    if (paramBtn) paramBtn.addEventListener('click', doParamFilter)
     document.addEventListener('keydown', e => {
       if (e.key === 'Escape') {
         if (modalOverlay.classList.contains('visible')) { closeModal(); return }

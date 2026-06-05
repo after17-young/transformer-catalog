@@ -30,6 +30,12 @@ const products = [
     summary: '户外环氧树脂浇注式电流互感器，适用于10kV电力系统',
     image: 'images/products/ct-10kv-01.jpg',
     cardImage: 'images/products/card/ct-10kv-01.jpg',
+    dimensions: {
+      length: '',
+      width: '',
+      height: '',
+      weight: '',
+    },
     specs: [
       { label: '额定电压', value: '10 kV' },
       { label: '额定频率', value: '50/60 Hz' },
@@ -50,6 +56,12 @@ const products = [
     summary: '户内干式电流互感器，适用于20kV中压配电系统',
     image: 'images/products/ct-20kv-01.jpg',
     cardImage: 'images/products/card/ct-20kv-01.jpg',
+    dimensions: {
+      length: '',
+      width: '',
+      height: '',
+      weight: '',
+    },
     specs: [
       { label: '额定电压', value: '20 kV' },
       { label: '额定频率', value: '50/60 Hz' },
@@ -69,6 +81,12 @@ const products = [
     summary: '35kV 户外干式电流互感器，适用于高电压等级变电站',
     image: 'images/products/ct-35kv-01.jpg',
     cardImage: 'images/products/card/ct-35kv-01.jpg',
+    dimensions: {
+      length: '',
+      width: '',
+      height: '',
+      weight: '',
+    },
     specs: [
       { label: '额定电压', value: '35 kV' },
       { label: '额定频率', value: '50/60 Hz' },
@@ -90,6 +108,12 @@ const products = [
     summary: '户内环氧树脂浇注式电压互感器，适用于10kV开关柜',
     image: 'images/products/vt-10kv-01.jpg',
     cardImage: 'images/products/card/vt-10kv-01.jpg',
+    dimensions: {
+      length: '',
+      width: '',
+      height: '',
+      weight: '',
+    },
     specs: [
       { label: '额定电压比', value: '10000/100V / 10000/√3 : 100/√3 V' },
       { label: '额定频率', value: '50/60 Hz' },
@@ -108,6 +132,12 @@ const products = [
     summary: '20kV 户内干式电压互感器，带剩余电压绕组',
     image: 'images/products/vt-20kv-01.jpg',
     cardImage: 'images/products/card/vt-20kv-01.jpg',
+    dimensions: {
+      length: '',
+      width: '',
+      height: '',
+      weight: '',
+    },
     specs: [
       { label: '额定电压比', value: '20000/√3 : 100/√3 : 100/3 V' },
       { label: '额定频率', value: '50/60 Hz' },
@@ -126,6 +156,12 @@ const products = [
     summary: '35kV 户外干式电压互感器，带剩余电压绕组',
     image: 'images/products/vt-35kv-01.jpg',
     cardImage: 'images/products/card/vt-35kv-01.jpg',
+    dimensions: {
+      length: '',
+      width: '',
+      height: '',
+      weight: '',
+    },
     specs: [
       { label: '额定电压比', value: '35000/√3 : 100/√3 : 100/3 V' },
       { label: '额定频率', value: '50/60 Hz' },
@@ -146,6 +182,12 @@ const products = [
     summary: '10kV 户外干式组合互感器，电流电压一体化设计',
     image: 'images/products/combo-01.jpg',
     cardImage: 'images/products/card/combo-01.jpg',
+    dimensions: {
+      length: '',
+      width: '',
+      height: '',
+      weight: '',
+    },
     specs: [
       { label: '额定电压', value: '10 kV' },
       { label: '额定频率', value: '50/60 Hz' },
@@ -167,6 +209,12 @@ const products = [
     summary: '电缆型零序电流互感器，用于单相接地故障检测',
     image: 'images/products/zero-01.jpg',
     cardImage: 'images/products/card/zero-01.jpg',
+    dimensions: {
+      length: '',
+      width: '',
+      height: '',
+      weight: '',
+    },
     specs: [
       { label: '额定电压', value: '10 kV' },
       { label: '额定频率', value: '50/60 Hz' },
@@ -188,6 +236,12 @@ const products = [
     summary: '机车专用干式电流互感器，适用于10kV机车配电',
     image: 'images/products/jqct-10kv-01.jpg',
     cardImage: 'images/products/card/jqct-10kv-01.jpg',
+    dimensions: {
+      length: '',
+      width: '',
+      height: '',
+      weight: '',
+    },
     specs: [
       { label: '额定电压', value: '10 kV' },
       { label: '额定频率', value: '50 Hz' },
@@ -207,6 +261,12 @@ const products = [
     summary: '机车专用干式电流互感器，适用于20kV机车配电',
     image: 'images/products/jqct-20kv-01.jpg',
     cardImage: 'images/products/card/jqct-20kv-01.jpg',
+    dimensions: {
+      length: '',
+      width: '',
+      height: '',
+      weight: '',
+    },
     specs: [
       { label: '额定电压', value: '20 kV' },
       { label: '额定频率', value: '50 Hz' },
@@ -226,6 +286,12 @@ const products = [
     summary: '机车专用干式电流互感器，适用于35kV机车配电',
     image: 'images/products/jqct-35kv-01.jpg',
     cardImage: 'images/products/card/jqct-35kv-01.jpg',
+    dimensions: {
+      length: '',
+      width: '',
+      height: '',
+      weight: '',
+    },
     specs: [
       { label: '额定电压', value: '35 kV' },
       { label: '额定频率', value: '50 Hz' },
@@ -247,6 +313,12 @@ const products = [
     summary: '机车专用干式电压互感器，适用于10kV机车配电',
     image: 'images/products/jqvt-10kv-01.jpg',
     cardImage: 'images/products/card/jqvt-10kv-01.jpg',
+    dimensions: {
+      length: '',
+      width: '',
+      height: '',
+      weight: '',
+    },
     specs: [
       { label: '额定电压比', value: '25/0.15/0.15 KV' },
       { label: '额定频率', value: '50 Hz' },
@@ -266,6 +338,12 @@ const products = [
     summary: '机车专用干式电压互感器，适用于20kV机车配电',
     image: 'images/products/jqvt-25-07.jpg',
     cardImage: 'images/products/card/jqvt-25-07.jpg',
+    dimensions: {
+      length: '',
+      width: '',
+      height: '',
+      weight: '',
+    },
     specs: [
       { label: '额定电压比', value: '25/0.15/0.15 KV' },
       { label: '额定频率', value: '50 Hz' },
@@ -285,6 +363,12 @@ const products = [
     summary: '机车专用干式电压互感器，适用于35kV机车配电',
     image: 'images/products/jqvt-35kv-01.jpg',
     cardImage: 'images/products/card/jqvt-35kv-01.jpg',
+    dimensions: {
+      length: '',
+      width: '',
+      height: '',
+      weight: '',
+    },
     specs: [
       { label: '额定电压比', value: '25/0.1 KV' },
       { label: '额定频率', value: '50 Hz' },
@@ -304,6 +388,12 @@ const products = [
     summary: '机车专用干式电压互感器，适用于20kV机车配电',
     image: 'images/products/jqvt-25-01.jpg',
     cardImage: 'images/products/card/jqvt-25-01.jpg',
+    dimensions: {
+      length: '',
+      width: '',
+      height: '',
+      weight: '',
+    },
     specs: [
       { label: '额定电压比', value: '25/0.1 KV' },
       { label: '额定频率', value: '50 Hz' },
@@ -323,6 +413,12 @@ const products = [
     summary: '机车专用干式电压互感器，适用于20kV机车配电',
     image: 'images/products/jqvt-25-02.jpg',
     cardImage: 'images/products/card/jqvt-25-02.jpg',
+    dimensions: {
+      length: '',
+      width: '',
+      height: '',
+      weight: '',
+    },
     specs: [
       { label: '额定电压比', value: '25/0.2/0.2/0.2 KV' },
       { label: '额定频率', value: '50 Hz' },
@@ -342,6 +438,12 @@ const products = [
     summary: '机车专用干式电压互感器，适用于20kV机车配电',
     image: 'images/products/jqvt-25-03.jpg',
     cardImage: 'images/products/card/jqvt-25-03.jpg',
+    dimensions: {
+      length: '',
+      width: '',
+      height: '',
+      weight: '',
+    },
     specs: [
       { label: '额定电压比', value: '25/0.15/0.15 KV' },
       { label: '额定频率', value: '50 Hz' },
@@ -361,6 +463,12 @@ const products = [
     summary: '机车专用干式电压互感器，适用于20kV机车配电',
     image: 'images/products/jqvt-25-04.jpg',
     cardImage: 'images/products/card/jqvt-25-04.jpg',
+    dimensions: {
+      length: '',
+      width: '',
+      height: '',
+      weight: '',
+    },
     specs: [
       { label: '额定电压比', value: '25/0.1 KV' },
       { label: '额定频率', value: '50 Hz' },
@@ -380,6 +488,12 @@ const products = [
     summary: '机车专用干式电压互感器，适用于20kV机车配电',
     image: 'images/products/jqvt-25-05.jpg',
     cardImage: 'images/products/card/jqvt-25-05.jpg',
+    dimensions: {
+      length: '',
+      width: '',
+      height: '',
+      weight: '',
+    },
     specs: [
       { label: '额定电压比', value: '25/0.1 KV' },
       { label: '额定频率', value: '50 Hz' },
@@ -399,6 +513,12 @@ const products = [
     summary: '机车专用干式电压互感器，适用于20kV机车配电',
     image: 'images/products/jqvt-25-06.jpg',
     cardImage: 'images/products/card/jqvt-25-06.jpg',
+    dimensions: {
+      length: '',
+      width: '',
+      height: '',
+      weight: '',
+    },
     specs: [
       { label: '额定电压比', value: '25/0.1/0.1 KV' },
       { label: '额定频率', value: '50 Hz' },
@@ -421,6 +541,12 @@ const products = [
     summary: '动车组专用电流互感器，适用于10kV动车配电',
     image: 'images/products/dect-10kv-01.jpg',
     cardImage: 'images/products/card/dect-10kv-01.jpg',
+    dimensions: {
+      length: '',
+      width: '',
+      height: '',
+      weight: '',
+    },
     specs: [
       { label: '额定电压', value: '10 kV' },
       { label: '额定频率', value: '50/60 Hz' },
@@ -440,6 +566,12 @@ const products = [
     summary: '动车组专用电流互感器，适用于20kV动车配电',
     image: 'images/products/dect-20kv-01.jpg',
     cardImage: 'images/products/card/dect-20kv-01.jpg',
+    dimensions: {
+      length: '',
+      width: '',
+      height: '',
+      weight: '',
+    },
     specs: [
       { label: '额定电压', value: '20 kV' },
       { label: '额定频率', value: '50/60 Hz' },
@@ -459,6 +591,12 @@ const products = [
     summary: '动车组专用电流互感器，适用于35kV动车配电',
     image: 'images/products/dect-35kv-01.jpg',
     cardImage: 'images/products/card/dect-35kv-01.jpg',
+    dimensions: {
+      length: '',
+      width: '',
+      height: '',
+      weight: '',
+    },
     specs: [
       { label: '额定电压', value: '35 kV' },
       { label: '额定频率', value: '50/60 Hz' },
@@ -480,6 +618,12 @@ const products = [
     summary: '动车组专用电压互感器，适用于10kV动车配电',
     image: 'images/products/devt-10kv-01.jpg',
     cardImage: 'images/products/card/devt-10kv-01.jpg',
+    dimensions: {
+      length: '',
+      width: '',
+      height: '',
+      weight: '',
+    },
     specs: [
       { label: '额定电压比', value: '10000/100V' },
       { label: '额定频率', value: '50/60 Hz' },
@@ -499,6 +643,12 @@ const products = [
     summary: '动车组专用电压互感器，适用于20kV动车配电',
     image: 'images/products/devt-20kv-01.jpg',
     cardImage: 'images/products/card/devt-20kv-01.jpg',
+    dimensions: {
+      length: '',
+      width: '',
+      height: '',
+      weight: '',
+    },
     specs: [
       { label: '额定电压比', value: '20000/100V' },
       { label: '额定频率', value: '50/60 Hz' },
@@ -518,6 +668,12 @@ const products = [
     summary: '动车组专用电压互感器，适用于35kV动车配电',
     image: 'images/products/devt-35kv-01.jpg',
     cardImage: 'images/products/card/devt-35kv-01.jpg',
+    dimensions: {
+      length: '',
+      width: '',
+      height: '',
+      weight: '',
+    },
     specs: [
       { label: '额定电压比', value: '35000/100V' },
       { label: '额定频率', value: '50/60 Hz' },
