@@ -263,17 +263,6 @@ const products = [
 
   // ───── 机车产品 - 电流互感器 ─────
   {
-    id: 'jqct-10kv-01', line: 'standard', type: 'rail_ct', voltage: '10KV',
-    name: 'JQG-10 型机车电流互感器',
-    summary: '机车专用干式电流互感器，适用于10kV机车配电',
-    image: 'images/products/jqct-10kv-01.jpg',
-    cardImage: 'images/products/card/jqct-10kv-01.jpg',
-    dimensions: {
-      length: '',
-      width: '',
-      height: '',
-      weight: '',
-    },
     specs: [
       { label: '额定电压', value: '10 kV' },
       { label: '额定频率', value: '50 Hz' },
@@ -296,17 +285,6 @@ const products = [
     ],
   },
   {
-    id: 'jqct-20kv-01', line: 'standard', type: 'rail_ct', voltage: '20KV',
-    name: 'JQG-20 型机车电流互感器',
-    summary: '机车专用干式电流互感器，适用于20kV机车配电',
-    image: 'images/products/jqct-20kv-01.jpg',
-    cardImage: 'images/products/card/jqct-20kv-01.jpg',
-    dimensions: {
-      length: '',
-      width: '',
-      height: '',
-      weight: '',
-    },
     specs: [
       { label: '额定电压', value: '20 kV' },
       { label: '额定频率', value: '50 Hz' },
@@ -329,17 +307,6 @@ const products = [
     ],
   },
   {
-    id: 'jqct-35kv-01', line: 'standard', type: 'rail_ct', voltage: '35KV',
-    name: 'JQG-35 型机车电流互感器',
-    summary: '机车专用干式电流互感器，适用于35kV机车配电',
-    image: 'images/products/jqct-35kv-01.jpg',
-    cardImage: 'images/products/card/jqct-35kv-01.jpg',
-    dimensions: {
-      length: '',
-      width: '',
-      height: '',
-      weight: '',
-    },
     specs: [
       { label: '额定电压', value: '35 kV' },
       { label: '额定频率', value: '50 Hz' },
@@ -618,141 +585,7 @@ const products = [
 
   // ───── LZZB9系列 - 支柱式电流互感器 ─────
   {
-    id: 'lzzb9-10q', line: 'standard', type: 'post', voltage: '10KV', series: 'lzzb9',
-    name: 'LZZB9-10Q 型电流互感器',
-    summary: '支柱式电流互感器，适用于10kV电力系统',
-    image: 'images/products/lzzb9-10q.jpg',
-    cardImage: 'images/products/card/lzzb9-10q.jpg',
-    dimensions: { length: '', width: '', height: '', weight: '' },
-    specs: [
-      { label: '额定电压', value: '10 kV' },
-      { label: '额定频率', value: '50/60 Hz' },
-      { label: '表面爬电距离', value: '245 mm' },
-      { label: '使用环境', value: '-40°C ~ +55°C' }
-    ],
-    description: 'LZZB9-10Q 系列支柱式电流互感器为环氧树脂浇注式结构，适用于 10kV 电力系统的电流测量、保护和计量。',
-    features: ['环氧树脂浇注绝缘', '高精度测量', '结构紧凑', '安装方便'],
-    accuracyCombos: [
-      { combo: '0.2(S)/0.2(S)', out02: '10', out05: '', out5p10: '' },
-      { combo: '0.2(S)/0.5(S)', out02: '10', out05: '10', out5p10: '' },
-      { combo: '0.5(S)/0.5(S)', out02: '', out05: '10', out5p10: '' },
-      { combo: '0.2(S)/5P10', out02: '10', out05: '', out5p10: '15' },
-      { combo: '0.5(S)/5P10', out02: '', out05: '10', out5p10: '15' }
-    ],
-    weight: '23',
-    ratings: [
-      { primary: '5', thermal: '0.6', dynamic: '1.5' },
-      { primary: '10', thermal: '2', dynamic: '5' },
-      { primary: '15', thermal: '5', dynamic: '12.5' },
-      { primary: '20,25', thermal: '6.3', dynamic: '15' },
-      { primary: '30', thermal: '12.6', dynamic: '31.5' },
-      { primary: '40', thermal: '16.2', dynamic: '40.5' },
-      { primary: '50,60', thermal: '21.6', dynamic: '54' },
-      { primary: '75', thermal: '32.4', dynamic: '81' },
-      { primary: '100', thermal: '47.2', dynamic: '85' },
-      { primary: '150~300', thermal: '63', dynamic: '100' },
-      { primary: '400~600', thermal: '72', dynamic: '100' },
-      { primary: '750~1250', thermal: '80', dynamic: '110' },
-      { primary: '1500~2500', thermal: '100', dynamic: '160' }
-    ]
-  },
   {
-    id: 'lzzj9-10q', line: 'standard', type: 'post', voltage: '10KV', series: 'lzzb9',
-    name: 'LZZJ9-10Q 型电流互感器',
-    summary: '支柱式电流互感器，适用于10kV电力系统',
-    image: 'images/products/lzzj9-10q.jpg',
-    cardImage: 'images/products/card/lzzj9-10q.jpg',
-    dimensions: { length: '', width: '', height: '', weight: '' },
-    specs: [
-      { label: '额定电压', value: '10 kV' },
-      { label: '额定频率', value: '50/60 Hz' },
-      { label: '表面爬电距离', value: '245 mm' },
-      { label: '使用环境', value: '-40°C ~ +55°C' }
-    ],
-    description: 'LZZJ9-10Q 系列支柱式电流互感器为环氧树脂浇注式结构，适用于 10kV 电力系统的电流测量、保护和计量。',
-    features: ['环氧树脂浇注绝缘', '高精度测量', '结构紧凑', '安装方便'],
-    accuracyCombos: [
-      { combo: '0.2(S)/0.2(S)', out02: '10', out05: '', out5p10: '' },
-      { combo: '0.2(S)/0.5(S)', out02: '10', out05: '10', out5p10: '' },
-      { combo: '0.5(S)/0.5(S)', out02: '', out05: '10', out5p10: '' },
-      { combo: '0.2(S)/5P10', out02: '10', out05: '', out5p10: '15' },
-      { combo: '0.5(S)/5P10', out02: '', out05: '10', out5p10: '15' }
-    ],
-    weight: '23',
-    ratings: [
-      { primary: '5', thermal: '0.6', dynamic: '1.5' },
-      { primary: '10', thermal: '2', dynamic: '5' },
-      { primary: '15', thermal: '5', dynamic: '12.5' },
-      { primary: '20,25', thermal: '6.3', dynamic: '15' },
-      { primary: '30', thermal: '12.6', dynamic: '31.5' },
-      { primary: '40', thermal: '16.2', dynamic: '40.5' },
-      { primary: '50,60', thermal: '21.6', dynamic: '54' },
-      { primary: '75', thermal: '32.4', dynamic: '81' },
-      { primary: '100', thermal: '47.2', dynamic: '85' },
-      { primary: '150~300', thermal: '63', dynamic: '100' },
-      { primary: '400~600', thermal: '72', dynamic: '100' },
-      { primary: '750~1250', thermal: '80', dynamic: '110' },
-      { primary: '1500~2500', thermal: '100', dynamic: '160' }
-    ]
-  }
-]
-
-// =========================================
-// 三级分类定义
-// =========================================
-
-const lines = [
-  { id: 'all', name: '全部' }
-]
-
-const types = [
-  { id: 'all', name: '全部' },
-  { id: 'current', name: '电流互感器', icon: '⚡' },
-  { id: 'voltage', name: '电压互感器', icon: '🔌' },
-  { id: 'combined', name: '组合互感器', icon: '🔗' }
-]
-
-const voltages = []
-
-const series = [
-  { id: 'all', name: '全部' },
-  { id: 'lzzb9', name: 'LZZB9系列' },
-  { id: 'lzzbj9', name: 'LZZBJ9系列' },
-  { id: 'lzzbj18', name: 'LZZBJ18系列' }
-]
-
-// 类型图标映射（给UI用）
-function getTypeIcon(typeId) {
-  const map = { current: '⚡', voltage: '🔌', combined: '🔗', zero: '🔄', post: '🏛️', wall: '🧱', outdoor: '🌲', vt36: '🔌', vtOutdoor: '🌲', rail_ct: '🚂', rail_vt: '🚄' }
-  return map[typeId] || '📦'
-}
-
-function getTypeName(typeId) {
-  const map = { current: '电流互感器', voltage: '电压互感器', combined: '组合互感器', zero: '零序电流互感器', post: '3.6-12KV支柱式电流互感器', wall: '3.6-12KV穿墙式电流互感器', outdoor: '3.6-12KV户外电流、电压互感器', vt36: '3.6-12KV电压互感器', vtOutdoor: '3.6-12KV户外电压互感器', rail_ct: '机车动车电流互感器', rail_vt: '机车动车电压互感器' }
-  return map[typeId] || '未知'
-}
-
-function getLineName(lineId) {
-  const map = {}
-  return map[lineId] || ''
-}
-
-// =========================================
-// 企业信息（修改为你公司的信息）
-// =========================================
-const companyInfo = {
-  name: '大北互',
-  fullName: '大连北方互感器集团有限公司',
-  shortName: '大北互',
-  slogan: '人品决定产品，科技决定未来',
-  desc: '大连北方互感器集团位于享誉"中国互感器之都"的大连市普兰店区，始建于1997年，占地面积40万平方米，建筑面积12万平方米，拥有员工1800多人。集团下辖大连北方互感器有限公司、大连北方真空开关有限公司、大连北方避雷器有限公司和湖南大北互互感器有限公司。目前自主研发、生产的主导产品有500kV级及以下各种互感器、避雷器，126kV级及以下各种断路器、隔离开关、绝缘件。\n\n企业重视科技创新，每年都有几十种新产品问世，拥有专利200多项，是全国互感器标准化技术委员会委员单位，制订国家标准及行业标准30多部，是国标和行标的主要撰稿单位之一。\n\n产品广泛应用于国内外重点工程，国家电网输配电线路及电站项目；中东、非洲、东南亚、俄联邦等国家电网项目；百余座350MW及以上火力、水利、新能源等发电项目；中石油、中石化、恒力石化、浙石化等千万吨以上炼油项目；首钢、日照、敬业、中天等超大规模钢铁项目；印尼青山、力勤、华友、紫金等大型矿业项目；奥运会、军运会、亚运会等大型基础建设配电项目；国内外40余条地铁、150余条电气化铁路项目；和谐、复兴号、澜沧号等高速列车项目；南水北调、西气东输、西电东送等大型民生工程项目。\n\n凭借优质的产品和服务，成为德国西门子、瑞士ABB、日本东芝、日立能源、法国施耐德、法国阿尔斯通、美国伊顿等国际知名企业的优秀供应商，并荣膺伊顿亚太区最佳供应商大奖和德国西门子公司可持续发展之星称号。\n\n大连北方互感器集团秉承"人品决定产品，科技决定未来"的核心价值观，履行"做强企业、致富员工、回馈社会"的使命，多年来累计为社会捐款物达1500万元。公司将为实现"持续领跑中国互感器行业，打造最具影响力的国际品牌"的愿景不懈奋斗。集团全体员工热忱欢迎与国内外友人密切合作，共铸辉煌。',
-  contact: {
-    address: '辽宁省大连市普兰店区丰荣工业园区',
-    email: '',
-    website: 'www.dlbf.com',
-    phone: '0411-83291638',
-    zip: '116203',
-  },
   certifications: [
     { icon: '🏅', name: 'ISO9001 质量认证' },
     { icon: '📜', name: '国家计量器具许可' },
