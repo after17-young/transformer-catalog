@@ -112,7 +112,7 @@
 
   function renderTypeTabs() {
     const show = filter.line === 'locomotive' || filter.line === 'train'
-      ? types.filter(t => t.id === 'all' || t.id === 'current' || t.id === 'voltage')
+      ? types.filter(t => t.id === 'all' || t.id === 'current' || t.id === 'post' || t.id === 'voltage')
       : types
     typeTabs.innerHTML = show.map(t =>
       `<button class="filter-tab${t.id === filter.type ? ' active' : ''}" data-type="${t.id}">${t.icon || ''} ${t.name}</button>`
@@ -163,7 +163,11 @@
   function getFilteredProducts() {
     return products.filter(p => {
       if (filter.line !== 'all' && p.line !== filter.line) return false
-      if (filter.type !== 'all' && p.type !== filter.type) return false
+      if (filter.type !== 'all') {
+        if (filter.type === 'current') {
+          if (p.type !== 'current' && p.type !== 'post') return false
+        } else if (p.type !== filter.type) return false
+      }
       if (filter.voltage !== 'all' && (p.type === 'current' || p.type === 'voltage' || p.type === 'post') && p.voltage !== filter.voltage) return false
       return true
     })

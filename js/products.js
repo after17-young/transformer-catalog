@@ -703,10 +703,10 @@ const lines = [
 const types = [
   { id: 'all', name: '全部' },
   { id: 'current', name: '电流互感器', icon: '⚡' },
+  { id: 'post', name: '3.6-12KV支柱式电流互感器', icon: '🏛️' },
   { id: 'voltage', name: '电压互感器', icon: '🔌' },
   { id: 'combined', name: '组合互感器', icon: '🔗' },
-  { id: 'zero', name: '零序电流互感器', icon: '🔄' },
-  { id: 'post', name: '3.6-12KV支柱式电流互感器', icon: '🏛️' }
+  { id: 'zero', name: '零序电流互感器', icon: '🔄' }
 ]
 
 const voltages = [
