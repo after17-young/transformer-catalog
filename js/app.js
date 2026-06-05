@@ -442,32 +442,32 @@
     let html = ''
     html += '<span class="product-card-type' + (p.type === 'voltage' ? ' voltage-t' : '') + '">' + (tn[p.type] || '') + '</span>'
     html += '<h3 class="product-card-name" style="margin:0 0 4px 0">' + esc(p.name) + '</h3>'
-    // 显示 ratings 表（电流互感器）
+    // 显示 ratings 表（电流互感器），所有列在一个可横向滑动的表格
     if (p.ratings && p.ratings.length) {
-      html += '<div class="modal-ratings"><h4>技术参数</h4><div class="ratings-table-wrap" style="overflow-x:auto"><table class="ratings-table">'
-      html += '<thead><tr><th>额定一次电流 (A)</th><th>一秒热电流 (kA)</th><th>动稳定电流 (kA)</th></tr></thead><tbody>'
+      html += '<div class="modal-ratings"><h4>技术参数</h4><div class="ratings-table-wrap" style="overflow-x:auto">'
+      // 主体表格
+      html += '<table class="ratings-table" style="min-width:900px"><thead><tr>'
+      html += '<th>额定一次电流 (A)</th><th>一秒热电流 (kA)</th><th>动稳定电流 (kA)</th>'
+      if (p.accuracyCombos && p.accuracyCombos.length) {
+        html += '<th>准确级组合</th><th>0.2(S) 输出 (VA)</th><th>0.5(S) 输出 (VA)</th><th>5P10 输出 (VA)</th>'
+      }
+      html += '<th>表面爬电距离 (mm)</th><th>重量 (kg)</th></tr></thead><tbody>'
       for (var i = 0; i < p.ratings.length; i++) {
         var r = p.ratings[i]
-        html += '<tr><td>' + esc(r.primary) + '</td><td>' + esc(r.thermal) + '</td><td>' + esc(r.dynamic) + '</td></tr>'
+        html += '<tr><td>' + esc(r.primary) + '</td><td>' + esc(r.thermal) + '</td><td>' + esc(r.dynamic) + '</td>'
+        html += '<td colspan="4"></td>'
+        html += '<td>245</td><td>' + esc(p.weight || '') + '</td></tr>'
+      }
+      // 追加准确级组合行（合并展示）
+      if (p.accuracyCombos && p.accuracyCombos.length) {
+        for (var i = 0; i < p.accuracyCombos.length; i++) {
+          var c = p.accuracyCombos[i]
+          html += '<tr><td colspan="3" style="color:#999;font-size:11px">准确级对应输出</td>'
+          html += '<td>' + esc(c.combo) + '</td><td>' + esc(c.out02) + '</td><td>' + esc(c.out05) + '</td><td>' + esc(c.out5p10) + '</td>'
+          html += '<td></td><td></td></tr>'
+        }
       }
       html += '</tbody></table></div></div>'
-    }
-    // 显示准确级组合表
-    if (p.accuracyCombos && p.accuracyCombos.length) {
-      html += '<div class="modal-ratings"><h4>准确级组合及额定二次输出</h4><div class="ratings-table-wrap" style="overflow-x:auto"><table class="ratings-table">'
-      html += '<thead><tr><th>准确级组合</th><th>0.2(S) 输出 (VA)</th><th>0.5(S) 输出 (VA)</th><th>5P10 输出 (VA)</th></tr></thead><tbody>'
-      for (var i = 0; i < p.accuracyCombos.length; i++) {
-        var c = p.accuracyCombos[i]
-        html += '<tr><td>' + esc(c.combo) + '</td><td>' + esc(c.out02) + '</td><td>' + esc(c.out05) + '</td><td>' + esc(c.out5p10) + '</td></tr>'
-      }
-      html += '</tbody></table></div></div>'
-      // 显示爬电距离和重量信息
-      if (p.weight || p.specs) {
-        html += '<div style="padding:8px 16px;font-size:13px;color:var(--text-secondary);display:flex;gap:20px">'
-        html += '<span>表面爬电距离: 245 mm</span>'
-        html += '<span>重量: ' + esc(p.weight || '') + ' kg</span>'
-        html += '</div>'
-      }
     }
     // 显示 vtRatings 表（电压互感器）
     if (p.vtRatings && p.vtRatings.length) {
