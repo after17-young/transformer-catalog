@@ -442,36 +442,31 @@
     let html = ''
     html += '<span class="product-card-type' + (p.type === 'voltage' ? ' voltage-t' : '') + '">' + (tn[p.type] || '') + '</span>'
     html += '<h3 class="product-card-name" style="margin:0 0 4px 0">' + esc(p.name) + '</h3>'
-    // 显示 ratings 表（电流互感器），所有列在一个可横向滑动的表格
+    // 显示 ratings 表（电流互感器），精确匹配 Excel 格式
     if (p.ratings && p.ratings.length) {
-      html += '<div class="modal-ratings"><h4>技术参数</h4>'
-      // 通用参数（所有电流等级共用）
-      html += '<div style="padding:6px 0 10px;font-size:13px;color:var(--text-secondary);display:flex;gap:20px;flex-wrap:wrap">'
-      html += '<span>📏 表面爬电距离: <strong>245 mm</strong></span>'
-      if (p.weight) html += '<span>⚖️ 重量: <strong>' + esc(p.weight) + ' kg</strong></span>'
-      html += '</div>'
-      html += '<div class="ratings-table-wrap" style="overflow-x:auto">'
-      // 主体表格
-      html += '<table class="ratings-table" style="min-width:900px"><thead><tr>'
-      html += '<th>额定一次电流 (A)</th><th>一秒热电流 (kA)</th><th>动稳定电流 (kA)</th>'
-      if (p.accuracyCombos && p.accuracyCombos.length) {
-        html += '<th>准确级组合</th><th>0.2(S) 输出 (VA)</th><th>0.5(S) 输出 (VA)</th><th>5P10 输出 (VA)</th>'
-      }
+      html += '<div class="modal-ratings"><h4>技术参数</h4><div class="ratings-table-wrap" style="overflow-x:auto">'
+      html += '<table class="ratings-table" style="min-width:1000px"><thead><tr>'
+      html += '<th>额定一次电流<br>Ipr (A)</th>'
+      html += '<th>一秒热电流<br>(kA 有效值)</th>'
+      html += '<th>动稳定电流<br>(kA 峰值)</th>'
+      html += '<th>准确级组合<br>(1S/2S)</th>'
+      html += '<th>额定二次输出 (VA)<br>0.2(S)</th>'
+      html += '<th>额定二次输出 (VA)<br>0.5(S)</th>'
+      html += '<th>额定二次输出 (VA)<br>5P10</th>'
+      html += '<th>表面爬电距离<br>(mm)</th>'
+      html += '<th>重量<br>(kg)</th>'
       html += '</tr></thead><tbody>'
-      for (var i = 0; i < p.ratings.length; i++) {
+      // 第一行：5A（含准确级组合、输出、爬电距离、重量）
+      var r0 = p.ratings[0]
+      html += '<tr><td>' + esc(r0.primary) + '</td><td>' + esc(r0.thermal) + '</td><td>' + esc(r0.dynamic) + '</td>'
+      html += '<td style="font-size:11px;line-height:1.6">' + buildAccuracyCombosText(p) + '</td>'
+      html += '<td>10</td><td>10</td><td>15</td>'
+      html += '<td>245</td><td>' + esc(p.weight || '') + '</td></tr>'
+      // 其余行
+      for (var i = 1; i < p.ratings.length; i++) {
         var r = p.ratings[i]
         html += '<tr><td>' + esc(r.primary) + '</td><td>' + esc(r.thermal) + '</td><td>' + esc(r.dynamic) + '</td>'
-        html += '<td colspan="4"></td></tr>'
-      }
-      // 追加准确级组合行（浅色背景区分）
-      if (p.accuracyCombos && p.accuracyCombos.length) {
-        html += '<tr style="background:#f5f7fa"><td colspan="3" style="font-weight:600;font-size:11px">准确级组合对应输出</td>'
-        html += '<td colspan="4" style="font-size:11px">不同准确级组合对应的额定二次输出值见下方</td></tr>'
-        for (var i = 0; i < p.accuracyCombos.length; i++) {
-          var c = p.accuracyCombos[i]
-          html += '<tr style="background:#f5f7fa"><td colspan="3" style="font-size:11px;color:#666"></td>'
-          html += '<td style="font-weight:500">' + esc(c.combo) + '</td><td>' + esc(c.out02) + '</td><td>' + esc(c.out05) + '</td><td>' + esc(c.out5p10) + '</td></tr>'
-        }
+        html += '<td></td><td></td><td></td><td></td><td></td><td></td></tr>'
       }
       html += '</tbody></table></div></div>'
     }
@@ -494,6 +489,15 @@
       html += '</table></div>'
     }
     return html
+  }
+
+  function buildAccuracyCombosText(p) {
+    if (!p.accuracyCombos || !p.accuracyCombos.length) return ''
+    var lines = []
+    for (var i = 0; i < p.accuracyCombos.length; i++) {
+      lines.push(esc(p.accuracyCombos[i].combo))
+    }
+    return lines.join('<br>')
   }
 
   function closeModal() { modalOverlay.classList.remove('visible'); document.body.style.overflow = '' }
