@@ -393,7 +393,20 @@
   function showDetail(p) {
     const ln = {}
     const tn = { current: '电流互感器', voltage: '电压互感器', combined: '组合互感器', zero: '零序电流互感器', post: '3.6-12KV支柱式电流互感器', wall: '3.6-12KV穿墙式电流互感器', outdoor: '3.6-12KV户外电流、电压互感器', vt36: '3.6-12KV电压互感器', vtOutdoor: '3.6-12KV户外电压互感器', rail_ct: '机车动车电流互感器', rail_vt: '机车动车电压互感器' }
-    modalBody.innerHTML = `
+    // 机车动车产品保持原样显示
+    if (p.type === 'rail_ct' || p.type === 'rail_vt') {
+      modalBody.innerHTML = buildFullDetail(p, tn, ln)
+    } else {
+      modalBody.innerHTML = buildSimpleDetail(p, tn, ln)
+    }
+    modalOverlay.classList.add('visible')
+    document.body.style.overflow = 'hidden'
+  }
+
+  function esc(s) { return (s || '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;') }
+
+  function buildFullDetail(p, tn, ln) {
+    return `
       <span class="line-label">${ln[p.line] || ''}</span>
       <span class="product-card-type${p.type === 'voltage' ? ' voltage-t' : ''}">${tn[p.type] || ''}</span>
       <h3 class="product-card-name">${p.name}</h3>
@@ -423,8 +436,58 @@
         </div>
       </div>` : ''}
       <div class="modal-features"><h4>产品特点</h4><ul>${p.features.map(f => `<li>${f}</li>`).join('')}</ul></div>`
-    modalOverlay.classList.add('visible')
-    document.body.style.overflow = 'hidden'
+  }
+
+  function buildSimpleDetail(p, tn, ln) {
+    let html = ''
+    html += '<span class="product-card-type' + (p.type === 'voltage' ? ' voltage-t' : '') + '">' + (tn[p.type] || '') + '</span>'
+    html += '<h3 class="product-card-name" style="margin:0 0 4px 0">' + esc(p.name) + '</h3>'
+    // 显示 ratings 表（电流互感器）
+    if (p.ratings && p.ratings.length) {
+      html += '<div class="modal-ratings"><h4>技术参数</h4><div class="ratings-table-wrap" style="overflow-x:auto"><table class="ratings-table">'
+      html += '<thead><tr><th>额定一次电流 (A)</th><th>一秒热电流 (kA)</th><th>动稳定电流 (kA)</th></tr></thead><tbody>'
+      for (var i = 0; i < p.ratings.length; i++) {
+        var r = p.ratings[i]
+        html += '<tr><td>' + esc(r.primary) + '</td><td>' + esc(r.thermal) + '</td><td>' + esc(r.dynamic) + '</td></tr>'
+      }
+      html += '</tbody></table></div></div>'
+    }
+    // 显示准确级组合表
+    if (p.accuracyCombos && p.accuracyCombos.length) {
+      html += '<div class="modal-ratings"><h4>准确级组合及额定二次输出</h4><div class="ratings-table-wrap" style="overflow-x:auto"><table class="ratings-table">'
+      html += '<thead><tr><th>准确级组合</th><th>0.2(S) 输出 (VA)</th><th>0.5(S) 输出 (VA)</th><th>5P10 输出 (VA)</th></tr></thead><tbody>'
+      for (var i = 0; i < p.accuracyCombos.length; i++) {
+        var c = p.accuracyCombos[i]
+        html += '<tr><td>' + esc(c.combo) + '</td><td>' + esc(c.out02) + '</td><td>' + esc(c.out05) + '</td><td>' + esc(c.out5p10) + '</td></tr>'
+      }
+      html += '</tbody></table></div></div>'
+      // 显示爬电距离和重量信息
+      if (p.weight || p.specs) {
+        html += '<div style="padding:8px 16px;font-size:13px;color:var(--text-secondary);display:flex;gap:20px">'
+        html += '<span>表面爬电距离: 245 mm</span>'
+        html += '<span>重量: ' + esc(p.weight || '') + ' kg</span>'
+        html += '</div>'
+      }
+    }
+    // 显示 vtRatings 表（电压互感器）
+    if (p.vtRatings && p.vtRatings.length) {
+      html += '<div class="modal-ratings"><h4>技术参数</h4><div class="ratings-table-wrap"><table class="ratings-table">'
+      html += '<thead><tr><th>额定电压比</th><th>准确级组合</th><th>额定二次输出 (VA)</th><th>极限输出 (VA)</th><th>额定绝缘水平</th><th>表面爬电距离 (mm)</th><th>重量 (kg)</th></tr></thead><tbody>'
+      for (var i = 0; i < p.vtRatings.length; i++) {
+        var r = p.vtRatings[i]
+        html += '<tr><td>' + esc(r.ratio) + '</td><td>' + esc(r.accuracy) + '</td><td>' + esc(r.output) + '</td><td>' + esc(r.limitOutput) + '</td><td>' + esc(r.insulation) + '</td><td>' + esc(r.creepage) + '</td><td>' + esc(r.weight) + '</td></tr>'
+      }
+      html += '</tbody></table></div></div>'
+    }
+    // 既没有 ratings、accuracyCombos 也没有 vtRatings 时显示 specs
+    if (!p.ratings && !p.vtRatings && !p.accuracyCombos) {
+      html += '<div class="modal-specs"><h4>技术参数</h4><table class="specs-table">'
+      for (var i = 0; i < p.specs.length; i++) {
+        html += '<tr><td>' + esc(p.specs[i].label) + '</td><td>' + esc(p.specs[i].value) + '</td></tr>'
+      }
+      html += '</table></div>'
+    }
+    return html
   }
 
   function closeModal() { modalOverlay.classList.remove('visible'); document.body.style.overflow = '' }

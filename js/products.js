@@ -812,27 +812,33 @@ const products = [
     specs: [
       { label: '额定电压', value: '10 kV' },
       { label: '额定频率', value: '50/60 Hz' },
-      { label: '准确级', value: '0.2(S)/0.5(S)/5P10' },
-      { label: '额定二次输出', value: '10/10/15 VA' },
       { label: '表面爬电距离', value: '245 mm' },
       { label: '使用环境', value: '-40°C ~ +55°C' }
     ],
     description: 'LZZB9-10Q 系列支柱式电流互感器为环氧树脂浇注式结构，适用于 10kV 电力系统的电流测量、保护和计量。',
     features: ['环氧树脂浇注绝缘', '高精度测量', '结构紧凑', '安装方便'],
+    accuracyCombos: [
+      { combo: '0.2(S)/0.2(S)', out02: '10', out05: '', out5p10: '' },
+      { combo: '0.2(S)/0.5(S)', out02: '10', out05: '10', out5p10: '' },
+      { combo: '0.5(S)/0.5(S)', out02: '', out05: '10', out5p10: '' },
+      { combo: '0.2(S)/5P10', out02: '10', out05: '', out5p10: '15' },
+      { combo: '0.5(S)/5P10', out02: '', out05: '10', out5p10: '15' }
+    ],
+    weight: '23',
     ratings: [
-      { primary: '5', thermal: '0.6', dynamic: '1.5', accuracy: '0.2(S)/0.5(S)/5P10', output: '10/10/15', creepage: '245', weight: '23' },
-      { primary: '10', thermal: '2', dynamic: '5', accuracy: '', output: '', creepage: '', weight: '' },
-      { primary: '15', thermal: '5', dynamic: '12.5', accuracy: '', output: '', creepage: '', weight: '' },
-      { primary: '20,25', thermal: '6.3', dynamic: '15', accuracy: '', output: '', creepage: '', weight: '' },
-      { primary: '30', thermal: '12.6', dynamic: '31.5', accuracy: '', output: '', creepage: '', weight: '' },
-      { primary: '40', thermal: '16.2', dynamic: '40.5', accuracy: '', output: '', creepage: '', weight: '' },
-      { primary: '50,60', thermal: '21.6', dynamic: '54', accuracy: '', output: '', creepage: '', weight: '' },
-      { primary: '75', thermal: '32.4', dynamic: '81', accuracy: '', output: '', creepage: '', weight: '' },
-      { primary: '100', thermal: '47.2', dynamic: '85', accuracy: '', output: '', creepage: '', weight: '' },
-      { primary: '150~300', thermal: '63', dynamic: '100', accuracy: '', output: '', creepage: '', weight: '' },
-      { primary: '400~600', thermal: '72', dynamic: '100', accuracy: '', output: '', creepage: '', weight: '' },
-      { primary: '750~1250', thermal: '80', dynamic: '110', accuracy: '', output: '', creepage: '', weight: '' },
-      { primary: '1500~2500', thermal: '100', dynamic: '160', accuracy: '', output: '', creepage: '', weight: '' }
+      { primary: '5', thermal: '0.6', dynamic: '1.5' },
+      { primary: '10', thermal: '2', dynamic: '5' },
+      { primary: '15', thermal: '5', dynamic: '12.5' },
+      { primary: '20,25', thermal: '6.3', dynamic: '15' },
+      { primary: '30', thermal: '12.6', dynamic: '31.5' },
+      { primary: '40', thermal: '16.2', dynamic: '40.5' },
+      { primary: '50,60', thermal: '21.6', dynamic: '54' },
+      { primary: '75', thermal: '32.4', dynamic: '81' },
+      { primary: '100', thermal: '47.2', dynamic: '85' },
+      { primary: '150~300', thermal: '63', dynamic: '100' },
+      { primary: '400~600', thermal: '72', dynamic: '100' },
+      { primary: '750~1250', thermal: '80', dynamic: '110' },
+      { primary: '1500~2500', thermal: '100', dynamic: '160' }
     ]
   },
   {
@@ -845,27 +851,33 @@ const products = [
     specs: [
       { label: '额定电压', value: '10 kV' },
       { label: '额定频率', value: '50/60 Hz' },
-      { label: '准确级', value: '0.2(S)/0.5(S)/5P10' },
-      { label: '额定二次输出', value: '10/10/15 VA' },
       { label: '表面爬电距离', value: '245 mm' },
       { label: '使用环境', value: '-40°C ~ +55°C' }
     ],
     description: 'LZZJ9-10Q 系列支柱式电流互感器为环氧树脂浇注式结构，适用于 10kV 电力系统的电流测量、保护和计量。',
     features: ['环氧树脂浇注绝缘', '高精度测量', '结构紧凑', '安装方便'],
+    accuracyCombos: [
+      { combo: '0.2(S)/0.2(S)', out02: '10', out05: '', out5p10: '' },
+      { combo: '0.2(S)/0.5(S)', out02: '10', out05: '10', out5p10: '' },
+      { combo: '0.5(S)/0.5(S)', out02: '', out05: '10', out5p10: '' },
+      { combo: '0.2(S)/5P10', out02: '10', out05: '', out5p10: '15' },
+      { combo: '0.5(S)/5P10', out02: '', out05: '10', out5p10: '15' }
+    ],
+    weight: '23',
     ratings: [
-      { primary: '5', thermal: '0.6', dynamic: '1.5', accuracy: '0.2(S)/0.5(S)/5P10', output: '10/10/15', creepage: '245', weight: '23' },
-      { primary: '10', thermal: '2', dynamic: '5', accuracy: '', output: '', creepage: '', weight: '' },
-      { primary: '15', thermal: '5', dynamic: '12.5', accuracy: '', output: '', creepage: '', weight: '' },
-      { primary: '20,25', thermal: '6.3', dynamic: '15', accuracy: '', output: '', creepage: '', weight: '' },
-      { primary: '30', thermal: '12.6', dynamic: '31.5', accuracy: '', output: '', creepage: '', weight: '' },
-      { primary: '40', thermal: '16.2', dynamic: '40.5', accuracy: '', output: '', creepage: '', weight: '' },
-      { primary: '50,60', thermal: '21.6', dynamic: '54', accuracy: '', output: '', creepage: '', weight: '' },
-      { primary: '75', thermal: '32.4', dynamic: '81', accuracy: '', output: '', creepage: '', weight: '' },
-      { primary: '100', thermal: '47.2', dynamic: '85', accuracy: '', output: '', creepage: '', weight: '' },
-      { primary: '150~300', thermal: '63', dynamic: '100', accuracy: '', output: '', creepage: '', weight: '' },
-      { primary: '400~600', thermal: '72', dynamic: '100', accuracy: '', output: '', creepage: '', weight: '' },
-      { primary: '750~1250', thermal: '80', dynamic: '110', accuracy: '', output: '', creepage: '', weight: '' },
-      { primary: '1500~2500', thermal: '100', dynamic: '160', accuracy: '', output: '', creepage: '', weight: '' }
+      { primary: '5', thermal: '0.6', dynamic: '1.5' },
+      { primary: '10', thermal: '2', dynamic: '5' },
+      { primary: '15', thermal: '5', dynamic: '12.5' },
+      { primary: '20,25', thermal: '6.3', dynamic: '15' },
+      { primary: '30', thermal: '12.6', dynamic: '31.5' },
+      { primary: '40', thermal: '16.2', dynamic: '40.5' },
+      { primary: '50,60', thermal: '21.6', dynamic: '54' },
+      { primary: '75', thermal: '32.4', dynamic: '81' },
+      { primary: '100', thermal: '47.2', dynamic: '85' },
+      { primary: '150~300', thermal: '63', dynamic: '100' },
+      { primary: '400~600', thermal: '72', dynamic: '100' },
+      { primary: '750~1250', thermal: '80', dynamic: '110' },
+      { primary: '1500~2500', thermal: '100', dynamic: '160' }
     ]
   }
 ]
