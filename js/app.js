@@ -126,7 +126,8 @@
         { id: 'all', name: '全部型号' },
         { id: 'post', name: '支柱式电流互感器' },
         { id: 'wall', name: '穿墙式电流互感器' },
-        { id: 'outdoor', name: '户外电流、电压互感器' }
+        { id: 'outdoor', name: '户外电流、电压互感器' },
+        { id: 'zero', name: '零序电流互感器' }
       ]
     } else if (filter.type === 'voltage') {
       subTypes = [
@@ -180,7 +181,7 @@
       if (filter.line !== 'all' && p.line !== filter.line) return false
       if (filter.type !== 'all') {
         if (filter.type === 'current') {
-          if (filter.subType === 'all') return p.type === 'post' || p.type === 'wall' || p.type === 'outdoor'
+          if (filter.subType === 'all') return p.type === 'post' || p.type === 'wall' || p.type === 'outdoor' || p.type === 'zero'
           return p.type === filter.subType
         } else if (filter.type === 'voltage') {
           if (filter.subType === 'all') return p.type === 'vt36' || p.type === 'vtOutdoor'
