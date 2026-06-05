@@ -23,107 +23,6 @@ const carouselSlides = [
 // 产品数据（示例，替换为实际产品）
 // =========================================
 const products = [
-  // ───── 标准产品 - 电流互感器 ─────
-  {
-    id: 'ct-10kv-01', line: 'standard', type: 'current', voltage: '10KV',
-    name: 'LW-10 型电流互感器',
-    summary: '户外环氧树脂浇注式电流互感器，适用于10kV电力系统',
-    image: 'images/products/ct-10kv-01.jpg',
-    cardImage: 'images/products/card/ct-10kv-01.jpg',
-    dimensions: {
-      length: '',
-      width: '',
-      height: '',
-      weight: '',
-    },
-    specs: [
-      { label: '额定电压', value: '10 kV' },
-      { label: '额定频率', value: '50/60 Hz' },
-      { label: '额定电流比', value: '100-600/5A / 100-600/1A' },
-      { label: '准确级', value: '0.2S / 0.5 / 5P20' },
-      { label: '额定短时热电流', value: '25 kA / 1s' },
-      { label: '额定动稳定电流', value: '63 kA' },
-      { label: '绝缘水平', value: '12/28/75 kV' },
-      { label: '使用环境', value: '-40°C ~ +55°C' },
-      { label: '执行标准', value: 'GB/T 20840.1-2010' }
-    ],
-    description: 'LW-10 系列电流互感器为户外环氧树脂浇注式结构，具有优良的绝缘性能和耐候性能。产品体积小、重量轻、安装方便，适用于户外配电系统及变电站的电流测量和保护。',
-    features: ['环氧树脂浇注，抗紫外线老化', '高精度测量，支持 0.2S 级', '较强的过电流能力', '免维护设计'],
-    ratings: [
-      { primary: 100, thermal: '', dynamic: '', accuracy: '', output: '', creepage: '', weight: '' },
-      { primary: 200, thermal: '', dynamic: '', accuracy: '', output: '', creepage: '', weight: '' },
-      { primary: 300, thermal: '', dynamic: '', accuracy: '', output: '', creepage: '', weight: '' },
-      { primary: 400, thermal: '', dynamic: '', accuracy: '', output: '', creepage: '', weight: '' },
-      { primary: 500, thermal: '', dynamic: '', accuracy: '', output: '', creepage: '', weight: '' },
-      { primary: 600, thermal: '', dynamic: '', accuracy: '', output: '', creepage: '', weight: '' }
-    ],
-  },
-  {
-    id: 'ct-20kv-01', line: 'standard', type: 'current', voltage: '20KV',
-    name: 'LZZB-20 型电流互感器',
-    summary: '户内干式电流互感器，适用于20kV中压配电系统',
-    image: 'images/products/ct-20kv-01.jpg',
-    cardImage: 'images/products/card/ct-20kv-01.jpg',
-    dimensions: {
-      length: '',
-      width: '',
-      height: '',
-      weight: '',
-    },
-    specs: [
-      { label: '额定电压', value: '20 kV' },
-      { label: '额定频率', value: '50/60 Hz' },
-      { label: '额定电流比', value: '200-1200/5A / 200-1200/1A' },
-      { label: '准确级', value: '0.2 / 0.5 / 5P20 / 10P20' },
-      { label: '额定短时热电流', value: '31.5 kA / 3s' },
-      { label: '额定动稳定电流', value: '80 kA' },
-      { label: '绝缘水平', value: '24/50/95 kV' },
-      { label: '使用环境', value: '-40°C ~ +55°C' }
-    ],
-    description: 'LZZB-20 系列电流互感器为户内干式结构，适用于 20kV 中压配电系统的电流测量、电能计量和继电保护。',
-    features: ['真空环氧浇注绝缘', '高精度多绕组设计', '局部放电量低', '可靠性高'],
-    ratings: [
-      { primary: 100, thermal: '', dynamic: '', accuracy: '', output: '', creepage: '', weight: '' },
-      { primary: 200, thermal: '', dynamic: '', accuracy: '', output: '', creepage: '', weight: '' },
-      { primary: 300, thermal: '', dynamic: '', accuracy: '', output: '', creepage: '', weight: '' },
-      { primary: 400, thermal: '', dynamic: '', accuracy: '', output: '', creepage: '', weight: '' },
-      { primary: 500, thermal: '', dynamic: '', accuracy: '', output: '', creepage: '', weight: '' },
-      { primary: 600, thermal: '', dynamic: '', accuracy: '', output: '', creepage: '', weight: '' }
-    ],
-  },
-  {
-    id: 'ct-35kv-01', line: 'standard', type: 'current', voltage: '35KV',
-    name: 'LZZBJ9-35 型电流互感器',
-    summary: '35kV 户外干式电流互感器，适用于高电压等级变电站',
-    image: 'images/products/ct-35kv-01.jpg',
-    cardImage: 'images/products/card/ct-35kv-01.jpg',
-    dimensions: {
-      length: '',
-      width: '',
-      height: '',
-      weight: '',
-    },
-    specs: [
-      { label: '额定电压', value: '35 kV' },
-      { label: '额定频率', value: '50/60 Hz' },
-      { label: '额定电流比', value: '200-1200/5A / 200-1200/1A' },
-      { label: '准确级', value: '0.2S / 0.5 / 5P20 / 10P20' },
-      { label: '额定短时热电流', value: '40 kA / 3s' },
-      { label: '额定动稳定电流', value: '100 kA' },
-      { label: '绝缘水平', value: '40.5/95/185 kV' },
-      { label: '使用环境', value: '-40°C ~ +55°C' }
-    ],
-    description: 'LZZBJ9-35 系列电流互感器为户外干式结构，采用进口环氧树脂真空浇注，具有优异的绝缘性能和抗老化能力。适用于 35kV 电力系统的电流测量、保护和计量。',
-    features: ['真空环氧浇注绝缘', '高精度多绕组设计', '抗紫外线、耐候性强', '适用于恶劣环境'],
-    ratings: [
-      { primary: 100, thermal: '', dynamic: '', accuracy: '', output: '', creepage: '', weight: '' },
-      { primary: 200, thermal: '', dynamic: '', accuracy: '', output: '', creepage: '', weight: '' },
-      { primary: 300, thermal: '', dynamic: '', accuracy: '', output: '', creepage: '', weight: '' },
-      { primary: 400, thermal: '', dynamic: '', accuracy: '', output: '', creepage: '', weight: '' },
-      { primary: 500, thermal: '', dynamic: '', accuracy: '', output: '', creepage: '', weight: '' },
-      { primary: 600, thermal: '', dynamic: '', accuracy: '', output: '', creepage: '', weight: '' }
-    ],
-  },
   // ───── 标准产品 - 电压互感器 ─────
   {
     id: 'vt-10kv-01', line: 'standard', type: 'voltage', voltage: '10KV',
@@ -207,10 +106,7 @@ const products = [
     ],
   },
 
-  // ───── 标准产品 - 组合互感器 ─────
-  {
-    id: 'combo-01', line: 'standard', type: 'combined', voltage: null,
-    name: 'JLSZV-10 型组合互感器',
+  // ───── 机车产品 - 电压互感器 ─────
     summary: '10kV 户外干式组合互感器，电流电压一体化设计',
     image: 'images/products/combo-01.jpg',
     cardImage: 'images/products/card/combo-01.jpg',
@@ -234,12 +130,7 @@ const products = [
     features: ['电流电压一体化，节约空间', '环氧树脂浇注绝缘', '安装简便，接线方便', '适用于户外计量箱']
   },
 
-  // ───── 标准产品 - 零序电流互感器 ─────
-  {
-    id: 'zero-01', line: 'standard', type: 'zero', voltage: null,
-    name: 'LJ-10 型零序电流互感器',
-    summary: '电缆型零序电流互感器，用于单相接地故障检测',
-    image: 'images/products/zero-01.jpg',
+  // ───── 机车产品 - 电压互感器 ─────
     cardImage: 'images/products/card/zero-01.jpg',
     dimensions: {
       length: '',
