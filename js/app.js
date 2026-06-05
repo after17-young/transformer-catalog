@@ -38,7 +38,7 @@
 
   // ---- 状态 ----
   let currentPage = 'home'
-  const filter = { line: 'all', type: 'all', voltage: 'all' }
+  const filter = { line: 'all', type: 'all', subType: 'all' }
   let carouselIndex = 0
   let carouselTimer = null
 
@@ -119,10 +119,15 @@
     ).join('')
   }
 
-  function renderVoltageTabs() {
-    if (filter.type === 'current' || filter.type === 'voltage' || filter.type === 'post') {
-      voltageTabs.innerHTML = voltages.map(v =>
-        `<button class="filter-tab voltage-tab${v.id === filter.voltage ? ' active' : ''}" data-voltage="${v.id}">${v.name}</button>`
+  function renderSubTypeTabs() {
+    if (filter.type === 'current') {
+      const subTypes = [
+        { id: 'all', name: '全部型号' },
+        { id: 'current', name: '电流互感器' },
+        { id: 'post', name: '3.6-12KV支柱式电流互感器' }
+      ]
+      voltageTabs.innerHTML = subTypes.map(s =>
+        `<button class="filter-tab voltage-tab${s.id === filter.subType ? ' active' : ''}" data-subtype="${s.id}">${s.name}</button>`
       ).join('')
       voltageTabs.style.display = ''
     } else {
@@ -132,18 +137,18 @@
   }
 
   function selectLine(id) {
-    filter.line = id; filter.type = 'all'; filter.voltage = 'all'
-    renderLineTabs(); renderTypeTabs(); renderVoltageTabs(); renderFilteredProducts()
+    filter.line = id; filter.type = 'all'; filter.subType = 'all'
+    renderLineTabs(); renderTypeTabs(); renderSubTypeTabs(); renderFilteredProducts()
   }
 
   function selectType(id) {
-    filter.type = id; filter.voltage = 'all'
-    renderTypeTabs(); renderVoltageTabs(); renderFilteredProducts()
+    filter.type = id; filter.subType = 'all'
+    renderTypeTabs(); renderSubTypeTabs(); renderFilteredProducts()
   }
 
-  function selectVoltage(id) {
-    filter.voltage = id
-    renderVoltageTabs(); renderFilteredProducts()
+  function selectSubType(id) {
+    filter.subType = id
+    renderSubTypeTabs(); renderFilteredProducts()
   }
 
   // 统一事件代理
@@ -152,8 +157,8 @@
     if (lineBtn) { e.preventDefault(); selectLine(lineBtn.dataset.line); return }
     const typeBtn = e.target.closest('#typeTabs .filter-tab')
     if (typeBtn) { e.preventDefault(); selectType(typeBtn.dataset.type); return }
-    const voltBtn = e.target.closest('#voltageTabs .filter-tab')
-    if (voltBtn) { e.preventDefault(); selectVoltage(voltBtn.dataset.voltage); return }
+    const subBtn = e.target.closest('#voltageTabs .filter-tab')
+    if (subBtn) { e.preventDefault(); selectSubType(subBtn.dataset.subtype); return }
   })
 
   // =============================================
@@ -165,10 +170,11 @@
       if (filter.line !== 'all' && p.line !== filter.line) return false
       if (filter.type !== 'all') {
         if (filter.type === 'current') {
-          if (p.type !== 'current' && p.type !== 'post') return false
+          if (filter.subType === 'current' && p.type !== 'current') return false
+          if (filter.subType === 'post' && p.type !== 'post') return false
+          if (filter.subType === 'all' && p.type !== 'current' && p.type !== 'post') return false
         } else if (p.type !== filter.type) return false
       }
-      if (filter.voltage !== 'all' && (p.type === 'current' || p.type === 'voltage' || p.type === 'post') && p.voltage !== filter.voltage) return false
       return true
     })
   }
@@ -366,7 +372,7 @@
     if (searchOverlay.classList.contains('open')) closeSearch()
     closeSidebarFn()
     if (page === 'home') renderHomeProducts()
-    if (page === 'products') { renderLineTabs(); renderTypeTabs(); renderVoltageTabs(); renderFilteredProducts() }
+    if (page === 'products') { renderLineTabs(); renderTypeTabs(); renderSubTypeTabs(); renderFilteredProducts() }
     if (page === 'params') { renderParamsPage() }
   }
 
@@ -402,7 +408,7 @@
         const page = el.dataset.pageLink
         if (page === 'products') {
           const line = el.dataset.line
-          if (line) { filter.line = line; filter.type = 'all'; filter.voltage = 'all' }
+          if (line) { filter.line = line; filter.type = 'all'; filter.subType = 'all' }
         }
         navigateTo(page)
       })
@@ -454,7 +460,7 @@
     // 预渲染产品筛选（在切换到产品页面时完全渲染）
     renderLineTabs()
     renderTypeTabs()
-    renderVoltageTabs()
+    renderSubTypeTabs()
     renderFilteredProducts()
     console.log('[PWA] 大北互 v2 已启动')
   }
