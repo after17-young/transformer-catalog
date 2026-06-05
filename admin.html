@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>大北互产品管理</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:-apple-system,sans-serif;background:#f0f2f5;color:#333;font-size:14px}
+#app{display:flex;height:100vh}
+.sidebar{width:300px;min-width:300px;background:#fff;border-right:1px solid #ddd;display:flex;flex-direction:column}
+.sidebar-header{padding:14px;border-bottom:1px solid #eee}
+.sidebar-header h2{font-size:16px}
+.toolbar{display:flex;gap:4px;margin-top:8px;flex-wrap:wrap}
+.toolbar button{padding:5px 10px;border-radius:5px;background:#fff;cursor:pointer;font-size:11px;border:1px solid #ccc}
+.toolbar button:hover{background:#e8f0fe}
+.toolbar button.primary{background:#0047ab;color:#fff;border-color:#0047ab}
+.search-box{padding:8px 14px}
+.search-box input{width:100%;padding:7px 10px;border:1px solid #ddd;border-radius:6px;font-size:13px;outline:0}
+.product-list{flex:1;overflow-y:auto}
+.product-item{padding:8px 14px;border-bottom:1px solid #f0f0f0;cursor:pointer;font-size:13px}
+.product-item:hover{background:#f5f7fa}
+.product-item.active{background:#e8f0fe;border-left:3px solid #0047ab}
+.product-item .id{font-size:11px;color:#999}
+.main{flex:1;overflow-y:auto;padding:20px;max-width:900px}
+.empty-state{display:flex;flex-direction:column;align-items:center;justify-content:center;height:100%;color:#999;gap:12px}
+.form-section{background:#fff;border-radius:8px;padding:14px;margin-bottom:14px;box-shadow:0 1px 3px rgba(0,0,0,.08)}
+.form-section h3{font-size:14px;font-weight:600;margin-bottom:10px;padding-bottom:6px;border-bottom:1px solid #eee}
+.form-row{display:flex;gap:10px;margin-bottom:8px}
+.form-field{flex:1;min-width:0}
+.form-field label{display:block;font-size:11px;font-weight:600;color:#666;margin-bottom:3px}
+.form-field input,.form-field select,.form-field textarea{width:100%;padding:6px 8px;border:1.5px solid #ddd;border-radius:5px;font-size:13px;outline:0;font-family:inherit}
+.form-field input:focus,.form-field select:focus,.form-field textarea:focus{border-color:#0047ab}
+.form-field textarea{min-height:50px;resize:vertical}
+.table-editor{width:100%;border-collapse:collapse;font-size:12px}
+.table-editor th{background:#f5f7fa;padding:5px 3px;text-align:center;font-weight:600;font-size:11px;border:1px solid #e0e0e0;white-space:nowrap}
+.table-editor td{padding:2px;border:1px solid #e0e0e0}
+.table-editor input{width:100%;border:none;padding:4px 3px;font-size:12px;text-align:center;outline:0;background:transparent}
+.table-editor input:focus{background:#e8f0fe}
+.table-editor .row-del{cursor:pointer;color:#d32f2f;font-weight:700;padding:2px 6px}
+.list-editor{display:flex;flex-wrap:wrap;gap:4px}
+.list-editor .item{display:flex;align-items:center;gap:3px;background:#f5f7fa;border-radius:4px;padding:2px 6px;font-size:12px}
+.list-editor .item .del{cursor:pointer;color:#d32f2f;font-weight:700;margin-left:4px}
+.list-editor .add-row{display:flex;gap:4px;margin-top:5px;width:100%}
+.list-editor .add-row input{flex:1;padding:3px 6px;border:1px solid #ddd;border-radius:4px;font-size:12px}
+.list-editor .add-row button{padding:3px 8px;border:1px solid #ccc;border-radius:4px;background:#fff;cursor:pointer;font-size:11px}
+.hidden{display:none!important}
+.status{position:fixed;top:10px;right:10px;padding:8px 16px;border-radius:6px;font-size:13px;z-index:999}
+.status.ok{background:#e8f5e9;color:#2e7d32}
+.status.err{background:#ffebee;color:#c62828}
+.load-screen{display:flex;flex-direction:column;align-items:center;justify-content:center;height:100vh;gap:12px}
+.load-screen h1{font-size:24px;color:#0047ab}
+.btn{padding:10px 20px;background:#0047ab;color:#fff;border:none;border-radius:8px;font-size:15px;cursor:pointer;text-decoration:none;display:inline-block}
+.btn:hover{opacity:.9}
+</style>
+</head>
+<body>
+<div id="loadScreen" class="load-screen">
+  <h1>🏭 大北互产品管理</h1>
+  <p>选择 products.js 文件开始管理</p>
+  <input type="file" id="fileInput" accept=".js" style="display:none">
+  <button class="btn" onclick="document.getElementById('fileInput').click()">📂 选择 js/products.js 文件</button>
+  <p style="font-size:12px;color:#999;max-width:400px;text-align:center">选好后可编辑产品参数、对照表等，完成后导出替换回仓库</p>
+</div>
+<div id="app" class="hidden">
+  <div class="sidebar">
+    <div class="sidebar-header">
+      <h2>📋 产品管理 <span id="count" style="font-size:12px;color:#999"></span></h2>
+      <div class="toolbar">
+        <button class="primary" onclick="saveAll()">💾 保存</button>
+        <button onclick="addProduct()">+ 新增</button>
+        <button onclick="doExport()">📥 导出JS</button>
+        <button onclick="doDelete()" style="color:#d32f2f">🗑️ 删除</button>
+      </div>
+    </div>
+    <div class="search-box"><input type="text" id="searchInput" placeholder="搜索..." oninput="renderList()"></div>
+    <div class="product-list" id="productList"></div>
+  </div>
+  <div class="main">
+    <div class="empty-state" id="emptyState"><h3>👈 选择一个产品</h3></div>
+    <div id="editPanel" class="hidden"></div>
+  </div>
+</div>
+<div id="status" class="status hidden"></div>
+
+<script>
+let products = [], currentId = null;
+
+// ===== 加载文件 =====
+document.getElementById('fileInput').onchange = function(e) {
+  const file = e.target.files[0];
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = function(ev) {
+    try {
+      // 用 eval 方式直接执行整个 JS 文件，提取 products
+      // 创建一个隔离环境
+      const mod = {};
+      const fn = new Function('module', 'exports', ev.target.result + '; return module.exports && module.exports.products ? module.exports.products : products;');
+      const data = fn(mod, {}, function(){});
+      if (!data || !data.length) throw new Error('没找到产品数据');
+      products = data;
+      document.getElementById('loadScreen').classList.add('hidden');
+      document.getElementById('app').classList.remove('hidden');
+      document.getElementById('count').textContent = '(' + products.length + '个)';
+      renderList();
+      show('✅ 加载成功！共 ' + products.length + ' 个产品', 'ok');
+    } catch(err) {
+      show('❌ 加载失败: ' + err.message, 'err');
+      console.error(err);
+    }
+  };
+  reader.readAsText(file);
+};
+
+function show(msg, type) {
+  const el = document.getElementById('status');
+  el.textContent = msg; el.className = 'status ' + type; el.classList.remove('hidden');
+  setTimeout(() => el.classList.add('hidden'), 3000);
+}
+
+function renderList() {
+  const q = document.getElementById('searchInput').value.toLowerCase();
+  const list = document.getElementById('productList');
+  const f = q ? products.filter(p => p.name.toLowerCase().includes(q) || p.id.toLowerCase().includes(q)) : products;
+  list.innerHTML = f.map(p => \`<div class="product-item\${p.id===currentId?' active':''}" onclick="select('\${p.id}')"><strong>\${esc(p.name)}</strong><div class="id">\${p.id} | \${p.type}\${p.voltage?' | '+p.voltage:''}</div></div>\`).join('');
+}
+
+function select(id) { currentId = id; renderList(); document.getElementById('emptyState').classList.add('hidden'); document.getElementById('editPanel').classList.remove('hidden'); renderEdit(id); }
+
+function esc(s) { return (s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
+
+function renderEdit(id) {
+  const p = products.find(x => x.id === id); if(!p) return;
+  document.getElementById('editPanel').innerHTML = \`
+    <div class="form-section">
+      <h3>📝 基本信息</h3>
+      <div class="form-row">
+        <div class="form-field"><label>ID</label><input value="\${esc(p.id)}" id="f_id" readonly style="background:#f5f5f5"></div>
+        <div class="form-field"><label>名称</label><input value="\${esc(p.name)}" id="f_name"></div>
+      </div>
+      <div class="form-row">
+        <div class="form-field"><label>类型 (type)</label><input value="\${esc(p.type)}" id="f_type"></div>
+        <div class="form-field"><label>产品线 (line)</label><input value="\${esc(p.line)}" id="f_line"></div>
+        <div class="form-field"><label>电压等级</label><input value="\${p.voltage||''}" id="f_voltage"></div>
+      </div>
+      <div class="form-row">
+        <div class="form-field"><label>摘要</label><input value="\${esc(p.summary)}" id="f_summary"></div>
+      </div>
+      <div class="form-row">
+        <div class="form-field"><label>卡片图片</label><input value="\${esc(p.cardImage||'')}" id="f_cimg"><div style="font-size:10px;color:#999">如 images/products/card/xxx.jpg</div></div>
+        <div class="form-field"><label>详情图片</label><input value="\${esc(p.image||'')}" id="f_img"><div style="font-size:10px;color:#999">如 images/products/xxx.jpg</div></div>
+      </div>
+    </div>
+
+    <div class="form-section">
+      <h3>📐 外形尺寸</h3>
+      <div class="form-row">
+        <div class="form-field"><label>长(mm)</label><input value="\${esc(p.dimensions?.length||'')}" id="f_dl"></div>
+        <div class="form-field"><label>宽(mm)</label><input value="\${esc(p.dimensions?.width||'')}" id="f_dw"></div>
+        <div class="form-field"><label>高(mm)</label><input value="\${esc(p.dimensions?.height||'')}" id="f_dh"></div>
+        <div class="form-field"><label>重(kg)</label><input value="\${esc(p.dimensions?.weight||'')}" id="f_dwt"></div>
+      </div>
+    </div>
+
+    <div class="form-section">
+      <h3>📋 规格参数 <button onclick="addSpec()" style="float:right;padding:2px 8px;border:1px solid #ccc;border-radius:4px;background:#fff;cursor:pointer;font-size:11px">+ 添加</button></h3>
+      <table class="table-editor" id="specsTable"><thead><tr><th>参数名</th><th>参数值</th><th></th></tr></thead><tbody>\${(p.specs||[]).map((s,i) => \`<tr><td><input value="\${esc(s.label)}" data-si="\${i}" data-sk="l"></td><td><input value="\${esc(s.value)}" data-si="\${i}" data-sk="v"></td><td class="row-del" onclick="rmSpec(\${i})">×</td></tr>\`).join('')}</tbody></table>
+    </div>
+
+    \${p.ratings ? \`
+    <div class="form-section">
+      <h3>⚡ 电流对照表 <button onclick="addRating()" style="float:right;padding:2px 8px;border:1px solid #ccc;border-radius:4px;background:#fff;cursor:pointer;font-size:11px">+ 行</button></h3>
+      <table class="table-editor"><thead><tr><th>一次电流</th><th>热电流</th><th>动稳定</th><th>准确级</th><th>二次输出</th><th>爬电距离</th><th>重量</th><th></th></tr></thead><tbody>\${p.ratings.map((r,i) => \`<tr>\${['primary','thermal','dynamic','accuracy','output','creepage','weight'].map(f => '<td><input value="\${esc(r[f]||'')}" data-ri="\${i}" data-rf="\${f}"></td>').join('')}<td class="row-del" onclick="rmRating(\${i})">×</td></tr>\`).join('')}</tbody></table>
+    </div>\` : ''}
+
+    \${p.vtRatings ? \`
+    <div class="form-section">
+      <h3>🔌 电压对照表 <button onclick="addVtRating()" style="float:right;padding:2px 8px;border:1px solid #ccc;border-radius:4px;background:#fff;cursor:pointer;font-size:11px">+ 行</button></h3>
+      <table class="table-editor"><thead><tr><th>电压比</th><th>准确级</th><th>二次输出</th><th>极限输出</th><th>绝缘水平</th><th>爬电距离</th><th>重量</th><th></th></tr></thead><tbody>\${p.vtRatings.map((r,i) => \`<tr>\${['ratio','accuracy','output','limitOutput','insulation','creepage','weight'].map(f => '<td><input value="\${esc(r[f]||'')}" data-vi="\${i}" data-vf="\${f}"></td>').join('')}<td class="row-del" onclick="rmVtRating(\${i})">×</td></tr>\`).join('')}</tbody></table>
+    </div>\` : ''}
+
+    <div class="form-section">
+      <h3>📄 产品描述</h3>
+      <textarea id="f_desc" rows="3" style="width:100%;padding:6px 8px;border:1.5px solid #ddd;border-radius:5px;font-size:13px;font-family:inherit;resize:vertical">\${esc(p.description)}</textarea>
+    </div>
+
+    <div class="form-section">
+      <h3>⭐ 产品特点</h3>
+      <div class="list-editor">
+        \${(p.features||[]).map((f,i) => \`<span class="item">\${esc(f)}<span class="del" onclick="rmFeat(\${i})">×</span></span>\`).join('')}
+        <div class="add-row"><input id="newFeat" placeholder="新特点..."><button onclick="addFeat()">添加</button></div>
+      </div>
+    </div>
+  \`;
+}
+
+function addSpec() { const p = products.find(x => x.id === currentId); p.specs.push({label:'',value:''}); renderEdit(currentId); }
+function rmSpec(i) { const p = products.find(x => x.id === currentId); p.specs.splice(i,1); renderEdit(currentId); }
+function addRating() { const p = products.find(x => x.id === currentId); p.ratings.push({primary:'',thermal:'',dynamic:'',accuracy:'',output:'',creepage:'',weight:''}); renderEdit(currentId); }
+function rmRating(i) { const p = products.find(x => x.id === currentId); p.ratings.splice(i,1); renderEdit(currentId); }
+function addVtRating() { const p = products.find(x => x.id === currentId); p.vtRatings.push({ratio:'',accuracy:'',output:'',limitOutput:'',insulation:'',creepage:'',weight:''}); renderEdit(currentId); }
+function rmVtRating(i) { const p = products.find(x => x.id === currentId); p.vtRatings.splice(i,1); renderEdit(currentId); }
+function addFeat() { const v=document.getElementById('newFeat'); if(!v.value.trim()) return; const p=products.find(x=>x.id===currentId); p.features.push(v.value.trim()); v.value=''; renderEdit(currentId); }
+function rmFeat(i) { const p=products.find(x=>x.id===currentId); p.features.splice(i,1); renderEdit(currentId); }
+
+function addProduct() {
+  const id='p' + Date.now();
+  products.push({id,name:'新产品',type:'current',line:'standard',summary:'',description:'',specs:[{label:'额定电压',value:''}],features:[],dimensions:{length:'',width:'',height:'',weight:''}});
+  select(id);
+}
+
+function doDelete() {
+  if(!confirm('确定删除当前产品？')) return;
+  const i=products.findIndex(x=>x.id===currentId);
+  if(i>-1) products.splice(i,1);
+  currentId=null; renderList();
+  document.getElementById('emptyState').classList.remove('hidden');
+  document.getElementById('editPanel').classList.add('hidden');
+  show('🗑️ 已删除', 'ok');
+}
+
+function saveAll() {
+  const p=products.find(x=>x.id===currentId);
+  if(!p) return;
+  p.name=document.getElementById('f_name').value;
+  p.type=document.getElementById('f_type').value;
+  p.line=document.getElementById('f_line').value;
+  p.voltage=document.getElementById('f_voltage').value||null;
+  p.summary=document.getElementById('f_summary').value;
+  p.cardImage=document.getElementById('f_cimg').value;
+  p.image=document.getElementById('f_img').value;
+  p.description=document.getElementById('f_desc').value;
+  p.dimensions=p.dimensions||{};
+  p.dimensions.length=document.getElementById('f_dl').value;
+  p.dimensions.width=document.getElementById('f_dw').value;
+  p.dimensions.height=document.getElementById('f_dh').value;
+  p.dimensions.weight=document.getElementById('f_dwt').value;
+  document.querySelectorAll('#specsTable input[data-si]').forEach(el => {
+    const i=parseInt(el.dataset.si),k=el.dataset.sk;
+    if(!p.specs[i]) p.specs[i]={label:'',value:''};
+    if(k==='l') p.specs[i].label=el.value; else p.specs[i].value=el.value;
+  });
+  document.querySelectorAll('[data-ri]').forEach(el => {
+    const i=parseInt(el.dataset.ri),f=el.dataset.rf;
+    if(!p.ratings[i]) p.ratings[i]={}; p.ratings[i][f]=el.value;
+  });
+  document.querySelectorAll('[data-vi]').forEach(el => {
+    const i=parseInt(el.dataset.vi),f=el.dataset.vf;
+    if(!p.vtRatings[i]) p.vtRatings[i]={}; p.vtRatings[i][f]=el.value;
+  });
+  renderList();
+  show('✅ 已保存！点击"📥 导出JS"下载文件', 'ok');
+}
+
+function doExport() {
+  // 生成完整的 products.js 文件
+  let js = JSON.stringify(products, null, 2);
+  // 格式化 JS 风格
+  js = js.replace(/"([a-zA-Z_$]\w*)":/g, '$1:');
+  js = js.replace(/'/g, "\\'");
+  js = js.replace(/"/g, "'");
+  // 处理数字不用引号
+  const content = `// 由管理工具导出
+const products = ${js};
+
+if (typeof module !== 'undefined') {
+  module.exports = { products };
+}`;
+  const blob = new Blob([content], {type:'application/javascript'});
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = 'products.js';
+  a.click();
+  show('✅ 导出成功！替换到仓库 js/products.js 即可', 'ok');
+}
+</script>
+</body>
+</html>
