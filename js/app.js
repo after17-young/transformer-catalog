@@ -37,16 +37,19 @@
 
   const pageTitles = { home: '首页', products: '产品中心', params: '智能选型', about: '企业简介' }
 
+  // ---- 编辑模式 ----
+  if (editMode) {
+    const style = document.createElement('style')
+    style.textContent = '.edit-btn{background:rgba(255,255,255,0.2);border:1px solid rgba(255,255,255,0.4);color:#fff;padding:4px 10px;border-radius:6px;font-size:11px;cursor:pointer;margin-left:8px}.edit-btn:hover{background:rgba(255,255,255,0.3)}.edit-bar{text-align:right;margin-top:12px;display:flex;gap:6px;justify-content:flex-end}.edit-bar button{padding:6px 14px;border-radius:6px;font-size:12px;cursor:pointer;border:1px solid #ccc}.edit-bar .primary{background:#0047ab;color:#fff;border-color:#0047ab}.edit-input{width:100%;padding:5px 8px;border:1.5px solid #ddd;border-radius:5px;font-size:13px;outline:0;font-family:inherit;box-sizing:border-box}.edit-input:focus{border-color:#0047ab}.edit-modal-editor table{width:100%;border-collapse:collapse;font-size:12px}.edit-modal-editor th{background:#f5f7fa;padding:5px 3px;text-align:center;font-weight:600;font-size:11px;border:1px solid #e0e0e0;white-space:nowrap}.edit-modal-editor td{padding:2px;border:1px solid #e0e0e0}.edit-modal-editor input{width:100%;border:none;padding:4px 3px;font-size:12px;text-align:center;outline:0;background:transparent;font-family:inherit}.edit-modal-editor input:focus{background:#e8f0fe}.edit-modal-editor .del{cursor:pointer;color:#d32f2f;text-align:center;font-weight:700;padding:2px 6px}.edit-old-badge{display:inline-block;background:#0047ab;color:#fff;font-size:10px;padding:2px 8px;border-radius:4px;margin-left:8px;vertical-align:middle}'
+    document.head.appendChild(style)
+  }
+
   // ---- 状态 ----
   let currentPage = 'home'
   const filter = { type: 'all', subType: 'all', series: 'all' }
   let carouselIndex = 0
   let carouselTimer = null
   let editMode = location.search.includes('edit=1')
-
-  // ---- 编辑模式 ----
-  if (editMode) {
-    const style = document.createElement('style')
 
   // =============================================
   // 轮播图
@@ -445,89 +448,86 @@
   }
 
   function buildEditForm(p, tn, ln) {
-    var html = ''
-    // Basic info
-    html += '<div style="max-height:70vh;overflow-y:auto">'
-    html += '<span class="product-card-type' + (p.type === 'voltage' ? ' voltage-t' : '') + '">' + (tn[p.type] || '') + '</span>'
-    html += '<h3 class="product-card-name">编辑: ' + esc(p.name) + '</h3>'
-    html += '<div style="margin:10px 0">'
-    html += '<div style="display:flex;gap:8px;margin-bottom:6px">'
-    html += '<div style="flex:1"><label style="font-size:11px;font-weight:600;color:#666">名称</label><input class="edit-input" value="' + esc(p.name) + '" id="ef_name"></div>'
-    html += '<div style="flex:1"><label style="font-size:11px;font-weight:600;color:#666">ID</label><input class="edit-input" value="' + esc(p.id) + '" id="ef_id" readonly style="background:#f5f5f5"></div>'
-    html += '</div>'
-    html += '<div style="display:flex;gap:8px;margin-bottom:6px">'
-    html += '<div style="flex:1"><label style="font-size:11px;font-weight:600;color:#666">类型</label><input class="edit-input" value="' + esc(p.type) + '" id="ef_type"></div>'
-    html += '<div style="flex:1"><label style="font-size:11px;font-weight:600;color:#666">电压</label><input class="edit-input" value="' + esc(p.voltage||'') + '" id="ef_voltage"></div>'
-    html += '<div style="flex:1"><label style="font-size:11px;font-weight:600;color:#666">产品线</label><input class="edit-input" value="' + esc(p.line) + '" id="ef_line"></div>'
-    html += '</div>'
-    html += '<div style="margin-bottom:6px"><label style="font-size:11px;font-weight:600;color:#666">摘要</label><input class="edit-input" value="' + esc(p.summary) + '" id="ef_summary"></div>'
-    html += '<div style="display:flex;gap:8px;margin-bottom:6px">'
-    html += '<div style="flex:1"><label style="font-size:11px;font-weight:600;color:#666">卡片图片</label><input class="edit-input" value="' + esc(p.cardImage||'') + '" id="ef_cimg"></div>'
-    html += '<div style="flex:1"><label style="font-size:11px;font-weight:600;color:#666">详情图片</label><input class="edit-input" value="' + esc(p.image||'') + '" id="ef_img"></div>'
-    html += '</div></div>'
-    // Dimensions
-    html += '<div style="margin:10px 0"><h4 style="font-size:13px;font-weight:600;margin-bottom:6px">📐 外形尺寸</h4>'
-    html += '<div style="display:flex;gap:8px">'
-    html += '<div style="flex:1"><label>长(mm)</label><input class="edit-input" value="' + esc(p.dimensions?.length||'') + '" id="ef_dl"></div>'
-    html += '<div style="flex:1"><label>宽(mm)</label><input class="edit-input" value="' + esc(p.dimensions?.width||'') + '" id="ef_dw"></div>'
-    html += '<div style="flex:1"><label>高(mm)</label><input class="edit-input" value="' + esc(p.dimensions?.height||'') + '" id="ef_dh"></div>'
-    html += '<div style="flex:1"><label>重(kg)</label><input class="edit-input" value="' + esc(p.dimensions?.weight||'') + '" id="ef_dwt"></div>'
-    html += '</div></div>'
-    // Specs table
-    html += '<div style="margin:10px 0"><h4 style="font-size:13px;font-weight:600;margin-bottom:6px">📋 规格参数 <button onclick="editAddSpec()" style="float:right;padding:2px 8px;border:1px solid #ccc;border-radius:4px;background:#fff;cursor:pointer;font-size:11px">+</button></h4>'
-    html += '<div class="edit-modal-editor"><table><thead><tr><th>参数名</th><th>参数值</th><th></th></tr></thead><tbody>'
-    for (var i = 0; i < p.specs.length; i++) {
-      html += '<tr><td><input class="edit-input" value="' + esc(p.specs[i].label) + '" data-si="' + i + '" data-sk="l"></td>'
-      html += '<td><input class="edit-input" value="' + esc(p.specs[i].value) + '" data-si="' + i + '" data-sk="v"></td>'
-      html += '<td class="del" onclick="editRmSpec(' + i + ')">&#10005;</td></tr>'
-    }
-    html += '</tbody></table></div></div>'
-    // Ratings
-    if (p.ratings) {
-      html += '<div style="margin:10px 0"><h4 style="font-size:13px;font-weight:600;margin-bottom:6px">⚡ 电流对照表 <button onclick="editAddRating()" style="float:right;padding:2px 8px;border:1px solid #ccc;border-radius:4px;background:#fff;cursor:pointer;font-size:11px">+ 行</button></h4>'
-      html += '<div class="edit-modal-editor"><table><thead><tr><th>一次电流</th><th>热电流</th><th>动稳定</th><th>准确级</th><th>二次输出</th><th>爬电距离</th><th>重量</th><th></th></tr></thead><tbody>'
-      for (var i = 0; i < p.ratings.length; i++) {
-        html += '<tr>'
-        var rflds = ['primary','thermal','dynamic','accuracy','output','creepage','weight']
-        for (var j = 0; j < rflds.length; j++) {
-          html += '<td><input class="edit-input" value="' + esc(p.ratings[i][rflds[j]]||'') + '" data-ri="' + i + '" data-rf="' + rflds[j] + '"></td>'
-        }
-        html += '<td class="del" onclick="editRmRating(' + i + ')">&#10005;</td></tr>'
-      }
-      html += '</tbody></table></div></div>'
-    }
-    // VtRatings
-    if (p.vtRatings) {
-      html += '<div style="margin:10px 0"><h4 style="font-size:13px;font-weight:600;margin-bottom:6px">🔌 电压对照表 <button onclick="editAddVtRating()" style="float:right;padding:2px 8px;border:1px solid #ccc;border-radius:4px;background:#fff;cursor:pointer;font-size:11px">+ 行</button></h4>'
-      html += '<div class="edit-modal-editor"><table><thead><tr><th>电压比</th><th>准确级</th><th>二次输出</th><th>极限输出</th><th>绝缘水平</th><th>爬电距离</th><th>重量</th><th></th></tr></thead><tbody>'
-      for (var i = 0; i < p.vtRatings.length; i++) {
-        html += '<tr>'
-        var vflds = ['ratio','accuracy','output','limitOutput','insulation','creepage','weight']
-        for (var j = 0; j < vflds.length; j++) {
-          html += '<td><input class="edit-input" value="' + esc(p.vtRatings[i][vflds[j]]||'') + '" data-vi="' + i + '" data-vf="' + vflds[j] + '"></td>'
-        }
-        html += '<td class="del" onclick="editRmVtRating(' + i + ')">&#10005;</td></tr>'
-      }
-      html += '</tbody></table></div></div>'
-    }
-    // Description
-    html += '<div style="margin:10px 0"><h4 style="font-size:13px;font-weight:600;margin-bottom:6px">📄 描述</h4>'
-    html += '<textarea class="edit-input" id="ef_desc" rows="3" style="resize:vertical">' + esc(p.description) + '</textarea></div>'
-    // Features
-    html += '<div style="margin:10px 0"><h4 style="font-size:13px;font-weight:600;margin-bottom:6px">⭐ 产品特点'
-    html += '<span style="float:right"><input id="ef_newFeat" placeholder="新特点..." style="padding:3px 6px;border:1px solid #ddd;border-radius:4px;font-size:11px;width:140px"><button onclick="editAddFeat()" style="padding:3px 8px;border:1px solid #ccc;border-radius:4px;background:#fff;cursor:pointer;font-size:11px;margin-left:4px">添加</button></span>'
-    html += '</h4><div>'
-    for (var i = 0; i < p.features.length; i++) {
-      html += '<span style="display:inline-flex;align-items:center;gap:4px;background:#f5f7fa;border-radius:4px;padding:2px 6px;font-size:12px;margin:2px">' + esc(p.features[i])
-      html += '<span class="del" onclick="editRmFeat(' + i + ')" style="cursor:pointer;color:#d32f2f;font-weight:700;margin-left:3px">&#10005;</span></span>'
-    }
-    html += '</div></div>'
-    // Buttons
-    html += '<div class="edit-bar">'
-    html += '<button onclick="editSave()" class="primary">💾 保存</button>'
-    html += '<button onclick="editExport()">📥 导出JS</button>'
-    html += '</div></div>'
-    return html
+    // Build editable specs table
+    const specsRows = p.specs.map((s, i) =>
+      `<tr><td><input class="edit-input" value="${esc(s.label)}" data-si="${i}" data-sk="l"></td><td><input class="edit-input" value="${esc(s.value)}" data-si="${i}" data-sk="v"></td><td class="del" onclick="editRmSpec(${i})">×</td></tr>`
+    ).join('')
+
+    // Build ratings table
+    const ratingsHtml = p.ratings ? `
+      <div class="modal-ratings"><h4>⚡ 电流对照表 <button onclick="editAddRating()" style="float:right;padding:2px 8px;border:1px solid #ccc;border-radius:4px;background:#fff;cursor:pointer;font-size:11px">+ 行</button></h4>
+      <div class="edit-modal-editor"><table><thead><tr><th>一次电流</th><th>热电流</th><th>动稳定</th><th>准确级</th><th>二次输出</th><th>爬电距离</th><th>重量</th><th></th></tr></thead><tbody>
+      ${p.ratings.map((r, i) => `<tr>${['primary','thermal','dynamic','accuracy','output','creepage','weight'].map(f => `<td><input class="edit-input" value="${esc(r[f]||'')}" data-ri="${i}" data-rf="${f}"></td>`).join('')}<td class="del" onclick="editRmRating(${i})">×</td></tr>`).join('')}
+      </tbody></table></div></div>` : ''
+
+    const vtRatingsHtml = p.vtRatings ? `
+      <div class="modal-ratings"><h4>🔌 电压对照表 <button onclick="editAddVtRating()" style="float:right;padding:2px 8px;border:1px solid #ccc;border-radius:4px;background:#fff;cursor:pointer;font-size:11px">+ 行</button></h4>
+      <div class="edit-modal-editor"><table><thead><tr><th>电压比</th><th>准确级</th><th>二次输出</th><th>极限输出</th><th>绝缘水平</th><th>爬电距离</th><th>重量</th><th></th></tr></thead><tbody>
+      ${p.vtRatings.map((r, i) => `<tr>${['ratio','accuracy','output','limitOutput','insulation','creepage','weight'].map(f => `<td><input class="edit-input" value="${esc(r[f]||'')}" data-vi="${i}" data-vf="${f}"></td>`).join('')}<td class="del" onclick="editRmVtRating(${i})">×</td></tr>`).join('')}
+      </tbody></table></div></div>` : ''
+
+    // Features editable list
+    const featHtml = p.features.map((f, i) =>
+      `<span style="display:inline-flex;align-items:center;gap:4px;background:#f5f7fa;border-radius:4px;padding:2px 6px;font-size:12px;margin:2px">${esc(f)}<span class="del" onclick="editRmFeat(${i})" style="cursor:pointer;color:#d32f2f;font-weight:700;margin-left:3px">×</span></span>`
+    ).join('')
+
+    return `
+      <div style="max-height:70vh;overflow-y:auto">
+      <span class="product-card-type${p.type === 'voltage' ? ' voltage-t' : ''}">${tn[p.type] || ''}</span>
+      <h3 class="product-card-name">编辑: ${p.name}</h3>
+
+      <div style="margin:10px 0">
+        <div style="display:flex;gap:8px;margin-bottom:6px">
+          <div style="flex:1"><label style="font-size:11px;font-weight:600;color:#666">名称</label><input class="edit-input" value="${esc(p.name)}" id="ef_name"></div>
+          <div style="flex:1"><label style="font-size:11px;font-weight:600;color:#666">ID</label><input class="edit-input" value="${esc(p.id)}" id="ef_id" readonly style="background:#f5f5f5"></div>
+        </div>
+        <div style="display:flex;gap:8px;margin-bottom:6px">
+          <div style="flex:1"><label style="font-size:11px;font-weight:600;color:#666">类型</label><input class="edit-input" value="${esc(p.type)}" id="ef_type"></div>
+          <div style="flex:1"><label style="font-size:11px;font-weight:600;color:#666">电压</label><input class="edit-input" value="${esc(p.voltage||'')}" id="ef_voltage"></div>
+          <div style="flex:1"><label style="font-size:11px;font-weight:600;color:#666">产品线</label><input class="edit-input" value="${esc(p.line)}" id="ef_line"></div>
+        </div>
+        <div style="margin-bottom:6px"><label style="font-size:11px;font-weight:600;color:#666">摘要</label><input class="edit-input" value="${esc(p.summary)}" id="ef_summary"></div>
+        <div style="display:flex;gap:8px;margin-bottom:6px">
+          <div style="flex:1"><label style="font-size:11px;font-weight:600;color:#666">卡片图片</label><input class="edit-input" value="${esc(p.cardImage||'')}" id="ef_cimg"></div>
+          <div style="flex:1"><label style="font-size:11px;font-weight:600;color:#666">详情图片</label><input class="edit-input" value="${esc(p.image||'')}" id="ef_img"></div>
+        </div>
+      </div>
+
+      <div style="margin:10px 0">
+        <h4 style="font-size:13px;font-weight:600;margin-bottom:6px;padding-bottom:4px;border-bottom:1px solid #eee">📐 外形尺寸</h4>
+        <div style="display:flex;gap:8px">
+          <div style="flex:1"><label style="font-size:11px;font-weight:600;color:#666">长(mm)</label><input class="edit-input" value="${esc(p.dimensions?.length||'')}" id="ef_dl"></div>
+          <div style="flex:1"><label style="font-size:11px;font-weight:600;color:#666">宽(mm)</label><input class="edit-input" value="${esc(p.dimensions?.width||'')}" id="ef_dw"></div>
+          <div style="flex:1"><label style="font-size:11px;font-weight:600;color:#666">高(mm)</label><input class="edit-input" value="${esc(p.dimensions?.height||'')}" id="ef_dh"></div>
+          <div style="flex:1"><label style="font-size:11px;font-weight:600;color:#666">重(kg)</label><input class="edit-input" value="${esc(p.dimensions?.weight||'')}" id="ef_dwt"></div>
+        </div>
+      </div>
+
+      <div style="margin:10px 0">
+        <h4 style="font-size:13px;font-weight:600;margin-bottom:6px;padding-bottom:4px;border-bottom:1px solid #eee">📋 规格参数 <button onclick="editAddSpec()" style="float:right;padding:2px 8px;border:1px solid #ccc;border-radius:4px;background:#fff;cursor:pointer;font-size:11px">+</button></h4>
+        <div class="edit-modal-editor"><table><thead><tr><th>参数名</th><th>参数值</th><th></th></tr></thead><tbody>${specsRows}</tbody></table></div>
+      </div>
+
+      ${ratingsHtml}
+      ${vtRatingsHtml}
+
+      <div style="margin:10px 0">
+        <h4 style="font-size:13px;font-weight:600;margin-bottom:6px;padding-bottom:4px;border-bottom:1px solid #eee">📄 描述</h4>
+        <textarea class="edit-input" id="ef_desc" rows="3" style="resize:vertical">${esc(p.description)}</textarea>
+      </div>
+
+      <div style="margin:10px 0">
+        <h4 style="font-size:13px;font-weight:600;margin-bottom:6px;padding-bottom:4px;border-bottom:1px solid #eee">⭐ 产品特点
+          <span style="float:right"><input id="ef_newFeat" placeholder="新特点..." style="padding:3px 6px;border:1px solid #ddd;border-radius:4px;font-size:11px;width:140px"><button onclick="editAddFeat()" style="padding:3px 8px;border:1px solid #ccc;border-radius:4px;background:#fff;cursor:pointer;font-size:11px;margin-left:4px">添加</button></span>
+        </h4>
+        <div>${featHtml || '<span style="font-size:12px;color:#999">暂无</span>'}</div>
+      </div>
+
+      <div class="edit-bar">
+        <button onclick="editSave()" class="primary">💾 保存</button>
+        <button onclick="editExport()">📥 导出JS</button>
+      </div>
+      </div>`
   }
 
   function closeModal() { modalOverlay.classList.remove('visible'); document.body.style.overflow = '' }

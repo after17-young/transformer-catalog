@@ -59,7 +59,7 @@ body{font-family:-apple-system,sans-serif;background:#f0f2f5;color:#333;font-siz
   <h1>🏭 大北互产品管理</h1>
   <p>选择 products.js 文件开始管理</p>
   <input type="file" id="fileInput" accept=".js" style="display:none">
-  <button class="btn" id="loadBtn" onclick="document.getElementById('fileInput').click()">📂 选择 js/products.js 文件</button>
+  <button class="btn" onclick="document.getElementById('fileInput').click()">📂 选择 js/products.js 文件</button>
   <p style="font-size:12px;color:#999;max-width:400px;text-align:center">选好后可编辑产品参数、对照表等，完成后导出替换回仓库</p>
 </div>
 <div id="app" class="hidden">
@@ -85,107 +85,38 @@ body{font-family:-apple-system,sans-serif;background:#f0f2f5;color:#333;font-siz
 
 <script>
 let products = [], currentId = null;
-let originalFileContent = '';  // 保存完整原文件内容，供导出使用
 
 // ===== 加载文件 =====
 document.getElementById('fileInput').onchange = function(e) {
   const file = e.target.files[0];
   if (!file) return;
-  document.getElementById('loadBtn').textContent = '⏳ 正在解析...';
   const reader = new FileReader();
   reader.onload = function(ev) {
     try {
-      const content = ev.target.result;
-      originalFileContent = content;
-      const data = parseProductsFromJS(content);
+      // 用 eval 方式直接执行整个 JS 文件，提取 products
+      // 创建一个隔离环境
+      const mod = {};
+      const fn = new Function('module', 'exports', ev.target.result + '; return module.exports && module.exports.products ? module.exports.products : products;');
+      const data = fn(mod, {}, function(){});
       if (!data || !data.length) throw new Error('没找到产品数据');
       products = data;
       document.getElementById('loadScreen').classList.add('hidden');
       document.getElementById('app').classList.remove('hidden');
       document.getElementById('count').textContent = '(' + products.length + '个)';
       renderList();
+      show('✅ 加载成功！共 ' + products.length + ' 个产品', 'ok');
     } catch(err) {
-      show('❌ ' + err.message, 'err');
-      document.getElementById('loadBtn').textContent = '📂 选择 js/products.js 文件';
+      show('❌ 加载失败: ' + err.message, 'err');
       console.error(err);
     }
   };
   reader.readAsText(file);
 };
 
-/** 从 JS 源码中提取 products 数组 */
-function parseProductsFromJS(code) {
-  // 定位 const products = [
-  const marker = 'const products = [';
-  const start = code.indexOf(marker);
-  if (start === -1) throw new Error('未找到 const products = [');
-
-  const begin = start + marker.length - 1; // 指向 [
-  let depth = 0, inStr = false, strChar = '', result = '';
-  let escaped = false;
-
-  for (let i = begin; i < code.length; i++) {
-    const ch = code[i];
-
-    if (inStr) {
-      if (escaped) { escaped = false; result += ch; continue; }
-      if (ch === '\\') { escaped = true; result += ch; continue; }
-      if (ch === strChar) { inStr = false; }
-      result += ch;
-      continue;
-    }
-
-    if (ch === "'" || ch === '"' || ch === '`') {
-      inStr = true;
-      strChar = ch;
-      result += ch;
-      continue;
-    }
-
-    if (ch === '[') depth++;
-    if (ch === ']') depth--;
-
-    if (depth === 0) {
-      result += ch;
-      break;
-    }
-    result += ch;
-  }
-
-  if (depth !== 0) throw new Error('数组括号不匹配，解析失败');
-
-  // 现在 result 是 [ ... ] 格式的 JS 对象数组
-  // 转为 JSON:
-  // 1. 单引号转双引号（小心处理字符串内的内容）
-  let json = '';
-  inStr = false; strChar = ''; escaped = false;
-
-  for (let i = 0; i < result.length; i++) {
-    const ch = result[i];
-    if (inStr) {
-      if (escaped) { escaped = false; json += ch; continue; }
-      if (ch === '\\') { escaped = true; json += ch; continue; }
-      if (ch === strChar) { inStr = false; json += '"'; continue; }
-      json += ch;
-      continue;
-    }
-    if (ch === "'") { inStr = true; strChar = "'"; json += '"'; continue; }
-    json += ch;
-  }
-
-  // 2. 给属性名加引号: { name: "xxx" } -> { "name": "xxx" }
-  json = json.replace(/([{,]\s*)(\w+)(\s*:)/g, '$1"$2"$3:');
-
-  // 3. 删除末尾逗号
-  json = json.replace(/,\s*([}\]])/g, '$1');
-
-  return JSON.parse(json);
-}
-
 function show(msg, type) {
   const el = document.getElementById('status');
   el.textContent = msg; el.className = 'status ' + type; el.classList.remove('hidden');
-  setTimeout(() => el.classList.add('hidden'), 5000);
+  setTimeout(() => el.classList.add('hidden'), 3000);
 }
 
 function renderList() {
@@ -323,33 +254,25 @@ function saveAll() {
 }
 
 function doExport() {
-  // 替换原文件中的 products 数组，保留其余所有代码
-  const marker = 'const products = [';
-  const start = originalFileContent.indexOf(marker);
-  if (start === -1) { show('❌ 无法导出: 找不到 products 数组', 'err'); return; }
+  // 生成完整的 products.js 文件
+  let js = JSON.stringify(products, null, 2);
+  // 格式化 JS 风格
+  js = js.replace(/"([a-zA-Z_$]\w*)":/g, '$1:');
+  js = js.replace(/'/g, "\\'");
+  js = js.replace(/"/g, "'");
+  // 处理数字不用引号
+  const content = `// 由管理工具导出
+const products = ${js};
 
-  // 找到原数组结束位置
-  const end = originalFileContent.indexOf('\n\n', start + 100) > 0 ?
-    originalFileContent.indexOf('\n\n', start + 100) :
-    originalFileContent.indexOf('\n//', start + 100);
-
-  // 生成新数组字符串
-  let newArr = JSON.stringify(products, null, 2);
-  newArr = newArr.replace(/"([a-zA-Z_$]\w*)":/g, '$1:');  // 去属性名引号
-  newArr = newArr.replace(/'/g, "\\'");                    // 转义单引号
-  newArr = newArr.replace(/"/g, "'");                      // 双引号转单引号
-
-  const before = originalFileContent.substring(0, start);
-  const after = end > 0 ? originalFileContent.substring(end) : '';
-
-  const content = before + 'const products = ' + newArr + after;
-
+if (typeof module !== 'undefined') {
+  module.exports = { products };
+}`;
   const blob = new Blob([content], {type:'application/javascript'});
   const a = document.createElement('a');
   a.href = URL.createObjectURL(blob);
   a.download = 'products.js';
   a.click();
-  show('✅ 导出成功！覆盖到 js/products.js 后 git push 部署', 'ok');
+  show('✅ 导出成功！替换到仓库 js/products.js 即可', 'ok');
 }
 </script>
 </body>
