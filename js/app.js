@@ -198,8 +198,7 @@
 
   function showSeriesGallery(seriesId) {
     var galleryDef = {
-      lzzbj9: { start: 40, end: 58, name: 'LZZBJ9系列参数图' },
-      lzzbj18: { start: 65, end: 67, name: 'LZZBJ18-10Q/150b/2(3,4)系列参数图' }
+      lzzbj9: { start: 40, end: 58, name: 'LZZBJ9系列参数图' }
     }
     var def = galleryDef[seriesId]
     if (!def) return
@@ -265,7 +264,7 @@
       return
     }
     // LZZBJ9 series: show in modal
-    if (filter.type === 'current' && filter.subType === 'post' && (filter.series === 'lzzbj9' || filter.series === 'lzzbj18')) {
+    if (filter.type === 'current' && filter.subType === 'post' && filter.series === 'lzzbj9') {
       emptyState.style.display = 'none'
       productGrid.innerHTML = ''
       showSeriesGallery(filter.series)
@@ -454,7 +453,7 @@
     modalOverlay.classList.remove('visible')
     document.body.style.overflow = ''
     // Gallery series: return to series selection
-    if (filter.series === 'lzzbj9' || filter.series === 'lzzbj18') {
+    if (filter.series === 'lzzbj9') {
       filter.series = 'all'
       renderSeriesView()
       renderFilteredProducts()
