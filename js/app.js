@@ -456,7 +456,7 @@
         var r = p.ratings[i]
         html += '<tr><td>' + esc(r.primary) + '</td><td>' + esc(r.thermal) + '</td><td>' + esc(r.dynamic) + '</td>'
         html += '<td colspan="4"></td>'
-        html += '<td>245</td><td>' + esc(p.weight || '') + '</td></tr>'
+        html += '<td>' + (i === 0 ? '245' : '') + '</td><td>' + (i === 0 ? esc(p.weight || '') : '') + '</td></tr>'
       }
       // 追加准确级组合行（合并展示）
       if (p.accuracyCombos && p.accuracyCombos.length) {
