@@ -1,0 +1,657 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>大北互 - 产品管理</title>
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { font-family: -apple-system, sans-serif; background: #f0f2f5; color: #333; }
+body.admin-mode { }
+#app { display: flex; height: 100vh; }
+/* 侧边栏 */
+.sidebar { width: 320px; min-width: 320px; background: #fff; border-right: 1px solid #ddd; display: flex; flex-direction: column; }
+.sidebar-header { padding: 16px; border-bottom: 1px solid #eee; }
+.sidebar-header h2 { font-size: 18px; margin-bottom: 8px; }
+.toolbar { display: flex; gap: 6px; flex-wrap: wrap; }
+.toolbar button { padding: 6px 12px; border: 1px solid #ccc; border-radius: 6px; background: #fff; cursor: pointer; font-size: 12px; }
+.toolbar button:hover { background: #e8f0fe; }
+.toolbar button.primary { background: #0047ab; color: #fff; border-color: #0047ab; }
+.toolbar button.danger { background: #d32f2f; color: #fff; border-color: #d32f2f; }
+.search-box { padding: 10px 16px; }
+.search-box input { width: 100%; padding: 8px 12px; border: 1px solid #ddd; border-radius: 8px; font-size: 13px; outline: none; }
+.search-box input:focus { border-color: #0047ab; }
+.product-list { flex: 1; overflow-y: auto; }
+.product-item { padding: 10px 16px; border-bottom: 1px solid #f0f0f0; cursor: pointer; font-size: 13px; }
+.product-item:hover { background: #f5f7fa; }
+.product-item.active { background: #e8f0fe; border-left: 3px solid #0047ab; }
+.product-item .id { font-size: 11px; color: #999; }
+.product-item .tags { margin-top: 4px; display: flex; gap: 4px; flex-wrap: wrap; }
+.product-item .tag { font-size: 10px; padding: 1px 6px; border-radius: 4px; background: #e8f0fe; color: #0047ab; }
+.product-item .tag.voltage { background: #fff3e0; color: #e65100; }
+.product-item .tag.rail { background: #e8f5e9; color: #2e7d32; }
+/* 编辑区 */
+.main { flex: 1; overflow-y: auto; padding: 0; }
+.empty-state { display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100%; color: #999; }
+.empty-state h3 { font-size: 20px; margin-bottom: 8px; color: #666; }
+.edit-form { padding: 20px; max-width: 900px; }
+.form-section { margin-bottom: 20px; background: #fff; border-radius: 10px; padding: 16px; box-shadow: 0 1px 3px rgba(0,0,0,0.08); }
+.form-section h3 { font-size: 14px; font-weight: 600; margin-bottom: 12px; padding-bottom: 8px; border-bottom: 1px solid #eee; }
+.form-row { display: flex; gap: 12px; margin-bottom: 10px; }
+.form-field { flex: 1; min-width: 0; }
+.form-field label { display: block; font-size: 11px; font-weight: 600; color: #666; margin-bottom: 4px; }
+.form-field input, .form-field select, .form-field textarea { width: 100%; padding: 7px 10px; border: 1.5px solid #ddd; border-radius: 6px; font-size: 13px; outline: none; font-family: inherit; }
+.form-field input:focus, .form-field select:focus, .form-field textarea:focus { border-color: #0047ab; }
+.form-field textarea { min-height: 60px; resize: vertical; }
+.form-field .help { font-size: 10px; color: #999; margin-top: 2px; }
+/* 表格编辑 */
+.table-editor { width: 100%; border-collapse: collapse; font-size: 12px; }
+.table-editor th { background: #f5f7fa; padding: 6px 4px; text-align: center; font-weight: 600; font-size: 11px; border: 1px solid #e0e0e0; white-space: nowrap; }
+.table-editor td { padding: 2px; border: 1px solid #e0e0e0; }
+.table-editor input { width: 100%; border: none; padding: 5px 4px; font-size: 12px; text-align: center; outline: none; background: transparent; }
+.table-editor input:focus { background: #e8f0fe; }
+.table-editor .row-del { cursor: pointer; color: #d32f2f; text-align: center; font-size: 16px; padding: 2px 6px; }
+.table-actions { margin-top: 8px; display: flex; gap: 6px; }
+.table-actions button { padding: 4px 10px; border: 1px solid #ccc; border-radius: 4px; background: #fff; cursor: pointer; font-size: 11px; }
+.table-actions button:hover { background: #e8f0fe; }
+/* 列表编辑器 */
+.list-editor { display: flex; flex-wrap: wrap; gap: 6px; }
+.list-editor .item { display: flex; align-items: center; gap: 4px; background: #f5f7fa; border-radius: 4px; padding: 3px 6px; font-size: 12px; }
+.list-editor .item .del { cursor: pointer; color: #d32f2f; font-weight: 700; }
+.list-editor .add-row { display: flex; gap: 4px; margin-top: 6px; width: 100%; }
+.list-editor .add-row input { flex: 1; padding: 4px 8px; border: 1px solid #ddd; border-radius: 4px; font-size: 12px; }
+.list-editor .add-row button { padding: 4px 10px; border: 1px solid #ccc; border-radius: 4px; background: #fff; cursor: pointer; font-size: 11px; }
+/* 加载页 */
+.load-screen { display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100vh; gap: 16px; }
+.load-screen h1 { font-size: 24px; color: #0047ab; }
+.load-screen p { color: #666; }
+.load-btn { padding: 12px 24px; background: #0047ab; color: #fff; border: none; border-radius: 8px; font-size: 15px; cursor: pointer; }
+.load-btn:hover { opacity: 0.9; }
+.hidden { display: none !important; }
+/* 图片预览 */
+.img-preview { width: 100px; height: 100px; object-fit: contain; border: 1px solid #ddd; border-radius: 4px; background: #f9f9f9; }
+</style>
+</head>
+<body>
+<div id="loadScreen" class="load-screen">
+  <h1>🏭 大北互产品管理</h1>
+  <p>加载 products.js 文件开始管理</p>
+  <input type="file" id="fileInput" accept=".js" style="display:none">
+  <button class="load-btn" onclick="document.getElementById('fileInput').click()">📂 选择 products.js 文件</button>
+  <p style="font-size:12px;color:#999">选择仓库中的 js/products.js 文件</p>
+</div>
+
+<div id="app" class="hidden">
+  <div class="sidebar">
+    <div class="sidebar-header">
+      <h2>📋 产品列表</h2>
+      <div class="toolbar">
+        <button onclick="exportJS()" class="primary">📥 导出 products.js</button>
+        <button onclick="exportJSON()">📤 导出 JSON</button>
+        <button onclick="importJSON()">📂 导入 JSON</button>
+        <input type="file" id="jsonInput" accept=".json" style="display:none" onchange="handleJSONImport(event)">
+      </div>
+    </div>
+    <div class="search-box">
+      <input type="text" id="searchInput" placeholder="搜索产品名称/型号..." oninput="renderList()" autocomplete="off">
+    </div>
+    <div class="product-list" id="productList"></div>
+  </div>
+  <div class="main">
+    <div class="empty-state" id="emptyState">
+      <h3>👈 选择产品编辑</h3>
+      <p>点击左侧产品开始修改参数</p>
+    </div>
+    <div id="editPanel" class="hidden">
+      <form class="edit-form" id="editForm"></form>
+    </div>
+  </div>
+</div>
+
+<script>
+// =============================================
+// 数据
+// =============================================
+let products = []
+let currentId = null
+let series = []
+let lines = []
+let types = []
+let voltages = []
+
+// =============================================
+// 加载文件
+// =============================================
+document.getElementById('fileInput').addEventListener('change', function(e) {
+  const file = e.target.files[0]
+  if (!file) return
+  const reader = new FileReader()
+  reader.onload = function(ev) {
+    const content = ev.target.result
+    try {
+      // Extract products array using eval-like parsing
+      const match = content.match(/const products\s*=\s*(\[[\s\S]*?\])\s*\n\s*\n\s*\/\/\s*={3,}/)
+      if (!match) {
+        alert('无法解析 products.js 文件，请确认文件格式正确')
+        return
+      }
+      // Use Function constructor to parse
+      const data = new Function('return ' + match[1])()
+      products = data
+
+      // Extract series
+      const sMatch = content.match(/const series\s*=\s*(\[[\s\S]*?\])\s*\n\s*\n/)
+      if (sMatch) series = new Function('return ' + sMatch[1])()
+
+      // Extract types
+      const tMatch = content.match(/const types\s*=\s*(\[[\s\S]*?\])\s*\n\s*\n/)
+      if (tMatch) types = new Function('return ' + tMatch[1])()
+
+      // Extract lines
+      const lMatch = content.match(/const lines\s*=\s*(\[[\s\S]*?\])\s*\n\s*\n/)
+      if (lMatch) lines = new Function('return ' + lMatch[1])()
+
+      // Extract voltages
+      const vMatch = content.match(/const voltages\s*=\s*(\[[\s\S]*?\])\s*\n\s*\n/)
+      if (vMatch) voltages = new Function('return ' + vMatch[1])()
+
+      document.getElementById('loadScreen').classList.add('hidden')
+      document.getElementById('app').classList.remove('hidden')
+      renderList()
+    } catch(err) {
+      alert('解析失败: ' + err.message)
+      console.error(err)
+    }
+  }
+  reader.readAsText(file)
+})
+
+// =============================================
+// 渲染产品列表
+// =============================================
+function renderList() {
+  const q = document.getElementById('searchInput').value.toLowerCase()
+  const list = document.getElementById('productList')
+
+  const filtered = q ? products.filter(p =>
+    p.name.toLowerCase().includes(q) || p.id.toLowerCase().includes(q)
+  ) : products
+
+  const typeNames = { current: '电流互感器', voltage: '电压互感器', combined: '组合互感器', zero: '零序电流互感器',
+    post: '支柱式', wall: '穿墙式', outdoor: '户外', vt36: '3.6-12KV电压', vtOutdoor: '户外电压',
+    rail_ct: '机车动车电流', rail_vt: '机车动车电压' }
+
+  list.innerHTML = filtered.map(p => `
+    <div class="product-item${p.id === currentId ? ' active' : ''}" onclick="selectProduct('${p.id}')">
+      <div><strong>${p.name}</strong></div>
+      <div class="id">ID: ${p.id}</div>
+      <div class="tags">
+        <span class="tag">${typeNames[p.type] || p.type}</span>
+        ${p.voltage ? `<span class="tag voltage">${p.voltage}</span>` : ''}
+        ${p.line !== 'standard' ? `<span class="tag rail">${p.line}</span>` : ''}
+      </div>
+    </div>
+  `).join('')
+}
+
+// =============================================
+// 选择产品
+// =============================================
+function selectProduct(id) {
+  currentId = id
+  renderList()
+  document.getElementById('emptyState').classList.add('hidden')
+  document.getElementById('editPanel').classList.remove('hidden')
+  renderEditForm(id)
+}
+
+// =============================================
+// 渲染编辑表单
+// =============================================
+function renderEditForm(id) {
+  const p = products.find(x => x.id === id)
+  if (!p) return
+
+  const typeOptions = ['current','voltage','combined','zero','post','wall','outdoor','vt36','vtOutdoor','rail_ct','rail_vt']
+  const typeNames = { current: '电流互感器', voltage: '电压互感器', combined: '组合互感器', zero: '零序电流互感器',
+    post: '支柱式电流互感器', wall: '穿墙式电流互感器', outdoor: '户外电流、电压互感器',
+    vt36: '3.6-12KV电压互感器', vtOutdoor: '3.6-12KV户外电压互感器', rail_ct: '机车动车电流互感器', rail_vt: '机车动车电压互感器' }
+  const lineOptions = ['standard','rail']
+
+  const html = `
+    <div class="form-section">
+      <h3>📝 基本信息</h3>
+      <div class="form-row">
+        <div class="form-field">
+          <label>产品ID</label>
+          <input type="text" value="${p.id}" id="f_id" readonly style="background:#f5f5f5">
+          <div class="help">ID不可修改</div>
+        </div>
+        <div class="form-field">
+          <label>产品名称</label>
+          <input type="text" value="${esc(p.name)}" id="f_name">
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-field">
+          <label>类型</label>
+          <select id="f_type">${typeOptions.map(t => `<option value="${t}"${p.type===t?' selected':''}>${typeNames[t]||t}</option>`).join('')}</select>
+        </div>
+        <div class="form-field">
+          <label>产品线</label>
+          <select id="f_line">${lineOptions.map(l => `<option value="${l}"${p.line===l?' selected':''}>${l==='standard'?'标准':'机车动车'}</option>`).join('')}</select>
+        </div>
+        <div class="form-field">
+          <label>电压等级</label>
+          <input type="text" value="${p.voltage||''}" id="f_voltage" placeholder="如 10KV">
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-field">
+          <label>摘要</label>
+          <input type="text" value="${esc(p.summary)}" id="f_summary">
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-field">
+          <label>卡片图片</label>
+          <input type="text" value="${p.cardImage||''}" id="f_cardImage" placeholder="images/products/card/xxx.jpg">
+          ${p.cardImage ? `<img src="${p.cardImage}" class="img-preview" onerror="this.style.display='none'">` : ''}
+        </div>
+        <div class="form-field">
+          <label>详情图片</label>
+          <input type="text" value="${p.image||''}" id="f_image" placeholder="images/products/xxx.jpg">
+          ${p.image ? `<img src="${p.image}" class="img-preview" onerror="this.style.display='none'">` : ''}
+        </div>
+      </div>
+    </div>
+
+    <div class="form-section">
+      <h3>📐 外形尺寸</h3>
+      <div class="form-row">
+        <div class="form-field"><label>长 (mm)</label><input type="text" value="${p.dimensions?.length||''}" id="f_dl"></div>
+        <div class="form-field"><label>宽 (mm)</label><input type="text" value="${p.dimensions?.width||''}" id="f_dw"></div>
+        <div class="form-field"><label>高 (mm)</label><input type="text" value="${p.dimensions?.height||''}" id="f_dh"></div>
+        <div class="form-field"><label>重量 (kg)</label><input type="text" value="${p.dimensions?.weight||''}" id="f_dwt"></div>
+      </div>
+    </div>
+
+    <div class="form-section">
+      <h3>📋 规格参数 (specs)</h3>
+      <div id="specsEditor"></div>
+    </div>
+
+    ${p.ratings ? \`
+    <div class="form-section">
+      <h3>⚡ 电流互感器对照表</h3>
+      <div id="ratingsEditor"></div>
+    </div>\` : ''}
+
+    ${p.vtRatings ? \`
+    <div class="form-section">
+      <h3>🔌 电压互感器对照表</h3>
+      <div id="vtRatingsEditor"></div>
+    </div>\` : ''}
+
+    <div class="form-section">
+      <h3>📄 产品描述</h3>
+      <div class="form-field">
+        <textarea id="f_desc" rows="4">${esc(p.description)}</textarea>
+      </div>
+    </div>
+
+    <div class="form-section">
+      <h3>⭐ 产品特点</h3>
+      <div id="featuresEditor"></div>
+    </div>
+
+    <div class="form-section">
+      <div class="toolbar">
+        <button type="button" class="primary" onclick="saveCurrent()">💾 保存修改</button>
+        <button type="button" class="danger" onclick="deleteCurrent()">🗑️ 删除产品</button>
+      </div>
+    </div>
+  `
+
+  document.getElementById('editForm').innerHTML = html
+
+  // Render dynamic editors
+  renderSpecsEditor(p)
+  if (p.ratings) renderRatingsEditor(p)
+  if (p.vtRatings) renderVtRatingsEditor(p)
+  renderFeaturesEditor(p)
+}
+
+// =============================================
+// Specs 编辑器
+// =============================================
+function renderSpecsEditor(p) {
+  const container = document.getElementById('specsEditor')
+  if (!container) return
+  let html = '<table class="table-editor"><thead><tr><th>参数名称</th><th>参数值</th><th></th></tr></thead><tbody>'
+  p.specs.forEach((s, i) => {
+    html += \`<tr><td><input type="text" value="\${esc(s.label)}" data-spec="\${i}" data-field="label"></td>
+      <td><input type="text" value="\${esc(s.value)}" data-spec="\${i}" data-field="value"></td>
+      <td class="row-del" onclick="delSpec(\${i})">×</td></tr>\`
+  })
+  html += '</tbody></table><div class="table-actions"><button type="button" onclick="addSpec()">+ 添加参数</button></div>'
+  container.innerHTML = html
+}
+
+function addSpec() {
+  const p = products.find(x => x.id === currentId)
+  p.specs.push({ label: '', value: '' })
+  renderSpecsEditor(p)
+}
+
+function delSpec(i) {
+  const p = products.find(x => x.id === currentId)
+  p.specs.splice(i, 1)
+  renderSpecsEditor(p)
+}
+
+// =============================================
+// Ratings 编辑器 (电流互感器)
+// =============================================
+function renderRatingsEditor(p) {
+  const container = document.getElementById('ratingsEditor')
+  if (!container) return
+  const fields = ['primary','thermal','dynamic','accuracy','output','creepage','weight']
+  const headers = ['额定一次电流(A)','一秒热电流(kA)','动稳定电流(kA)','准确级组合','额定二次输出(VA)','表面爬电距离(mm)','重量(kg)']
+  let html = '<table class="table-editor"><thead><tr>' + headers.map(h => '<th>' + h + '</th>').join('') + '<th></th></tr></thead><tbody>'
+  p.ratings.forEach((r, i) => {
+    html += '<tr>'
+    fields.forEach(f => {
+      html += \`<td><input type="text" value="\${esc(r[f]||'')}" data-ratings="\${i}" data-field="\${f}"></td>\`
+    })
+    html += \`<td class="row-del" onclick="delRating(\${i})">×</td></tr>\`
+  })
+  html += '</tbody></table><div class="table-actions"><button type="button" onclick="addRating()">+ 添加行</button></div>'
+  container.innerHTML = html
+}
+
+function addRating() {
+  const p = products.find(x => x.id === currentId)
+  p.ratings.push({ primary: '', thermal: '', dynamic: '', accuracy: '', output: '', creepage: '', weight: '' })
+  renderRatingsEditor(p)
+}
+function delRating(i) {
+  const p = products.find(x => x.id === currentId)
+  p.ratings.splice(i, 1)
+  renderRatingsEditor(p)
+}
+
+// =============================================
+// VtRatings 编辑器 (电压互感器)
+// =============================================
+function renderVtRatingsEditor(p) {
+  const container = document.getElementById('vtRatingsEditor')
+  if (!container) return
+  const fields = ['ratio','accuracy','output','limitOutput','insulation','creepage','weight']
+  const headers = ['额定电压比','准确级及组合','额定二次输出(VA)','极限输出(VA)','额定绝缘水平','表面爬电距离(mm)','重量(kg)']
+  let html = '<table class="table-editor"><thead><tr>' + headers.map(h => '<th>' + h + '</th>').join('') + '<th></th></tr></thead><tbody>'
+  p.vtRatings.forEach((r, i) => {
+    html += '<tr>'
+    fields.forEach(f => {
+      html += \`<td><input type="text" value="\${esc(r[f]||'')}" data-vtratings="\${i}" data-field="\${f}"></td>\`
+    })
+    html += \`<td class="row-del" onclick="delVtRating(\${i})">×</td></tr>\`
+  })
+  html += '</tbody></table><div class="table-actions"><button type="button" onclick="addVtRating()">+ 添加行</button></div>'
+  container.innerHTML = html
+}
+function addVtRating() {
+  const p = products.find(x => x.id === currentId)
+  p.vtRatings.push({ ratio: '', accuracy: '', output: '', limitOutput: '', insulation: '', creepage: '', weight: '' })
+  renderVtRatingsEditor(p)
+}
+function delVtRating(i) {
+  const p = products.find(x => x.id === currentId)
+  p.vtRatings.splice(i, 1)
+  renderVtRatingsEditor(p)
+}
+
+// =============================================
+// Features 编辑器
+// =============================================
+function renderFeaturesEditor(p) {
+  const container = document.getElementById('featuresEditor')
+  if (!container) return
+  let html = '<div class="list-editor">'
+  p.features.forEach((f, i) => {
+    html += \`<span class="item">\${esc(f)} <span class="del" onclick="delFeature(\${i})">×</span></span>\`
+  })
+  html += \`<div class="add-row"><input type="text" id="newFeature" placeholder="输入新特点..."><button type="button" onclick="addFeature()">添加</button></div></div>\`
+  container.innerHTML = html
+}
+function addFeature() {
+  const input = document.getElementById('newFeature')
+  if (!input.value.trim()) return
+  const p = products.find(x => x.id === currentId)
+  p.features.push(input.value.trim())
+  input.value = ''
+  renderFeaturesEditor(p)
+}
+function delFeature(i) {
+  const p = products.find(x => x.id === currentId)
+  p.features.splice(i, 1)
+  renderFeaturesEditor(p)
+}
+
+// =============================================
+// 保存当前产品
+// =============================================
+function saveCurrent() {
+  const p = products.find(x => x.id === currentId)
+  if (!p) return
+
+  p.name = document.getElementById('f_name').value
+  p.type = document.getElementById('f_type').value
+  p.line = document.getElementById('f_line').value
+  p.voltage = document.getElementById('f_voltage').value || null
+  p.summary = document.getElementById('f_summary').value
+  p.cardImage = document.getElementById('f_cardImage').value
+  p.image = document.getElementById('f_image').value
+  p.description = document.getElementById('f_desc').value
+
+  p.dimensions = p.dimensions || {}
+  p.dimensions.length = document.getElementById('f_dl').value
+  p.dimensions.width = document.getElementById('f_dw').value
+  p.dimensions.height = document.getElementById('f_dh').value
+  p.dimensions.weight = document.getElementById('f_dwt').value
+
+  // Save specs from inputs
+  document.querySelectorAll('#specsEditor input[data-spec]').forEach(inp => {
+    const idx = parseInt(inp.dataset.spec)
+    const field = inp.dataset.field
+    if (!p.specs[idx]) p.specs[idx] = { label: '', value: '' }
+    p.specs[idx][field] = inp.value
+  })
+
+  // Save ratings
+  if (p.ratings) {
+    document.querySelectorAll('#ratingsEditor input[data-ratings]').forEach(inp => {
+      const idx = parseInt(inp.dataset.ratings)
+      const field = inp.dataset.field
+      if (!p.ratings[idx]) p.ratings[idx] = {}
+      p.ratings[idx][field] = inp.value
+    })
+  }
+
+  // Save vtRatings
+  if (p.vtRatings) {
+    document.querySelectorAll('#vtRatingsEditor input[data-vtratings]').forEach(inp => {
+      const idx = parseInt(inp.dataset.vtratings)
+      const field = inp.dataset.field
+      if (!p.vtRatings[idx]) p.vtRatings[idx] = {}
+      p.vtRatings[idx][field] = inp.value
+    })
+  }
+
+  renderList()
+  alert('✅ 保存成功！点击"导出 products.js"生成新文件')
+}
+
+// =============================================
+// 删除产品
+// =============================================
+function deleteCurrent() {
+  if (!confirm('确定要删除这个产品吗？')) return
+  const idx = products.findIndex(x => x.id === currentId)
+  if (idx > -1) products.splice(idx, 1)
+  currentId = null
+  renderList()
+  document.getElementById('emptyState').classList.remove('hidden')
+  document.getElementById('editPanel').classList.add('hidden')
+}
+
+// =============================================
+// 导出 products.js
+// =============================================
+function exportJS() {
+  const js = generateProductsJS()
+  download(js, 'products.js', 'application/javascript')
+}
+
+function exportJSON() {
+  const json = JSON.stringify(products, null, 2)
+  download(json, 'products-data.json', 'application/json')
+}
+
+function importJSON() {
+  document.getElementById('jsonInput').click()
+}
+
+function handleJSONImport(e) {
+  const file = e.target.files[0]
+  if (!file) return
+  const reader = new FileReader()
+  reader.onload = function(ev) {
+    try {
+      const data = JSON.parse(ev.target.result)
+      products = data
+      renderList()
+      document.getElementById('editPanel').classList.add('hidden')
+      document.getElementById('emptyState').classList.remove('hidden')
+      alert('✅ 导入成功！共 ' + products.length + ' 个产品')
+    } catch(err) {
+      alert('导入失败: ' + err.message)
+    }
+  }
+  reader.readAsText(file)
+}
+
+// =============================================
+// 生成 products.js 内容
+// =============================================
+function generateProductsJS() {
+  // Read the original file header up to const products
+  // Since we can't, generate full file
+  const carouselSlides = \`
+const carouselSlides = [
+  { src: 'images/slide-company.jpg', alt: '公司厂区全景' },
+  { src: 'images/slide-products.jpg', alt: '产品展示' },
+  { src: 'images/slide-workshop.jpg', alt: '生产车间' }
+]\`
+
+  const productsStr = JSON.stringify(products, null, 2)
+    .replace(/"(\w+)":/g, '$1:')
+    .replace(/"([^"]*)"/g, function(m, g) {
+      // Keep numbers and booleans unquoted, quote strings
+      if (g === 'null' || g === 'true' || g === 'false' || !isNaN(g)) return m
+      return "'" + g.replace(/'/g, '\\\\\\'') + "'"
+    })
+
+  // Actually, let's use a simpler approach - format manually
+  return \`/**
+ * 互感器产品数据
+ *
+ * 三级分类结构：
+ *   产品线 (line):  standard(标准) | rail(机车动车)
+ *   类型   (type):  current(电流) | voltage(电压) | combined(组合) | zero(零序) | ...
+ *
+ * 由管理工具自动生成
+ */
+
+\${carouselSlides}
+
+const products = \${JSON.stringify(products, null, 2).replace(/"([a-zA-Z_]\w*)":/g, (_, k) => k + ':').replace(/"(-?\d+(\.\d+)?)"/g, (_, n) => n)}
+
+const lines = \${JSON.stringify(lines || [{id:'all',name:'全部'}], null, 2)}
+
+const types = \${JSON.stringify(types || [{id:'all',name:'全部'},{id:'current',name:'电流互感器',icon:'⚡'},{id:'voltage',name:'电压互感器',icon:'🔌'},{id:'combined',name:'组合互感器',icon:'🔗'}], null, 2)}
+
+const voltages = \${JSON.stringify(voltages || [], null, 2)}
+
+const series = \${JSON.stringify(series || [{id:'all',name:'全部'}], null, 2)}
+
+// 类型图标映射（给UI用）
+function getTypeIcon(typeId) {
+  const map = { current: '⚡', voltage: '🔌', combined: '🔗', zero: '🔄', post: '🏛️', wall: '🧱', outdoor: '🌲', vt36: '🔌', vtOutdoor: '🌲', rail_ct: '🚂', rail_vt: '🚄' }
+  return map[typeId] || '📦'
+}
+
+function getTypeName(typeId) {
+  const map = { current: '电流互感器', voltage: '电压互感器', combined: '组合互感器', zero: '零序电流互感器', post: '3.6-12KV支柱式电流互感器', wall: '3.6-12KV穿墙式电流互感器', outdoor: '3.6-12KV户外电流、电压互感器', vt36: '3.6-12KV电压互感器', vtOutdoor: '3.6-12KV户外电压互感器', rail_ct: '机车动车电流互感器', rail_vt: '机车动车电压互感器' }
+  return map[typeId] || '未知'
+}
+
+function getLineName(lineId) {
+  const map = {}
+  return map[lineId] || ''
+}
+
+const companyInfo = {
+  name: '大北互',
+  fullName: '大连北方互感器集团有限公司',
+  shortName: '大北互',
+  slogan: '人品决定产品，科技决定未来',
+  desc: '公司位于辽宁省大连市普兰店区丰荣工业园区，是专业从事电力互感器研发、生产和销售的高新技术企业。',
+  contact: {
+    address: '辽宁省大连市普兰店区丰荣工业园区',
+    email: '',
+    website: 'www.dlbf.com',
+    phone: '0411-83291638'
+  },
+  certifications: [
+    { icon: '🏅', name: 'ISO9001 质量认证' },
+    { icon: '📜', name: '国家计量器具许可' },
+    { icon: '🔬', name: '省级高新技术企业' },
+    { icon: '🌍', name: 'CE 国际认证' }
+  ],
+  strengths: [
+    { num: '15000+', label: '㎡ 生产厂房' },
+    { num: '200+', label: '在职员工' },
+    { num: '50万+', label: '年产量(台)' },
+    { num: '30+', label: '出口国家' }
+  ]
+}
+
+if (typeof module !== 'undefined') {
+  module.exports = { products, carouselSlides, lines, types, voltages, series, getTypeIcon, getTypeName, getLineName, companyInfo }
+}\`
+}
+
+// =============================================
+// 下载文件
+// =============================================
+function download(content, filename, mime) {
+  const blob = new Blob([content], { type: mime })
+  const url = URL.createObjectURL(blob)
+  const a = document.createElement('a')
+  a.href = url
+  a.download = filename
+  a.click()
+  URL.revokeObjectURL(url)
+}
+
+// =============================================
+// 工具函数
+// =============================================
+function esc(s) {
+  if (!s) return ''
+  return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;')
+}
+</script>
+</body>
+</html>
