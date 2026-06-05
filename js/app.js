@@ -242,10 +242,10 @@
     return products.filter(p => {
       if (filter.type !== 'all') {
         if (filter.type === 'current') {
-          if (filter.subType === 'all') return p.type === 'post' || p.type === 'wall' || p.type === 'outdoor' || p.type === 'zero' || p.type === 'rail_ct'
+          if (filter.subType === 'all') return false // 不显示任何产品，用系列卡片替代
           if (filter.subType === 'post') {
             if (filter.series !== 'all') return p.type === 'post' && p.series === filter.series
-            return p.type === 'post'
+            return false // 显示系列卡片
           }
           return p.type === filter.subType
         } else if (filter.type === 'voltage') {
@@ -259,13 +259,15 @@
 
   function renderFilteredProducts() {
     // Show series cards when in 支柱式 series overview
-    if (filter.type === 'current' && filter.subType === 'post' && filter.series === 'all') {
+    // Show series cards when in 支柱式 series overview or current all
+    if (filter.type === 'current' && (filter.subType === 'all' || filter.subType === 'post') && filter.series === 'all') {
       emptyState.style.display = 'none'
       productGrid.innerHTML = series.filter(s => s.id !== 'all').map(s => buildSeriesCard(s)).join('')
       return
     }
     // Gallery series: show in modal
-    if (filter.type === 'current' && filter.subType === 'post' && (filter.series === 'lzzbj9' || filter.series === 'lzzbj18')) {
+    // Gallery series: show in modal
+    if (filter.type === 'current' && (filter.series === 'lzzbj9' || filter.series === 'lzzbj18')) {
       emptyState.style.display = 'none'
       productGrid.innerHTML = ''
       showSeriesGallery(filter.series)

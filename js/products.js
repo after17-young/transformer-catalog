@@ -14,9 +14,8 @@
 // =========================================
 // 把图片放到 images/ 目录下，在这里添加路径
 const carouselSlides = [
-  { src: 'images/slide-company.jpg', alt: '公司厂区全景' },
-  { src: 'images/slide-products.jpg', alt: '产品展示' },
-  { src: 'images/slide-workshop.jpg', alt: '生产车间' }
+  { src: 'images/首页1.jpg', alt: '大北互产品展示1' },
+  { src: 'images/首页2.jpg', alt: '大北互产品展示2' }
 ]
 
 // =========================================
