@@ -263,6 +263,9 @@
     bindCardClicks(grid)
   }
 
+  // Expose for inline onclick
+  window.doParamFilterFn = doParamFilter
+
   function renderParamsPage() {
     // Reset form and clear results on page enter
     $('#pv_voltage').value = 'all'
