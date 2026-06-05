@@ -147,7 +147,10 @@ const products = [
       { label: '执行标准', value: 'GB/T 20840.3-2010' }
     ],
     description: 'JDZ-10 系列电压互感器为户内环氧树脂浇注式结构，适用于 10kV 及以下电力系统中作电压测量、电能计量及继电保护使用。',
-    features: ['环氧树脂浇注绝缘，阻燃自熄', '测量精度高，稳定性好', '体积小，重量轻', '局部放电量小']
+    features: ['环氧树脂浇注绝缘，阻燃自熄', '测量精度高，稳定性好', '体积小，重量轻', '局部放电量小'],
+    vtRatings: [
+      { ratio: '', accuracy: '', output: '', limitOutput: '', insulation: '', creepage: '', weight: '' }
+    ],
   },
   {
     id: 'vt-20kv-01', line: 'standard', type: 'voltage', voltage: '20KV',
@@ -171,7 +174,10 @@ const products = [
       { label: '使用环境', value: '-25°C ~ +55°C' }
     ],
     description: 'JDZX-20 系列电压互感器为户内干式结构，带有剩余电压绕组，适用于 20kV 中压配电系统的电压测量和接地保护。',
-    features: ['带剩余电压绕组，可实现接地保护', '真空环氧浇注', '大爬电距离设计', '高精度多绕组输出']
+    features: ['带剩余电压绕组，可实现接地保护', '真空环氧浇注', '大爬电距离设计', '高精度多绕组输出'],
+    vtRatings: [
+      { ratio: '', accuracy: '', output: '', limitOutput: '', insulation: '', creepage: '', weight: '' }
+    ],
   },
   {
     id: 'vt-35kv-01', line: 'standard', type: 'voltage', voltage: '35KV',
@@ -195,7 +201,10 @@ const products = [
       { label: '使用环境', value: '-40°C ~ +55°C' }
     ],
     description: 'JDZX-35 系列电压互感器为户外干式结构，带有剩余电压绕组（开口三角形绕组），适用于 35kV 电力系统的电压测量、电能计量和接地保护。',
-    features: ['带剩余电压绕组，可实现接地保护', '真空环氧浇注，耐候性强', '大爬电距离设计', '高精度多绕组输出']
+    features: ['带剩余电压绕组，可实现接地保护', '真空环氧浇注，耐候性强', '大爬电距离设计', '高精度多绕组输出'],
+    vtRatings: [
+      { ratio: '', accuracy: '', output: '', limitOutput: '', insulation: '', creepage: '', weight: '' }
+    ],
   },
 
   // ───── 标准产品 - 组合互感器 ─────
@@ -376,7 +385,10 @@ const products = [
       { label: '执行标准', value: 'TB/T 3202-2015' }
     ],
     description: 'JQG-10Y 系列机车电压互感器专为电力机车设计，具有优异的抗震动和耐候性能，适用于机车配电系统的电压测量和计量。',
-    features: ['抗震动设计', '体积小、重量轻', '温度适应范围宽', '可靠性高']
+    features: ['抗震动设计', '体积小、重量轻', '温度适应范围宽', '可靠性高'],
+    vtRatings: [
+      { ratio: '', accuracy: '', output: '', limitOutput: '', insulation: '', creepage: '', weight: '' }
+    ],
   },
   {
     id: 'jqvt-25-07', line: 'standard', type: 'rail_vt', voltage: '20KV',
@@ -401,7 +413,10 @@ const products = [
       { label: '执行标准', value: 'TB/T 3202-2015' }
     ],
     description: 'JDZX 系列机车电压互感器，适用于 25kV 机车配电系统的电压测量和计量。',
-    features: ['抗震动设计', '体积小、重量轻', '温度适应范围宽', '可靠性高']
+    features: ['抗震动设计', '体积小、重量轻', '温度适应范围宽', '可靠性高'],
+    vtRatings: [
+      { ratio: '', accuracy: '', output: '', limitOutput: '', insulation: '', creepage: '', weight: '' }
+    ],
   },
   {
     id: 'JDZXW2-25A', line: 'standard', type: 'rail_vt', voltage: '35KV',
@@ -426,7 +441,10 @@ const products = [
       { label: '执行标准', value: 'TB/T 3202-2015' }
     ],
     description: 'JQG-35Y 系列机车电压互感器专为电力机车设计，适用于 35kV 机车配电系统的电压测量和继电保护。',
-    features: ['抗震动设计', '高精度多绕组设计', '温度适应范围宽', '可靠性高']
+    features: ['抗震动设计', '高精度多绕组设计', '温度适应范围宽', '可靠性高'],
+    vtRatings: [
+      { ratio: '', accuracy: '', output: '', limitOutput: '', insulation: '', creepage: '', weight: '' }
+    ],
   },
   {
     id: 'jqvt-25-01', line: 'standard', type: 'rail_vt', voltage: '20KV',
@@ -451,7 +469,10 @@ const products = [
       { label: '执行标准', value: 'TB/T 3202-2015' }
     ],
     description: 'JDZXW3-25 系列机车电压互感器，适用于 25kV 机车配电系统的电压测量和计量。',
-    features: ['抗震动设计', '体积小、重量轻', '温度适应范围宽', '可靠性高']
+    features: ['抗震动设计', '体积小、重量轻', '温度适应范围宽', '可靠性高'],
+    vtRatings: [
+      { ratio: '', accuracy: '', output: '', limitOutput: '', insulation: '', creepage: '', weight: '' }
+    ],
   },
   {
     id: 'jqvt-25-02', line: 'standard', type: 'rail_vt', voltage: '20KV',
@@ -476,7 +497,10 @@ const products = [
       { label: '执行标准', value: 'TB/T 3202-2015' }
     ],
     description: 'JDZX 系列机车电压互感器，适用于 25kV 机车配电系统的电压测量和计量。',
-    features: ['抗震动设计', '体积小、重量轻', '温度适应范围宽', '可靠性高']
+    features: ['抗震动设计', '体积小、重量轻', '温度适应范围宽', '可靠性高'],
+    vtRatings: [
+      { ratio: '', accuracy: '', output: '', limitOutput: '', insulation: '', creepage: '', weight: '' }
+    ],
   },
   {
     id: 'jqvt-25-03', line: 'standard', type: 'rail_vt', voltage: '20KV',
@@ -501,7 +525,10 @@ const products = [
       { label: '执行标准', value: 'TB/T 3202-2015' }
     ],
     description: 'JDZX 系列机车电压互感器，适用于 25kV 机车配电系统的电压测量和计量。',
-    features: ['抗震动设计', '体积小、重量轻', '温度适应范围宽', '可靠性高']
+    features: ['抗震动设计', '体积小、重量轻', '温度适应范围宽', '可靠性高'],
+    vtRatings: [
+      { ratio: '', accuracy: '', output: '', limitOutput: '', insulation: '', creepage: '', weight: '' }
+    ],
   },
   {
     id: 'jqvt-25-04', line: 'standard', type: 'rail_vt', voltage: '20KV',
@@ -526,7 +553,10 @@ const products = [
       { label: '执行标准', value: 'TB/T 3202-2015' }
     ],
     description: 'JDZX 系列机车电压互感器，适用于 25kV 机车配电系统的电压测量和计量。',
-    features: ['抗震动设计', '体积小、重量轻', '温度适应范围宽', '可靠性高']
+    features: ['抗震动设计', '体积小、重量轻', '温度适应范围宽', '可靠性高'],
+    vtRatings: [
+      { ratio: '', accuracy: '', output: '', limitOutput: '', insulation: '', creepage: '', weight: '' }
+    ],
   },
   {
     id: 'jqvt-25-05', line: 'standard', type: 'rail_vt', voltage: '20KV',
@@ -551,7 +581,10 @@ const products = [
       { label: '执行标准', value: 'TB/T 3202-2015' }
     ],
     description: 'JDZX 系列机车电压互感器，适用于 25kV 机车配电系统的电压测量和计量。',
-    features: ['抗震动设计', '体积小、重量轻', '温度适应范围宽', '可靠性高']
+    features: ['抗震动设计', '体积小、重量轻', '温度适应范围宽', '可靠性高'],
+    vtRatings: [
+      { ratio: '', accuracy: '', output: '', limitOutput: '', insulation: '', creepage: '', weight: '' }
+    ],
   },
   {
     id: 'jqvt-25-06', line: 'standard', type: 'rail_vt', voltage: '20KV',
@@ -576,7 +609,10 @@ const products = [
       { label: '执行标准', value: 'TB/T 3202-2015' }
     ],
     description: 'JDZX 系列机车电压互感器，适用于 25kV 机车配电系统的电压测量和计量。',
-    features: ['抗震动设计', '体积小、重量轻', '温度适应范围宽', '可靠性高']
+    features: ['抗震动设计', '体积小、重量轻', '温度适应范围宽', '可靠性高'],
+    vtRatings: [
+      { ratio: '', accuracy: '', output: '', limitOutput: '', insulation: '', creepage: '', weight: '' }
+    ],
   },
 
 
@@ -704,7 +740,10 @@ const products = [
       { label: '执行标准', value: 'TB/T 3391-2015' }
     ],
     description: 'DCG-10Y 系列动车电压互感器专为高速动车组设计，采用轻量化耐震结构，适用于动车配电系统的电压测量和计量。',
-    features: ['轻量化设计', '抗高频率震动', '温度适应范围宽', '长寿命免维护']
+    features: ['轻量化设计', '抗高频率震动', '温度适应范围宽', '长寿命免维护'],
+    vtRatings: [
+      { ratio: '', accuracy: '', output: '', limitOutput: '', insulation: '', creepage: '', weight: '' }
+    ],
   },
   {
     id: 'devt-20kv-01', line: 'standard', type: 'rail_vt', voltage: '20KV',
@@ -729,7 +768,10 @@ const products = [
       { label: '执行标准', value: 'TB/T 3391-2015' }
     ],
     description: 'DCG-20Y 系列动车电压互感器专为高速动车组设计，适用于 20kV 动车配电系统的电压测量和计量。',
-    features: ['轻量化设计', '抗高频率震动', '温度适应范围宽', '长寿命免维护']
+    features: ['轻量化设计', '抗高频率震动', '温度适应范围宽', '长寿命免维护'],
+    vtRatings: [
+      { ratio: '', accuracy: '', output: '', limitOutput: '', insulation: '', creepage: '', weight: '' }
+    ],
   },
   {
     id: 'devt-35kv-01', line: 'standard', type: 'rail_vt', voltage: '35KV',
@@ -754,7 +796,10 @@ const products = [
       { label: '执行标准', value: 'TB/T 3391-2015' }
     ],
     description: 'DCG-35Y 系列动车电压互感器专为高速动车组设计，适用于 35kV 动车配电系统的电压测量和继电保护。',
-    features: ['轻量化设计', '抗高频率震动', '高精度多绕组设计', '长寿命免维护']
+    features: ['轻量化设计', '抗高频率震动', '高精度多绕组设计', '长寿命免维护'],
+    vtRatings: [
+      { ratio: '', accuracy: '', output: '', limitOutput: '', insulation: '', creepage: '', weight: '' }
+    ],
   }
 ]
 

@@ -413,6 +413,15 @@
           </table>
         </div>
       </div>` : ''}
+      ${p.vtRatings ? `
+      <div class="modal-ratings"><h4>电压互感器技术参数对照表</h4>
+        <div class="ratings-table-wrap">
+          <table class="ratings-table">
+            <thead><tr><th>额定电压比</th><th>准确级及准确级组合</th><th>额定二次输出 (VA)</th><th>极限输出 (VA)</th><th>额定绝缘水平</th><th>表面爬电距离 (mm)</th><th>重量 (kg)</th></tr></thead>
+            <tbody>${p.vtRatings.map(r => `<tr><td>${r.ratio}</td><td>${r.accuracy}</td><td>${r.output}</td><td>${r.limitOutput}</td><td>${r.insulation}</td><td>${r.creepage}</td><td>${r.weight}</td></tr>`).join('')}</tbody>
+          </table>
+        </div>
+      </div>` : ''}
       <div class="modal-features"><h4>产品特点</h4><ul>${p.features.map(f => `<li>${f}</li>`).join('')}</ul></div>`
     modalOverlay.classList.add('visible')
     document.body.style.overflow = 'hidden'
