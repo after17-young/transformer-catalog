@@ -451,6 +451,7 @@ button { cursor: pointer; font: inherit; border: none; background: none; }
   position: relative;
 }
 .modal-overlay.visible .modal { transform: translateY(0); }
+.modal-gallery { max-width: 95vw !important; width: 95vw !important; }
 .modal-close {
   position: sticky; top: 10px; float: right; margin-right: 12px;
   width: 34px; height: 34px; border-radius: 50%; background: var(--bg);

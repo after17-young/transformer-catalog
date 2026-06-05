@@ -201,6 +201,7 @@
     for (var i = 40; i <= 58; i++) {
       imgs.push('images/series/1.中压一篇单页目录版_' + i + '.png')
     }
+    $('#productModal').classList.add('modal-gallery')
     modalBody.innerHTML =
       '<div style="display:flex;align-items:center;gap:10px;margin-bottom:8px">' +
       '<button class="filter-tab" onclick="closeModal()" style="padding:4px 12px;font-size:12px">← 返回系列</button>' +
@@ -443,6 +444,7 @@
   }
 
   function closeModal() {
+    $('#productModal').classList.remove('modal-gallery')
     modalOverlay.classList.remove('visible')
     document.body.style.overflow = ''
     // LZZBJ9 gallery: return to series selection
