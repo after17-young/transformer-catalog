@@ -124,7 +124,6 @@
     if (filter.type === 'current') {
       subTypes = [
         { id: 'all', name: '全部型号' },
-        { id: 'current', name: '电流互感器' },
         { id: 'post', name: '支柱式电流互感器' },
         { id: 'wall', name: '穿墙式电流互感器' },
         { id: 'outdoor', name: '户外电流、电压互感器' }
@@ -132,7 +131,6 @@
     } else if (filter.type === 'voltage') {
       subTypes = [
         { id: 'all', name: '全部型号' },
-        { id: 'voltage', name: '电压互感器' },
         { id: 'vt36', name: '3.6-12KV电压互感器' },
         { id: 'vtOutdoor', name: '3.6-12KV户外电压互感器' }
       ]
@@ -182,12 +180,10 @@
       if (filter.line !== 'all' && p.line !== filter.line) return false
       if (filter.type !== 'all') {
         if (filter.type === 'current') {
-          if (filter.subType === 'all') return p.type === 'current' || p.type === 'post' || p.type === 'wall' || p.type === 'outdoor'
-          if (filter.subType === 'current') return p.type === 'current'
+          if (filter.subType === 'all') return p.type === 'post' || p.type === 'wall' || p.type === 'outdoor'
           return p.type === filter.subType
         } else if (filter.type === 'voltage') {
-          if (filter.subType === 'all') return p.type === 'voltage' || p.type === 'vt36' || p.type === 'vtOutdoor'
-          if (filter.subType === 'voltage') return p.type === 'voltage'
+          if (filter.subType === 'all') return p.type === 'vt36' || p.type === 'vtOutdoor'
           return p.type === filter.subType
         } else if (p.type !== filter.type) return false
       }
